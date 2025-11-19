@@ -4,12 +4,12 @@ import { Logo } from '../Logo';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[var(--color-secondary)] text-white">
+    <footer className="bg-secondary text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {/* Sezione 1: Informazioni Aziendali */}
           <div className="space-y-4">
-            <Logo width={150} height={50} />
+            <Logo />
             <p className="text-gray-300 text-sm leading-relaxed">
               BeautyLine Professional offre corsi di alta formazione nel settore dell'estetica,
               con percorsi professionali e master per diventare esperti del settore.
@@ -17,13 +17,13 @@ export const Footer: React.FC = () => {
             <div className="space-y-2 text-sm text-gray-300">
               <p>
                 <span className="font-semibold">Email:</span>{' '}
-                <a href="mailto:info@beautylineprofessional.com" className="hover:text-[var(--color-primary)] transition-colors">
+                <a href="mailto:info@beautylineprofessional.com" className="hover:text-primary transition-colors">
                   info@beautylineprofessional.com
                 </a>
               </p>
               <p>
                 <span className="font-semibold">Telefono:</span>{' '}
-                <a href="tel:+390123456789" className="hover:text-[var(--color-primary)] transition-colors">
+                <a href="tel:+390123456789" className="hover:text-primary transition-colors">
                   +39 012 345 6789
                 </a>
               </p>
@@ -35,32 +35,32 @@ export const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-white">Link Utili</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/corsi" className="text-gray-300 hover:text-[var(--color-primary)] transition-colors text-sm">
+                <Link href="/corsi" className="text-gray-300 hover:text-primary transition-colors text-sm">
                   Corsi
                 </Link>
               </li>
               <li>
-                <Link href="/percorso-master" className="text-gray-300 hover:text-[var(--color-primary)] transition-colors text-sm">
+                <Link href="/percorso-master" className="text-gray-300 hover:text-primary transition-colors text-sm">
                   Percorso Master
                 </Link>
               </li>
               <li>
-                <Link href="/prodotti" className="text-gray-300 hover:text-[var(--color-primary)] transition-colors text-sm">
+                <Link href="/prodotti" className="text-gray-300 hover:text-primary transition-colors text-sm">
                   Prodotti
                 </Link>
               </li>
               <li>
-                <Link href="/noleggio" className="text-gray-300 hover:text-[var(--color-primary)] transition-colors text-sm">
+                <Link href="/noleggio" className="text-gray-300 hover:text-primary transition-colors text-sm">
                   Noleggio Attrezzature
                 </Link>
               </li>
               <li>
-                <Link href="/recensioni" className="text-gray-300 hover:text-[var(--color-primary)] transition-colors text-sm">
+                <Link href="/recensioni" className="text-gray-300 hover:text-primary transition-colors text-sm">
                   Recensioni
                 </Link>
               </li>
               <li>
-                <Link href="/contatti" className="text-gray-300 hover:text-[var(--color-primary)] transition-colors text-sm">
+                <Link href="/contatti" className="text-gray-300 hover:text-primary transition-colors text-sm">
                   Contatti
                 </Link>
               </li>
@@ -78,7 +78,7 @@ export const Footer: React.FC = () => {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 hover:bg-[var(--color-primary)] rounded-full flex items-center justify-center transition-colors"
+                className="w-10 h-10 bg-white/10 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -89,7 +89,7 @@ export const Footer: React.FC = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 hover:bg-[var(--color-primary)] rounded-full flex items-center justify-center transition-colors"
+                className="w-10 h-10 bg-white/10 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ export const Footer: React.FC = () => {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 hover:bg-[var(--color-primary)] rounded-full flex items-center justify-center transition-colors"
+                className="w-10 h-10 bg-white/10 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

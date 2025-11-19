@@ -80,9 +80,9 @@ export default function Home() {
       />
 
       {/* Features Section */}
-      <Section className="bg-[var(--color-muted)]">
+      <Section className="bg-muted">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-secondary)] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
             Perché Scegliere BeautyLine
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -91,12 +91,12 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-            <div className="w-16 h-16 bg-[var(--color-primary)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-[var(--color-secondary)] mb-2">
+            <h3 className="text-xl font-semibold text-secondary mb-2">
               Docenti Qualificati
             </h3>
             <p className="text-gray-600">
@@ -104,12 +104,12 @@ export default function Home() {
             </p>
           </div>
           <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-            <div className="w-16 h-16 bg-[var(--color-primary)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-[var(--color-secondary)] mb-2">
+            <h3 className="text-xl font-semibold text-secondary mb-2">
               Certificazioni Riconosciute
             </h3>
             <p className="text-gray-600">
@@ -117,13 +117,13 @@ export default function Home() {
             </p>
           </div>
           <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-            <div className="w-16 h-16 bg-[var(--color-primary)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-[var(--color-secondary)] mb-2">
+            <h3 className="text-xl font-semibold text-secondary mb-2">
               Approccio Pratico
             </h3>
             <p className="text-gray-600">
@@ -136,7 +136,7 @@ export default function Home() {
       {/* Featured Courses Section */}
       <Section>
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-secondary)] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
             Corsi in Evidenza
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -158,9 +158,9 @@ export default function Home() {
       </Section>
 
       {/* Testimonials Section */}
-      <Section className="bg-[var(--color-muted)]">
+      <Section className="bg-muted">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-secondary)] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
             Cosa Dicono i Nostri Studenti
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -175,7 +175,7 @@ export default function Home() {
       </Section>
 
       {/* CTA Section */}
-      <Section className="bg-[var(--color-secondary)] text-white">
+      <Section className="bg-secondary text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Pronto a Iniziare la Tua Carriera?
@@ -190,7 +190,7 @@ export default function Home() {
               </Button>
             </Link>
             <Link href="/corsi">
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-[var(--color-secondary)]">
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-secondary">
                 Scopri i Corsi
               </Button>
             </Link>

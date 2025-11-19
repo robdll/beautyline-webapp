@@ -70,9 +70,9 @@ const courses: Course[] = [
 export default function CorsiPage() {
   return (
     <>
-      <Section className="bg-[var(--color-muted)] pt-20">
+      <Section className="bg-muted pt-20">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-secondary)] mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
             I Nostri Corsi
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -89,9 +89,9 @@ export default function CorsiPage() {
         </div>
       </Section>
 
-      <Section className="bg-[var(--color-muted)]">
+      <Section className="bg-muted">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-secondary)] mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-4">
             Non Trovi il Corso che Cerchi?
           </h2>
           <p className="text-gray-600 mb-6">
@@ -99,7 +99,7 @@ export default function CorsiPage() {
           </p>
           <a
             href="/contatti"
-            className="inline-block px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[#B88A5C] transition-colors font-medium"
+            className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-[#B88A5C] transition-colors font-medium"
           >
             Contattaci
           </a>

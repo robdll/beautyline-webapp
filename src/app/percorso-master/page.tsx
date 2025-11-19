@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 export default function PercorsoMasterPage() {
   return (
     <>
-      <Section className="bg-[var(--color-muted)] pt-20">
+      <Section className="bg-muted pt-20">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-secondary)] mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
             Percorso Master
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -35,7 +35,7 @@ export default function PercorsoMasterPage() {
             />
           </div>
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-secondary)]">
+            <h2 className="text-3xl md:text-4xl font-bold text-secondary">
               Formazione Completa e Professionale
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -44,25 +44,25 @@ export default function PercorsoMasterPage() {
             </p>
             <ul className="space-y-3">
               <li className="flex items-start">
-                <svg className="w-6 h-6 text-[var(--color-primary)] mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-primary mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
                 <span className="text-gray-700">Oltre 200 ore di formazione teorica e pratica</span>
               </li>
               <li className="flex items-start">
-                <svg className="w-6 h-6 text-[var(--color-primary)] mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-primary mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
                 <span className="text-gray-700">Docenti esperti del settore</span>
               </li>
               <li className="flex items-start">
-                <svg className="w-6 h-6 text-[var(--color-primary)] mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-primary mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
                 <span className="text-gray-700">Attestato di qualifica professionale riconosciuto</span>
               </li>
               <li className="flex items-start">
-                <svg className="w-6 h-6 text-[var(--color-primary)] mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-primary mr-3 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
                 <span className="text-gray-700">Supporto post-corso e aggiornamenti continui</span>
@@ -72,9 +72,9 @@ export default function PercorsoMasterPage() {
         </div>
       </Section>
 
-      <Section className="bg-[var(--color-muted)]">
+      <Section className="bg-muted">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-secondary)] mb-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-8 text-center">
             Moduli del Percorso Master
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -87,7 +87,7 @@ export default function PercorsoMasterPage() {
               { title: 'Trucco Professionale', description: 'Make-up per ogni occasione' },
             ].map((module, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="text-xl font-semibold text-[var(--color-secondary)] mb-2">
+                <h3 className="text-xl font-semibold text-secondary mb-2">
                   {module.title}
                 </h3>
                 <p className="text-gray-600">{module.description}</p>
@@ -99,7 +99,7 @@ export default function PercorsoMasterPage() {
 
       <Section>
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-secondary)] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
             Investi nella Tua Formazione
           </h2>
           <p className="text-lg text-gray-600 mb-8">

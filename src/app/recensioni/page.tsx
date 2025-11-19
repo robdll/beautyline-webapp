@@ -64,9 +64,9 @@ const testimonials: Testimonial[] = [
 export default function RecensioniPage() {
   return (
     <>
-      <Section className="bg-[var(--color-muted)] pt-20">
+      <Section className="bg-muted pt-20">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-secondary)] mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
             Recensioni e Testimonianze
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -83,9 +83,9 @@ export default function RecensioniPage() {
         </div>
       </Section>
 
-      <Section className="bg-[var(--color-muted)]">
+      <Section className="bg-muted">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-secondary)] mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-4">
             Condividi la Tua Esperienza
           </h2>
           <p className="text-gray-600 mb-6">
@@ -93,7 +93,7 @@ export default function RecensioniPage() {
           </p>
           <a
             href="/contatti"
-            className="inline-block px-6 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[#B88A5C] transition-colors font-medium"
+            className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-[#B88A5C] transition-colors font-medium"
           >
             Contattaci
           </a>

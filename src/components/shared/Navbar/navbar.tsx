@@ -27,8 +27,8 @@ export const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
-            <Logo width={150} height={50} />
+          <Link href="/" className="shrink-0 transition-transform duration-200 hover:scale-105">
+            <Logo />
           </Link>
 
           {/* Desktop Navigation */}
@@ -37,7 +37,7 @@ export const Navbar: React.FC = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[var(--color-secondary)] hover:text-[var(--color-primary)] transition-colors duration-200 font-medium text-sm"
+                className="text-secondary hover:text-purple transition-colors duration-200 font-medium text-sm font-raleway"
               >
                 {item.label}
               </Link>
@@ -50,7 +50,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden p-2 rounded-md text-[var(--color-secondary)] hover:text-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+            className="lg:hidden p-2 rounded-md text-secondary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary"
             aria-label="Toggle menu"
           >
             <svg
@@ -84,7 +84,7 @@ export const Navbar: React.FC = () => {
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block px-4 py-2 text-[var(--color-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-muted)] rounded-md transition-colors duration-200 font-medium"
+                className="block px-4 py-2 text-secondary hover:text-purple hover:bg-muted rounded-md transition-colors duration-200 font-medium font-raleway"
               >
                 {item.label}
               </Link>

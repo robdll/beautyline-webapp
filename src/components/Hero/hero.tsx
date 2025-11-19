@@ -29,11 +29,11 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="space-y-6">
             {subtitle && (
-              <p className="text-[var(--color-primary)] font-semibold text-sm uppercase tracking-wide">
+              <p className="text-primary font-semibold text-sm uppercase tracking-wide">
                 {subtitle}
               </p>
             )}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[var(--color-secondary)] leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary leading-tight">
               {title}
             </h1>
             {description && (

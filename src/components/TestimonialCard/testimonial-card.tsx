@@ -46,7 +46,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
           </div>
         )}
         <div>
-          <p className="font-semibold text-[var(--color-secondary)]">
+          <p className="font-semibold text-secondary">
             {testimonial.name}
           </p>
           {testimonial.role && (

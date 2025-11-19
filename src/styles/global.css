@@ -2,21 +2,26 @@
 
 :root {
   /* Brand Colors */
-  --color-primary: #C89B6C;
+  --color-primary: #333333;
   --color-secondary: #1A1A1A;
+  --color-gold: #DEA43E;
+  --color-purple: #8B66A9;
   --color-background: #FFFFFF;
   --color-muted: #F5F5F5;
 
   /* Typography */
   --font-sans: 'Inter', sans-serif;
+  --font-raleway: 'Raleway', sans-serif;
 }
 
 @theme {
-  --color-primary: #C89B6C;
+  --color-primary: #DEA43E;
   --color-secondary: #1A1A1A;
+  --color-purple: #8B66A9;
   --color-background: #FFFFFF;
   --color-muted: #F5F5F5;
   --font-sans: 'Inter', sans-serif;
+  --font-raleway: 'Raleway', sans-serif;
 }
 
 * {

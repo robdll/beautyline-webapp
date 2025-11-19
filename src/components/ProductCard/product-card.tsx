@@ -23,11 +23,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
       </div>
       <div className="p-6 flex-grow flex flex-col">
         {product.category && (
-          <span className="text-xs font-semibold text-[var(--color-primary)] uppercase tracking-wide mb-2">
+          <span className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">
             {product.category}
           </span>
         )}
-        <h3 className="text-xl font-bold text-[var(--color-secondary)] mb-2">
+        <h3 className="text-xl font-bold text-secondary mb-2">
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
@@ -35,7 +35,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
         </p>
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
           {product.price && (
-            <p className="text-lg font-bold text-[var(--color-primary)]">
+            <p className="text-lg font-bold text-primary">
               {product.price}
             </p>
           )}

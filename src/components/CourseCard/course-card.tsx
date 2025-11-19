@@ -23,11 +23,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
       </div>
       <div className="p-6 flex-grow flex flex-col">
         {course.category && (
-          <span className="text-xs font-semibold text-[var(--color-primary)] uppercase tracking-wide mb-2">
+          <span className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">
             {course.category}
           </span>
         )}
-        <h3 className="text-xl font-bold text-[var(--color-secondary)] mb-2">
+        <h3 className="text-xl font-bold text-secondary mb-2">
           {course.title}
         </h3>
         <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
@@ -41,7 +41,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
               </p>
             )}
             {course.price && (
-              <p className="text-lg font-bold text-[var(--color-primary)]">
+              <p className="text-lg font-bold text-primary">
                 {course.price}
               </p>
             )}

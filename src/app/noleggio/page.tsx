@@ -36,9 +36,9 @@ const equipment = [
 export default function NoleggioPage() {
   return (
     <>
-      <Section className="bg-[var(--color-muted)] pt-20">
+      <Section className="bg-muted pt-20">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-secondary)] mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
             Noleggio Attrezzature
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -60,7 +60,7 @@ export default function NoleggioPage() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-[var(--color-secondary)] mb-2">
+                <h3 className="text-xl font-bold text-secondary mb-2">
                   {item.name}
                 </h3>
                 <p className="text-gray-600 mb-4">{item.description}</p>
@@ -73,14 +73,14 @@ export default function NoleggioPage() {
         </div>
       </Section>
 
-      <Section className="bg-[var(--color-muted)]">
+      <Section className="bg-muted">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-secondary)] mb-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-6 text-center">
             Perché Noleggiare con Noi
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-[var(--color-secondary)] mb-2">
+              <h3 className="text-lg font-semibold text-secondary mb-2">
                 Attrezzature Professionali
               </h3>
               <p className="text-gray-600">
@@ -88,7 +88,7 @@ export default function NoleggioPage() {
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-[var(--color-secondary)] mb-2">
+              <h3 className="text-lg font-semibold text-secondary mb-2">
                 Flessibilità
               </h3>
               <p className="text-gray-600">
@@ -96,7 +96,7 @@ export default function NoleggioPage() {
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-[var(--color-secondary)] mb-2">
+              <h3 className="text-lg font-semibold text-secondary mb-2">
                 Assistenza
               </h3>
               <p className="text-gray-600">
@@ -104,7 +104,7 @@ export default function NoleggioPage() {
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-[var(--color-secondary)] mb-2">
+              <h3 className="text-lg font-semibold text-secondary mb-2">
                 Consegna e Ritiro
               </h3>
               <p className="text-gray-600">

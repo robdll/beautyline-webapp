@@ -5,7 +5,7 @@ import { Logo } from '../Logo';
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-secondary text-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {/* Sezione 1: Informazioni Aziendali */}
           <div className="space-y-4">

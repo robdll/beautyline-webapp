@@ -25,7 +25,7 @@ export const Hero: React.FC<HeroProps> = ({
 }) => {
   return (
     <div className={cn('relative w-full', className)}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="space-y-6">
             {subtitle && (

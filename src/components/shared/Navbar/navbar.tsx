@@ -9,12 +9,13 @@ import { cn } from '@/lib/utils';
 
 const navigationItems: NavigationItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'Corsi', href: '/corsi' },
-  { label: 'Percorso Master', href: '/percorso-master' },
-  { label: 'Prodotti', href: '/prodotti' },
-  { label: 'Recensioni', href: '/recensioni' },
+  { label: 'Chi Siamo', href: '/chi-siamo' },
+  { label: 'I Nostri Corsi', href: '/corsi' },
   { label: 'Noleggio', href: '/noleggio' },
-  { label: 'Contatti', href: '/contatti' },
+  { label: 'I nostri prodotti', href: '/prodotti' },
+  { label: 'Vendita Usato', href: '/vendita-usato' },
+  { label: 'Recensioni', href: '/recensioni' },
+  { label: 'Contattaci', href: '/contatti' },
 ];
 
 export const Navbar: React.FC = () => {
@@ -24,7 +25,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white shadow-sm border-b border-gray-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="shrink-0 transition-transform duration-200 hover:scale-105">
@@ -37,14 +38,11 @@ export const Navbar: React.FC = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-secondary hover:text-purple transition-colors duration-200 font-medium text-sm font-raleway"
+                className="text-secondary hover:text-purple transition-colors duration-200 font-medium text-base font-raleway lg:px-5"
               >
                 {item.label}
               </Link>
             ))}
-            <Button variant="primary" size="sm">
-              Iscriviti
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}

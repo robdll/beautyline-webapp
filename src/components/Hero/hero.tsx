@@ -6,9 +6,7 @@ import { cn } from '@/lib/utils';
 
 interface HeroProps {
   title: string;
-  subtitle?: string;
   description?: string;
-  image?: string;
   videoSrc?: string;
   ctaText?: string;
   ctaHref?: string;
@@ -17,9 +15,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({
   title,
-  subtitle,
   description,
-  image,
   videoSrc = '/video/hero.mp4',
   ctaText = 'Scopri di più',
   ctaHref = '/corsi',
@@ -36,36 +32,20 @@ export const Hero: React.FC<HeroProps> = ({
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src={videoSrc} type="video/mp4" />
-        {/* Fallback image if video fails to load */}
-        {image && (
-          <img
-            src={image}
-            alt={title}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-        )}
       </video>
       
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-black/40 z-10" />
       
       {/* Content */}
-      <div className="relative z-20 w-full h-full flex items-center justify-center">
+      <div className="relative z-20 w-full h-full flex items-center md:items-start justify-center">
         <div className="w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24 flex flex-col items-center">
-          <div className="max-w-4xl w-full flex flex-col items-center space-y-6">
-            <div className="flex justify-center mb-4">
-              <Logo width={120} height={120} className="bg-black/40 rounded-[50%]"/>
-            </div>
-            {subtitle && (
-              <p className="text-primary font-semibold text-sm uppercase tracking-wide text-center">
-                {subtitle}
-              </p>
-            )}
+          <div className="max-w-4xl w-full flex flex-col items-center space-y-6 gap-12 lg:text-lg">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg text-center">
               {title}
             </h1>
             {description && (
-              <p className="text-lg md:text-xl text-white/90 leading-relaxed drop-shadow-md max-w-2xl text-center">
+              <p className="md:max-w-[340px] lg:max-w-[550px] text-lg md:text-xl lg:text-4xl text-white/90 leading-relaxed drop-shadow-md text-center">
                 {description}
               </p>
             )}

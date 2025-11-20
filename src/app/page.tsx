@@ -72,8 +72,7 @@ export default function Home() {
       {/* Hero Section */}
       <Hero
         title="BeautyLine Academy"
-        description="dal primo corso al primo cliente. Con te, passo dopo passo."
-        image="https://placehold.co/1200x600"
+        description="Dal primo corso al primo cliente. Con te, passo dopo passo."
         ctaText="Scopri i Corsi"
         ctaHref="/corsi"
       />

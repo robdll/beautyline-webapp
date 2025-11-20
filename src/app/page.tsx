@@ -71,9 +71,8 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <Hero
-        title="Formazione Professionale nel Settore Estetico"
-        subtitle="BeautyLine Professional"
-        description="Scopri i nostri corsi di alta formazione per diventare un esperto nel settore dell'estetica. Percorsi professionali certificati con docenti qualificati."
+        title="BeautyLine Academy"
+        description="dal primo corso al primo cliente. Con te, passo dopo passo."
         image="https://placehold.co/1200x600"
         ctaText="Scopri i Corsi"
         ctaHref="/corsi"

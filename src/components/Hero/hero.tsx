@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
+import { Logo } from '@/components/shared/Logo';
 import { cn } from '@/lib/utils';
 
 interface HeroProps {
@@ -50,25 +51,28 @@ export const Hero: React.FC<HeroProps> = ({
       
       {/* Content */}
       <div className="relative z-20 w-full h-full flex items-center justify-center">
-        <div className="w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24 flex flex-col items-center">
+          <div className="max-w-4xl w-full flex flex-col items-center space-y-6">
+            <div className="flex justify-center mb-4">
+              <Logo width={120} height={120} className="bg-black/40 rounded-[50%]"/>
+            </div>
             {subtitle && (
-              <p className="text-primary font-semibold text-sm uppercase tracking-wide">
+              <p className="text-primary font-semibold text-sm uppercase tracking-wide text-center">
                 {subtitle}
               </p>
             )}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg text-center">
               {title}
             </h1>
             {description && (
-              <p className="text-lg md:text-xl text-white/90 leading-relaxed drop-shadow-md max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl text-white/90 leading-relaxed drop-shadow-md max-w-2xl text-center">
                 {description}
               </p>
             )}
             {ctaText && (
-              <div className="pt-4">
+              <div className="pt-4 flex justify-center">
                 <Link href={ctaHref}>
-                  <Button variant="primary" size="lg">
+                  <Button variant="primary" size="lg" className="cursor-pointer">
                     {ctaText}
                   </Button>
                 </Link>

@@ -24,21 +24,21 @@ export const Navbar: React.FC = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white shadow-sm border-b border-gray-100">
+    <nav className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100">
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="shrink-0 transition-transform duration-200 hover:scale-105">
             <Logo />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {navigationItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-secondary hover:text-purple transition-colors duration-200 font-medium text-base font-raleway lg:px-5"
+                className="text-secondary hover:text-primary transition-colors duration-200 font-medium text-sm font-raleway uppercase tracking-wider"
               >
                 {item.label}
               </Link>
@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden p-2 rounded-md text-secondary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+            className="lg:hidden p-2 rounded-md text-secondary hover:text-primary focus:outline-none"
             aria-label="Toggle menu"
           >
             <svg
@@ -72,23 +72,23 @@ export const Navbar: React.FC = () => {
         {/* Mobile Menu */}
         <div
           className={cn(
-            'lg:hidden transition-all duration-300 ease-in-out overflow-hidden',
-            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            'lg:hidden transition-all duration-300 ease-in-out overflow-hidden bg-white',
+            isOpen ? 'max-h-screen opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0'
           )}
         >
-          <div className="py-4 space-y-3">
+          <div className="py-4 space-y-1">
             {navigationItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="block px-4 py-2 text-secondary hover:text-purple hover:bg-muted rounded-md transition-colors duration-200 font-medium font-raleway"
+                className="block px-4 py-3 text-secondary hover:text-primary hover:bg-muted/50 transition-colors duration-200 font-medium font-raleway uppercase text-sm tracking-wide"
               >
                 {item.label}
               </Link>
             ))}
-            <div className="px-4 pt-2">
-              <Button variant="primary" size="sm" className="w-full">
+            <div className="px-4 pt-4">
+              <Button variant="primary" size="sm" className="w-full uppercase tracking-wider font-bold">
                 Iscriviti
               </Button>
             </div>

@@ -2,12 +2,13 @@
 
 :root {
   /* Brand Colors */
-  --color-primary: #333333;
-  --color-secondary: #1A1A1A;
+  --color-primary: #DEA43E; /* Gold */
+  --color-secondary: #1A1A1A; /* Black */
   --color-gold: #DEA43E;
-  --color-purple: #8B66A9;
+  --color-black: #1A1A1A;
+  --color-white: #FFFFFF;
   --color-background: #FFFFFF;
-  --color-muted: #F5F5F5;
+  --color-muted: #F9F9F9;
 
   /* Typography */
   --font-sans: 'Inter', sans-serif;
@@ -17,9 +18,11 @@
 @theme {
   --color-primary: #DEA43E;
   --color-secondary: #1A1A1A;
-  --color-purple: #8B66A9;
+  --color-gold: #DEA43E;
+  --color-black: #1A1A1A;
+  --color-white: #FFFFFF;
   --color-background: #FFFFFF;
-  --color-muted: #F5F5F5;
+  --color-muted: #F9F9F9;
   --font-sans: 'Inter', sans-serif;
   --font-raleway: 'Raleway', sans-serif;
 }

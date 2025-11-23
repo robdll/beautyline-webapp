@@ -1,106 +1,78 @@
 import React from 'react';
-import { Metadata } from 'next';
+import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ProductCard } from '@/components/ProductCard';
 import { Product } from '@/types';
-
-export const metadata: Metadata = {
-  title: 'Prodotti Professionali',
-  description: 'Scopri la nostra selezione di prodotti professionali per l\'estetica. Attrezzature e cosmetici di alta qualità.',
-};
 
 // Mock data
 const products: Product[] = [
   {
     id: '1',
-    name: 'Kit Trattamenti Viso Completo',
-    description: 'Set completo di prodotti professionali per trattamenti viso di alta qualità.',
-    price: '€ 299',
-    image: 'https://placehold.co/400x400',
-    category: 'Trattamenti Viso',
+    name: 'Kit Laminazione Ciglia',
+    description: 'Kit completo professionale per trattamenti di laminazione ciglia.',
+    price: '€ 129,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Lashes',
   },
   {
     id: '2',
-    name: 'Linea Massaggio Professionale',
-    description: 'Oli e creme professionali per massaggi corpo di ogni tipo.',
-    price: '€ 189',
-    image: 'https://placehold.co/400x400',
-    category: 'Massaggio',
+    name: 'Siero Viso Anti-Age',
+    description: 'Siero concentrato con acido ialuronico e vitamine.',
+    price: '€ 49,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Skincare',
   },
   {
     id: '3',
-    name: 'Attrezzatura Epilazione',
-    description: 'Set completo per epilazione professionale con cerette e accessori.',
-    price: '€ 149',
-    image: 'https://placehold.co/400x400',
-    category: 'Epilazione',
+    name: 'Set Pennelli Professionali',
+    description: 'Set di 12 pennelli in fibra sintetica di alta qualità.',
+    price: '€ 89,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Tools',
   },
   {
     id: '4',
-    name: 'Kit Manicure Professionale',
-    description: 'Tutto il necessario per manicure e pedicure professionali.',
-    price: '€ 129',
-    image: 'https://placehold.co/400x400',
-    category: 'Manicure',
+    name: 'Crema Corpo Idratante',
+    description: 'Crema ricca e nutriente per tutti i tipi di pelle.',
+    price: '€ 35,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Body',
   },
   {
     id: '5',
-    name: 'Linea Cosmetica Premium',
-    description: 'Prodotti cosmetici di alta gamma per trattamenti avanzati.',
-    price: '€ 249',
-    image: 'https://placehold.co/400x400',
-    category: 'Cosmetici',
+    name: 'Olio Cuticole',
+    description: 'Olio nutriente per cuticole e unghie sane e forti.',
+    price: '€ 12,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Nails',
   },
   {
     id: '6',
-    name: 'Accessori Professionali',
-    description: 'Set completo di accessori e strumenti per estetista.',
-    price: '€ 89',
-    image: 'https://placehold.co/400x400',
-    category: 'Accessori',
+    name: 'Maschera Viso Purificante',
+    description: 'Maschera all\'argilla per pelli impure e miste.',
+    price: '€ 29,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Skincare',
   },
 ];
 
-export default function ProdottiPage() {
+export default function Prodotti() {
   return (
     <>
-      <Section className="bg-muted pt-20">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
-            I Nostri Prodotti
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Scopri la nostra selezione di prodotti professionali per l'estetica. Solo il meglio per i professionisti del settore.
-          </p>
-        </div>
-      </Section>
+      <Hero
+        title="I Nostri Prodotti"
+        description="Qualità professionale per risultati eccellenti."
+        ctaText="Contattaci per Info"
+        ctaHref="/contatti"
+      />
 
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </Section>
-
-      <Section className="bg-muted">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-4">
-            Prodotti di Qualità Professionale
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Tutti i nostri prodotti sono selezionati per garantire la massima qualità e professionalità.
-            Per informazioni su prodotti personalizzati o ordini speciali, contattaci.
-          </p>
-          <a
-            href="/contatti"
-            className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-[#B88A5C] transition-colors font-medium"
-          >
-            Contattaci
-          </a>
-        </div>
-      </Section>
     </>
   );
 }
-

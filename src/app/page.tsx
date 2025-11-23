@@ -4,16 +4,17 @@ import Link from 'next/link';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { CourseCard } from '@/components/CourseCard';
+import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { Button } from '@/components/shared/Button';
-import { Course, Testimonial } from '@/types';
+import { Course, Product, Testimonial } from '@/types';
 
-// Mock data - in a real app, this would come from an API or CMS
+// Mock data
 const featuredCourses: Course[] = [
   {
     id: '1',
     title: 'Corso Base di Estetica',
-    description: 'Corso completo per iniziare la tua carriera nel settore dell\'estetica professionale. Impara le tecniche fondamentali e le basi teoriche.',
+    description: 'Corso completo per iniziare la tua carriera nel settore dell\'estetica professionale.',
     duration: '40 ore',
     price: '€ 890',
     image: 'https://placehold.co/400x300',
@@ -22,7 +23,7 @@ const featuredCourses: Course[] = [
   {
     id: '2',
     title: 'Master in Trattamenti Viso',
-    description: 'Specializzazione avanzata nei trattamenti viso, dalle tecniche base ai protocolli più innovativi del settore.',
+    description: 'Specializzazione avanzata nei trattamenti viso, dalle tecniche base ai protocolli più innovativi.',
     duration: '60 ore',
     price: '€ 1.290',
     image: 'https://placehold.co/400x300',
@@ -31,11 +32,46 @@ const featuredCourses: Course[] = [
   {
     id: '3',
     title: 'Corso Massaggio Corpo',
-    description: 'Impara le tecniche di massaggio professionale per il benessere del corpo, con focus su drenaggio e rilassamento.',
+    description: 'Impara le tecniche di massaggio professionale per il benessere del corpo.',
     duration: '50 ore',
     price: '€ 1.090',
     image: 'https://placehold.co/400x300',
     category: 'Specialistico',
+  },
+];
+
+const featuredProducts: Product[] = [
+  {
+    id: '1',
+    name: 'Kit Laminazione Ciglia',
+    description: 'Kit completo professionale per trattamenti di laminazione ciglia.',
+    price: '€ 129,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Lashes',
+  },
+  {
+    id: '2',
+    name: 'Siero Viso Anti-Age',
+    description: 'Siero concentrato con acido ialuronico e vitamine.',
+    price: '€ 49,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Skincare',
+  },
+  {
+    id: '3',
+    name: 'Set Pennelli Professionali',
+    description: 'Set di 12 pennelli in fibra sintetica di alta qualità.',
+    price: '€ 89,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Tools',
+  },
+  {
+    id: '4',
+    name: 'Crema Corpo Idratante',
+    description: 'Crema ricca e nutriente per tutti i tipi di pelle.',
+    price: '€ 35,00',
+    image: 'https://placehold.co/300x300',
+    category: 'Body',
   },
 ];
 
@@ -60,7 +96,7 @@ const testimonials: Testimonial[] = [
     id: '3',
     name: 'Anna Verdi',
     role: 'Estetista',
-    content: 'Formazione eccellente e ambiente professionale. Consiglio BeautyLine a chiunque voglia intraprendere una carriera nel settore estetico.',
+    content: 'Prodotti di altissima qualità. Le mie clienti sono sempre soddisfatte dei risultati dei trattamenti con la linea BeautyLine.',
     image: 'https://placehold.co/100x100',
     rating: 5,
   },
@@ -71,129 +107,138 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <Hero
-        title="BeautyLine Academy"
-        description="Dal primo corso al primo cliente. Con te, passo dopo passo."
-        ctaText="Scopri i Corsi"
-        ctaHref="/corsi"
+        title="BeautyLine Professional"
+        description="L'eccellenza nell'estetica professionale. Formazione, prodotti e attrezzature per il tuo successo."
+        ctaText="Scopri i Prodotti"
+        ctaHref="/prodotti"
       />
 
-      {/* Features Section */}
-      <Section className="bg-muted">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-            Perché Scegliere BeautyLine
+      {/* Introduction Section */}
+      <Section>
+        <div className="text-center max-w-4xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-6 uppercase tracking-wide">
+            Benvenuti in BeautyLine
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Offriamo formazione di qualità con un approccio pratico e professionale
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Siamo il partner ideale per i professionisti dell'estetica. 
+            Offriamo una gamma completa di prodotti di alta qualità, corsi di formazione avanzata e attrezzature all'avanguardia. 
+            La nostra missione è supportare la tua crescita professionale con soluzioni innovative e un servizio eccellente.
           </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-secondary mb-2">
-              Docenti Qualificati
-            </h3>
-            <p className="text-gray-600">
-              Insegnanti esperti del settore con anni di esperienza professionale
-            </p>
-          </div>
-          <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-secondary mb-2">
-              Certificazioni Riconosciute
-            </h3>
-            <p className="text-gray-600">
-              Attestati professionali validi nel settore estetico
-            </p>
-          </div>
-          <div className="text-center p-6 bg-white rounded-lg shadow-sm">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-secondary mb-2">
-              Approccio Pratico
-            </h3>
-            <p className="text-gray-600">
-              Molta pratica su modelli reali e attrezzature professionali
-            </p>
+          <div className="mt-8">
+            <Link href="/chi-siamo">
+              <Button variant="outline" size="lg">
+                Scopri Chi Siamo
+              </Button>
+            </Link>
           </div>
         </div>
       </Section>
 
-      {/* Featured Courses Section */}
-      <Section>
+      {/* Featured Products Section */}
+      <Section className="bg-muted">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-            Corsi in Evidenza
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4 uppercase tracking-wide">
+            I Nostri Prodotti
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Scopri i nostri corsi più richiesti e inizia la tua formazione professionale
+            Scopri la nostra linea professionale dedicata alla cura e alla bellezza
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-          {featuredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+          {featuredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
         <div className="text-center">
-          <Link href="/corsi">
-            <Button variant="outline" size="lg">
-              Vedi Tutti i Corsi
+          <Link href="/prodotti">
+            <Button variant="primary" size="lg">
+              Vedi Tutti i Prodotti
             </Button>
           </Link>
         </div>
       </Section>
 
-      {/* Testimonials Section */}
-      <Section className="bg-muted">
+      {/* Academy Section */}
+      <Section>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
+              BeautyLine Academy
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              La nostra accademia offre percorsi formativi completi per chi vuole intraprendere la carriera di estetista o specializzarsi in tecniche avanzate.
+              Dai corsi base ai master specialistici, ti guidiamo verso l'eccellenza professionale.
+            </p>
+            <ul className="space-y-3 text-gray-600">
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 bg-primary rounded-full"></span>
+                Docenti qualificati ed esperti del settore
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 bg-primary rounded-full"></span>
+                Attestati riconosciuti
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="w-2 h-2 bg-primary rounded-full"></span>
+                Pratica su modelle reali
+              </li>
+            </ul>
+            <div className="pt-4">
+              <Link href="/corsi">
+                <Button variant="primary" size="lg">
+                  Scopri i Corsi
+                </Button>
+              </Link>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-6">
+             {/* Show only top 2 courses on mobile/tablet, maybe 2 in a column on desktop */}
+             {featuredCourses.slice(0, 2).map((course) => (
+                <CourseCard key={course.id} course={course} className="shadow-sm border border-gray-100" />
+             ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Reviews Section */}
+      <Section className="bg-secondary text-white">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-            Cosa Dicono i Nostri Studenti
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase tracking-wide">
+            Dicono di Noi
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Le esperienze di chi ha scelto BeautyLine per la propria formazione
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            Le opinioni di chi ha scelto BeautyLine per la propria formazione e il proprio lavoro
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+            <TestimonialCard key={testimonial.id} testimonial={testimonial} className="bg-white/5 border border-white/10 text-white" />
           ))}
+        </div>
+        <div className="text-center mt-10">
+          <Link href="/recensioni">
+            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-secondary">
+              Leggi Tutte le Recensioni
+            </Button>
+          </Link>
         </div>
       </Section>
 
       {/* CTA Section */}
-      <Section className="bg-secondary text-white">
+      <Section className="bg-primary/10">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Pronto a Iniziare la Tua Carriera?
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-6">
+            Hai bisogno di informazioni?
           </h2>
-          <p className="text-lg text-gray-300 mb-8">
-            Contattaci per maggiori informazioni sui nostri corsi e percorsi formativi
+          <p className="text-lg text-gray-600 mb-8">
+            Il nostro team è a tua disposizione per rispondere a tutte le tue domande sui prodotti, i corsi e i servizi offerti.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contatti">
-              <Button variant="primary" size="lg">
-                Contattaci
-              </Button>
-            </Link>
-            <Link href="/corsi">
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-secondary">
-                Scopri i Corsi
-              </Button>
-            </Link>
-          </div>
-    </div>
+          <Link href="/contatti">
+            <Button variant="primary" size="lg">
+              Contattaci Ora
+            </Button>
+          </Link>
+        </div>
       </Section>
     </>
   );

@@ -4,25 +4,25 @@ import { Logo } from '../Logo';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-secondary text-white">
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+    <footer className="bg-secondary text-white border-t border-primary/20">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {/* Sezione 1: Informazioni Aziendali */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <Logo />
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               BeautyLine Professional offre corsi di alta formazione nel settore dell'estetica,
               con percorsi professionali e master per diventare esperti del settore.
             </p>
-            <div className="space-y-2 text-sm text-gray-300">
-              <p>
-                <span className="font-semibold">Email:</span>{' '}
+            <div className="space-y-3 text-sm text-gray-400">
+              <p className="flex items-center gap-2">
+                <span className="text-primary">Email:</span>
                 <a href="mailto:info@beautylineprofessional.com" className="hover:text-primary transition-colors">
                   info@beautylineprofessional.com
                 </a>
               </p>
-              <p>
-                <span className="font-semibold">Telefono:</span>{' '}
+              <p className="flex items-center gap-2">
+                <span className="text-primary">Telefono:</span>
                 <a href="tel:+390123456789" className="hover:text-primary transition-colors">
                   +39 012 345 6789
                 </a>
@@ -31,36 +31,42 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Sezione 2: Link Utili */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Link Utili</h3>
-            <ul className="space-y-2">
+          <div className="space-y-6">
+            <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Link Utili</h3>
+            <ul className="space-y-3">
               <li>
-                <Link href="/corsi" className="text-gray-300 hover:text-primary transition-colors text-sm">
+                <Link href="/corsi" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
                   Corsi
                 </Link>
               </li>
               <li>
-                <Link href="/percorso-master" className="text-gray-300 hover:text-primary transition-colors text-sm">
+                <Link href="/percorso-master" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
                   Percorso Master
                 </Link>
               </li>
               <li>
-                <Link href="/prodotti" className="text-gray-300 hover:text-primary transition-colors text-sm">
+                <Link href="/prodotti" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
                   Prodotti
                 </Link>
               </li>
               <li>
-                <Link href="/noleggio" className="text-gray-300 hover:text-primary transition-colors text-sm">
+                <Link href="/noleggio" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
                   Noleggio Attrezzature
                 </Link>
               </li>
               <li>
-                <Link href="/recensioni" className="text-gray-300 hover:text-primary transition-colors text-sm">
+                <Link href="/recensioni" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
                   Recensioni
                 </Link>
               </li>
               <li>
-                <Link href="/contatti" className="text-gray-300 hover:text-primary transition-colors text-sm">
+                <Link href="/contatti" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
                   Contatti
                 </Link>
               </li>
@@ -68,9 +74,9 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Sezione 3: Social Media */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Seguici</h3>
-            <p className="text-gray-300 text-sm">
+          <div className="space-y-6">
+            <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Seguici</h3>
+            <p className="text-gray-400 text-sm">
               Resta aggiornato sulle nostre novità e promozioni
             </p>
             <div className="flex space-x-4">
@@ -78,7 +84,7 @@ export const Footer: React.FC = () => {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
+                className="w-10 h-10 bg-white/5 hover:bg-primary hover:text-white text-gray-400 rounded-full flex items-center justify-center transition-all duration-300"
                 aria-label="Facebook"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -89,7 +95,7 @@ export const Footer: React.FC = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
+                className="w-10 h-10 bg-white/5 hover:bg-primary hover:text-white text-gray-400 rounded-full flex items-center justify-center transition-all duration-300"
                 aria-label="Instagram"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -100,7 +106,7 @@ export const Footer: React.FC = () => {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 hover:bg-primary rounded-full flex items-center justify-center transition-colors"
+                className="w-10 h-10 bg-white/5 hover:bg-primary hover:text-white text-gray-400 rounded-full flex items-center justify-center transition-all duration-300"
                 aria-label="YouTube"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -112,7 +118,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-gray-700 text-center text-sm text-gray-400">
+        <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
           <p>&copy; {new Date().getFullYear()} BeautyLine Professional. Tutti i diritti riservati.</p>
         </div>
       </div>

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
+import { ParallaxDivider } from '@/components/ParallaxDivider';
 import { CourseCard } from '@/components/CourseCard';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
@@ -152,6 +153,8 @@ export default function Home() {
           ))}
         </div>
       </Section>
+
+      <ParallaxDivider imageSrc="/images/parallax-bg.jpg" strength={0.95} />
 
       {/* Introduction Section */}
       <Section>

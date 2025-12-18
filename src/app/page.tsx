@@ -137,7 +137,7 @@ export default function Home() {
           <h2 className="text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
             I Nostri Corsi
           </h2>
-          <p className="mt-2 mb-2 text-[11px] sm:text-xs md:text-sm text-gray-600 uppercase tracking-[0.22em] leading-relaxed">
+          <p className="mt-4 mb-4 text-[11px] sm:text-xs md:text-sm text-gray-600 uppercase tracking-[0.22em] leading-relaxed">
             Che tu voglia iniziare da zero o migliorare ciò che già fai, qui trovi percorsi pratici e concreti.
             <br className="hidden md:block" />
             Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.

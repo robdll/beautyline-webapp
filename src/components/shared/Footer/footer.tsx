@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-6">
             <Logo />
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              BeautyLine Professional offre corsi di alta formazione nel settore dell'estetica,
+              BeautyLine Professional offre corsi di alta formazione nel settore dell&apos;estetica,
               con percorsi professionali e master per diventare esperti del settore.
             </p>
             <div className="space-y-3 text-sm text-gray-400">

@@ -19,7 +19,7 @@ export default function PercorsoMasterPage() {
             Percorso Master
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Un percorso formativo completo e avanzato per diventare un vero esperto nel settore dell'estetica professionale
+            Un percorso formativo completo e avanzato per diventare un vero esperto nel settore dell&apos;estetica professionale
           </p>
         </div>
       </Section>
@@ -40,7 +40,7 @@ export default function PercorsoMasterPage() {
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
               Il Percorso Master è pensato per chi vuole raggiungere il massimo livello di competenza nel settore estetico.
-              Un programma completo che copre tutte le aree fondamentali dell'estetica professionale.
+              Un programma completo che copre tutte le aree fondamentali dell&apos;estetica professionale.
             </p>
             <ul className="space-y-3">
               <li className="flex items-start">
@@ -103,7 +103,7 @@ export default function PercorsoMasterPage() {
             Investi nella Tua Formazione
           </h2>
           <p className="text-lg text-gray-600 mb-8">
-            Il Percorso Master è l'investimento perfetto per la tua carriera nel settore estetico.
+            Il Percorso Master è l&apos;investimento perfetto per la tua carriera nel settore estetico.
             Contattaci per maggiori informazioni e per conoscere le prossime date disponibili.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

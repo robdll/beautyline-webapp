@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
-import { Logo } from '@/components/shared/Logo';
 import { cn } from '@/lib/utils';
 
 interface HeroProps {

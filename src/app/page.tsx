@@ -111,7 +111,7 @@ export default function Home() {
       {/* Hero Section */}
       <Hero
         title="BeautyLine Professional"
-        description="L'eccellenza nell'estetica professionale. Formazione, prodotti e attrezzature per il tuo successo."
+        description="L&apos;eccellenza nell&apos;estetica professionale. Formazione, prodotti e attrezzature per il tuo successo."
         ctaText="Scopri i Prodotti"
         ctaHref="/prodotti"
       />
@@ -167,8 +167,8 @@ export default function Home() {
             Benvenuti in BeautyLine
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Siamo il partner ideale per i professionisti dell'estetica. 
-            Offriamo una gamma completa di prodotti di alta qualità, corsi di formazione avanzata e attrezzature all'avanguardia. 
+            Siamo il partner ideale per i professionisti dell&apos;estetica. 
+            Offriamo una gamma completa di prodotti di alta qualità, corsi di formazione avanzata e attrezzature all&apos;avanguardia. 
             La nostra missione è supportare la tua crescita professionale con soluzioni innovative e un servizio eccellente.
           </p>
           <div className="mt-8">
@@ -214,7 +214,7 @@ export default function Home() {
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
               La nostra accademia offre percorsi formativi completi per chi vuole intraprendere la carriera di estetista o specializzarsi in tecniche avanzate.
-              Dai corsi base ai master specialistici, ti guidiamo verso l'eccellenza professionale.
+              Dai corsi base ai master specialistici, ti guidiamo verso l&apos;eccellenza professionale.
             </p>
             <ul className="space-y-3 text-gray-600">
               <li className="flex items-center gap-3">

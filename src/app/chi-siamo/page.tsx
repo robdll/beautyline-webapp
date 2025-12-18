@@ -21,11 +21,11 @@ export default function ChiSiamo() {
               La Nostra Storia
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              BeautyLine Professional nasce dalla passione per l'estetica e dalla volontà di formare professionisti d'eccellenza. 
+              BeautyLine Professional nasce dalla passione per l&apos;estetica e dalla volontà di formare professionisti d&apos;eccellenza. 
               Da anni siamo un punto di riferimento nel settore, offrendo corsi di alta formazione che uniscono teoria e pratica.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
-              La nostra accademia si distingue per l'attenzione dedicata ad ogni singolo studente, 
+              La nostra accademia si distingue per l&apos;attenzione dedicata ad ogni singolo studente, 
               con classi a numero chiuso e docenti altamente qualificati che ti seguiranno passo dopo passo nel tuo percorso di crescita.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">

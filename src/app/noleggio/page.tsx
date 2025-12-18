@@ -42,7 +42,7 @@ export default function NoleggioPage() {
             Noleggio Attrezzature
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Noleggia attrezzature professionali per l'estetica. Soluzioni flessibili per professionisti e centri estetici.
+            Noleggia attrezzature professionali per l&apos;estetica. Soluzioni flessibili per professionisti e centri estetici.
           </p>
         </div>
       </Section>

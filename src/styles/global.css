@@ -44,3 +44,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@layer utilities {
+  .text-shadow-soft-white {
+    text-shadow: 0px 0px 1px white;
+  }
+}
+

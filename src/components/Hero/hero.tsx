@@ -42,7 +42,7 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24 flex flex-col items-center">
           <div className="max-w-4xl w-full flex flex-col items-center space-y-6 gap-12 lg:text-lg">
             <h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-purple leading-tight text-center [text-shadow:0px_0px_1px_white]"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-purple leading-tight text-center text-shadow-soft-white"
             >
               {title}
             </h1>

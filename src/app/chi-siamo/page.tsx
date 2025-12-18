@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
+import { TestimonialCard } from '@/components/TestimonialCard';
 
 export default function ChiSiamo() {
   return (
@@ -9,12 +10,12 @@ export default function ChiSiamo() {
       <Hero
         title="Chi Siamo"
         description="La nostra passione, la tua professione."
-        ctaText="I Nostri Corsi"
-        ctaHref="/corsi"
+        ctaText="Contattaci"
+        ctaHref="/contatti"
       />
 
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h2 className="text-3xl md:text-4xl font-bold text-secondary">
               La Nostra Storia
@@ -27,14 +28,46 @@ export default function ChiSiamo() {
               La nostra accademia si distingue per l'attenzione dedicata ad ogni singolo studente, 
               con classi a numero chiuso e docenti altamente qualificati che ti seguiranno passo dopo passo nel tuo percorso di crescita.
             </p>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Crediamo fermamente che la formazione sia la chiave per il successo. Per questo motivo, i nostri programmi sono costantemente aggiornati 
+              per riflettere le ultime tendenze e tecniche del mondo beauty, garantendo ai nostri studenti un vantaggio competitivo sul mercato.
+            </p>
           </div>
-          <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-xl">
-            <Image
-              src="https://placehold.co/600x800"
-              alt="BeautyLine Academy"
-              fill
-              className="object-cover"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl mt-8">
+               <Image
+                src="https://placehold.co/400x600"
+                alt="BeautyLine Academy Interior"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl mb-8">
+              <Image
+                src="https://placehold.co/400x600"
+                alt="BeautyLine Academy Students"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Stats Section */}
+      <Section className="bg-primary/5 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="p-6">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">50+</div>
+            <div className="text-xl text-secondary font-medium">Formazioni</div>
+          </div>
+          <div className="p-6">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">1000+</div>
+            <div className="text-xl text-secondary font-medium">Corsiste</div>
+          </div>
+          <div className="p-6">
+            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">100%</div>
+            <div className="text-xl text-secondary font-medium">Crescita Professionale</div>
           </div>
         </div>
       </Section>
@@ -83,6 +116,50 @@ export default function ChiSiamo() {
               Utilizzo delle tecnologie e dei metodi più avanzati nel campo estetico.
             </p>
           </div>
+        </div>
+      </Section>
+
+      {/* Reviews Section */}
+      <Section>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
+            Dicono di Noi
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Le esperienze di chi ha scelto BeautyLine per la propria formazione
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <TestimonialCard 
+            testimonial={{
+              id: '1',
+              name: 'Maria Rossi',
+              role: 'Estetista Professionista',
+              content: 'Ho completato il corso base e sono rimasta entusiasta della qualità dell\'insegnamento. I docenti sono preparati e il materiale è sempre aggiornato.',
+              image: 'https://placehold.co/100x100',
+              rating: 5,
+            }} 
+          />
+          <TestimonialCard 
+            testimonial={{
+              id: '2',
+              name: 'Giulia Bianchi',
+              role: 'Proprietaria Centro Estetico',
+              content: 'Il master in trattamenti viso mi ha permesso di ampliare l\'offerta del mio centro. Tecniche professionali e supporto continuo anche dopo il corso.',
+              image: 'https://placehold.co/100x100',
+              rating: 5,
+            }} 
+          />
+          <TestimonialCard 
+            testimonial={{
+              id: '3',
+              name: 'Anna Verdi',
+              role: 'Estetista',
+              content: 'Formazione eccellente e ambiente professionale. Consiglio BeautyLine a chiunque voglia intraprendere una carriera nel settore estetico.',
+              image: 'https://placehold.co/100x100',
+              rating: 5,
+            }} 
+          />
         </div>
       </Section>
     </>

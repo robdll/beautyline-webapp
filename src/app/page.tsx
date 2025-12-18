@@ -115,25 +115,23 @@ export default function Home() {
       />
 
       {/* Courses Section */}
-      <Section>
-        <div className="max-w-5xl mx-auto mb-12 md:mb-16 flex flex-col items-center text-center">
-          <h2 className="text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
-            I Nostri Corsi
-          </h2>
-          <p className="mt-4 mb-4 text-[11px] sm:text-xs md:text-sm text-gray-600 uppercase tracking-[0.22em] leading-relaxed">
-            Che tu voglia iniziare da zero o migliorare ciò che già fai, qui trovi percorsi pratici e concreti.
-            <br className="hidden md:block" />
-            Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.
-          </p>
-        </div>
+      <Section className="flex flex-col items-center justify-center" containerClassName="flex flex-col items-center justify-center gap-12">
+        <h2 className="text-center text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
+          I Nostri Corsi
+        </h2>
+        <p className="text-center text-[11px] sm:text-xs md:text-sm text-gray-600 uppercase tracking-[0.22em] leading-relaxed">
+          Che tu voglia iniziare da zero o migliorare ciò che già fai, qui trovi percorsi pratici e concreti.
+          <br className="hidden md:block" />
+          Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="w-full flex flex-col md:flex-row md:flex-wrap gap-5 justify-center">
           {HOME_COURSE_CARDS.map((card) => (
             <Link
               key={card.title}
               href={card.href}
               aria-label={card.title}
-              className="group relative block overflow-hidden rounded-2xl shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="group relative block w-full md:w-[320px] lg:w-[380px] overflow-hidden rounded-2xl shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <div className="relative aspect-video">
                 <Image

@@ -8,6 +8,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { Button } from '@/components/shared/Button';
 import { Course, Product, Testimonial } from '@/types';
+import { HOME_COURSE_CARDS } from '@/lib/constants';
 
 // Mock data
 const featuredCourses: Course[] = [
@@ -103,24 +104,6 @@ const testimonials: Testimonial[] = [
 ];
 
 export default function Home() {
-  const homeCourseCards = [
-    {
-      title: 'Corsi Unghie',
-      imageSrc: '/images/card-1.jpg',
-      href: '/corsi',
-    },
-    {
-      title: 'Corsi Occhi',
-      imageSrc: '/images/card-2.png',
-      href: '/corsi',
-    },
-    {
-      title: 'Percorsi Master',
-      imageSrc: '/images/card-3.png',
-      href: '/corsi',
-    },
-  ] as const;
-
   return (
     <>
       {/* Hero Section */}
@@ -145,7 +128,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {homeCourseCards.map((card) => (
+          {HOME_COURSE_CARDS.map((card) => (
             <Link
               key={card.title}
               href={card.href}

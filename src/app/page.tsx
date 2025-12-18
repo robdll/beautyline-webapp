@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ParallaxDivider } from '@/components/ParallaxDivider';
+import { DeviceRentSection } from '@/components/DeviceRentSection';
 import { CourseCard } from '@/components/CourseCard';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
@@ -155,6 +156,9 @@ export default function Home() {
       </Section>
 
       <ParallaxDivider imageSrc="/images/parallax-bg.jpg" strength={0.95} />
+
+      {/* Device rent section */}
+      <DeviceRentSection />
 
       {/* Introduction Section */}
       <Section>

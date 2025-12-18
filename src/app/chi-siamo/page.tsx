@@ -36,7 +36,7 @@ export default function ChiSiamo() {
           <div className="grid grid-cols-2 gap-4">
             <div className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl mt-8">
                <Image
-                src="https://placehold.co/400x600"
+                src="https://placehold.co/400x600.png"
                 alt="BeautyLine Academy Interior"
                 fill
                 className="object-cover"
@@ -44,7 +44,7 @@ export default function ChiSiamo() {
             </div>
             <div className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl mb-8">
               <Image
-                src="https://placehold.co/400x600"
+                src="https://placehold.co/400x600.png"
                 alt="BeautyLine Academy Students"
                 fill
                 className="object-cover"
@@ -136,7 +136,7 @@ export default function ChiSiamo() {
               name: 'Maria Rossi',
               role: 'Estetista Professionista',
               content: 'Ho completato il corso base e sono rimasta entusiasta della qualità dell\'insegnamento. I docenti sono preparati e il materiale è sempre aggiornato.',
-              image: 'https://placehold.co/100x100',
+              image: 'https://placehold.co/100x100.png',
               rating: 5,
             }} 
           />
@@ -146,7 +146,7 @@ export default function ChiSiamo() {
               name: 'Giulia Bianchi',
               role: 'Proprietaria Centro Estetico',
               content: 'Il master in trattamenti viso mi ha permesso di ampliare l\'offerta del mio centro. Tecniche professionali e supporto continuo anche dopo il corso.',
-              image: 'https://placehold.co/100x100',
+              image: 'https://placehold.co/100x100.png',
               rating: 5,
             }} 
           />
@@ -156,7 +156,7 @@ export default function ChiSiamo() {
               name: 'Anna Verdi',
               role: 'Estetista',
               content: 'Formazione eccellente e ambiente professionale. Consiglio BeautyLine a chiunque voglia intraprendere una carriera nel settore estetico.',
-              image: 'https://placehold.co/100x100',
+              image: 'https://placehold.co/100x100.png',
               rating: 5,
             }} 
           />

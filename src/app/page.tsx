@@ -17,7 +17,7 @@ const featuredCourses: Course[] = [
     description: 'Corso completo per iniziare la tua carriera nel settore dell\'estetica professionale.',
     duration: '40 ore',
     price: '€ 890',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Base',
   },
   {
@@ -26,7 +26,7 @@ const featuredCourses: Course[] = [
     description: 'Specializzazione avanzata nei trattamenti viso, dalle tecniche base ai protocolli più innovativi.',
     duration: '60 ore',
     price: '€ 1.290',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Avanzato',
   },
   {
@@ -35,7 +35,7 @@ const featuredCourses: Course[] = [
     description: 'Impara le tecniche di massaggio professionale per il benessere del corpo.',
     duration: '50 ore',
     price: '€ 1.090',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Specialistico',
   },
 ];
@@ -46,7 +46,7 @@ const featuredProducts: Product[] = [
     name: 'Kit Laminazione Ciglia',
     description: 'Kit completo professionale per trattamenti di laminazione ciglia.',
     price: '€ 129,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Lashes',
   },
   {
@@ -54,7 +54,7 @@ const featuredProducts: Product[] = [
     name: 'Siero Viso Anti-Age',
     description: 'Siero concentrato con acido ialuronico e vitamine.',
     price: '€ 49,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Skincare',
   },
   {
@@ -62,7 +62,7 @@ const featuredProducts: Product[] = [
     name: 'Set Pennelli Professionali',
     description: 'Set di 12 pennelli in fibra sintetica di alta qualità.',
     price: '€ 89,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Tools',
   },
   {
@@ -70,7 +70,7 @@ const featuredProducts: Product[] = [
     name: 'Crema Corpo Idratante',
     description: 'Crema ricca e nutriente per tutti i tipi di pelle.',
     price: '€ 35,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Body',
   },
 ];
@@ -81,7 +81,7 @@ const testimonials: Testimonial[] = [
     name: 'Maria Rossi',
     role: 'Estetista Professionista',
     content: 'Ho completato il corso base e sono rimasta entusiasta della qualità dell\'insegnamento. I docenti sono preparati e il materiale è sempre aggiornato.',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
   {
@@ -89,7 +89,7 @@ const testimonials: Testimonial[] = [
     name: 'Giulia Bianchi',
     role: 'Proprietaria Centro Estetico',
     content: 'Il master in trattamenti viso mi ha permesso di ampliare l\'offerta del mio centro. Tecniche professionali e supporto continuo anche dopo il corso.',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
   {
@@ -97,12 +97,30 @@ const testimonials: Testimonial[] = [
     name: 'Anna Verdi',
     role: 'Estetista',
     content: 'Prodotti di altissima qualità. Le mie clienti sono sempre soddisfatte dei risultati dei trattamenti con la linea BeautyLine.',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
 ];
 
 export default function Home() {
+  const homeCourseCards = [
+    {
+      title: 'Corsi Unghie',
+      imageSrc: '/images/card-1.jpg',
+      href: '/corsi',
+    },
+    {
+      title: 'Corsi Occhi',
+      imageSrc: '/images/card-2.png',
+      href: '/corsi',
+    },
+    {
+      title: 'Percorsi Master',
+      imageSrc: '/images/card-3.png',
+      href: '/corsi',
+    },
+  ] as const;
+
   return (
     <>
       {/* Hero Section */}
@@ -112,6 +130,47 @@ export default function Home() {
         ctaText="Scopri i Prodotti"
         ctaHref="/prodotti"
       />
+
+      {/* Courses Section */}
+      <Section>
+        <div className="max-w-5xl mx-auto mb-12 md:mb-16 flex flex-col items-center text-center">
+          <h2 className="text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
+            I Nostri Corsi
+          </h2>
+          <p className="mt-2 mb-2 text-[11px] sm:text-xs md:text-sm text-gray-600 uppercase tracking-[0.22em] leading-relaxed">
+            Che tu voglia iniziare da zero o migliorare ciò che già fai, qui trovi percorsi pratici e concreti.
+            <br className="hidden md:block" />
+            Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {homeCourseCards.map((card) => (
+            <Link
+              key={card.title}
+              href={card.href}
+              aria-label={card.title}
+              className="group relative block overflow-hidden rounded-2xl shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              <div className="relative aspect-video">
+                <Image
+                  src={card.imageSrc}
+                  alt={card.title}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] brightness-95 group-hover:brightness-75"
+                />
+                <div className="absolute inset-0 bg-black/10 transition-colors duration-500 group-hover:bg-black/20" />
+                <div className="absolute inset-0 flex items-center justify-center p-6">
+                  <h3 className="text-white text-4xl md:text-5xl font-raleway font-light tracking-wide drop-shadow-md text-center">
+                    {card.title}
+                  </h3>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </Section>
 
       {/* Introduction Section */}
       <Section>

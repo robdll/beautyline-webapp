@@ -14,22 +14,22 @@ const equipment = [
   {
     name: 'Lettino Estetico Professionale',
     description: 'Lettino regolabile con accessori completi per trattamenti viso e corpo',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
   },
   {
     name: 'Lampada per Manicure',
     description: 'Lampada LED professionale per asciugatura smalti gel e semipermanenti',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
   },
   {
     name: 'Vaporizzatore Viso',
     description: 'Vaporizzatore professionale per trattamenti viso e pulizia profonda',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
   },
   {
     name: 'Macchina per Epilazione',
     description: 'Apparecchiatura professionale per epilazione elettrica',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
   },
 ];
 

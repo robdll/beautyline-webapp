@@ -16,7 +16,7 @@ const testimonials: Testimonial[] = [
     name: 'Maria Rossi',
     role: 'Estetista Professionista',
     content: 'Ho completato il corso base e sono rimasta entusiasta della qualità dell\'insegnamento. I docenti sono preparati e il materiale è sempre aggiornato. Consiglio vivamente BeautyLine!',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
   {
@@ -24,7 +24,7 @@ const testimonials: Testimonial[] = [
     name: 'Giulia Bianchi',
     role: 'Proprietaria Centro Estetico',
     content: 'Il master in trattamenti viso mi ha permesso di ampliare l\'offerta del mio centro. Tecniche professionali e supporto continuo anche dopo il corso. Ottima esperienza!',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
   {
@@ -32,7 +32,7 @@ const testimonials: Testimonial[] = [
     name: 'Anna Verdi',
     role: 'Estetista',
     content: 'Formazione eccellente e ambiente professionale. Consiglio BeautyLine a chiunque voglia intraprendere una carriera nel settore estetico. I corsi sono ben strutturati e pratici.',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
   {
@@ -40,7 +40,7 @@ const testimonials: Testimonial[] = [
     name: 'Laura Neri',
     role: 'Estetista Freelance',
     content: 'Ho seguito diversi corsi e tutti sono stati di altissima qualità. L\'attenzione ai dettagli e la professionalità dei docenti fanno la differenza. Grazie BeautyLine!',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
   {
@@ -48,7 +48,7 @@ const testimonials: Testimonial[] = [
     name: 'Sara Gialli',
     role: 'Estetista',
     content: 'Il percorso formativo è completo e ben organizzato. Ho acquisito competenze che mi hanno permesso di lavorare subito dopo il corso. Molto soddisfatta!',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
   {
@@ -56,7 +56,7 @@ const testimonials: Testimonial[] = [
     name: 'Elena Blu',
     role: 'Proprietaria Centro Estetico',
     content: 'Ho mandato diverse mie dipendenti ai corsi di BeautyLine e tutte sono rimaste entusiaste. La qualità della formazione è eccellente e i risultati si vedono nel lavoro quotidiano.',
-    image: 'https://placehold.co/100x100',
+    image: 'https://placehold.co/100x100.png',
     rating: 5,
   },
 ];

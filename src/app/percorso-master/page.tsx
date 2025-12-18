@@ -28,7 +28,7 @@ export default function PercorsoMasterPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
           <div className="relative w-full h-96 rounded-lg overflow-hidden shadow-xl">
             <Image
-              src="https://placehold.co/800x600"
+              src="https://placehold.co/800x600/png"
               alt="Percorso Master"
               fill
               className="object-cover"

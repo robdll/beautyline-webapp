@@ -11,7 +11,7 @@ const products: Product[] = [
     name: 'Kit Laminazione Ciglia',
     description: 'Kit completo professionale per trattamenti di laminazione ciglia.',
     price: '€ 129,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Lashes',
   },
   {
@@ -19,7 +19,7 @@ const products: Product[] = [
     name: 'Siero Viso Anti-Age',
     description: 'Siero concentrato con acido ialuronico e vitamine.',
     price: '€ 49,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Skincare',
   },
   {
@@ -27,7 +27,7 @@ const products: Product[] = [
     name: 'Set Pennelli Professionali',
     description: 'Set di 12 pennelli in fibra sintetica di alta qualità.',
     price: '€ 89,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Tools',
   },
   {
@@ -35,7 +35,7 @@ const products: Product[] = [
     name: 'Crema Corpo Idratante',
     description: 'Crema ricca e nutriente per tutti i tipi di pelle.',
     price: '€ 35,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Body',
   },
   {
@@ -43,7 +43,7 @@ const products: Product[] = [
     name: 'Olio Cuticole',
     description: 'Olio nutriente per cuticole e unghie sane e forti.',
     price: '€ 12,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Nails',
   },
   {
@@ -51,7 +51,7 @@ const products: Product[] = [
     name: 'Maschera Viso Purificante',
     description: 'Maschera all\'argilla per pelli impure e miste.',
     price: '€ 29,00',
-    image: 'https://placehold.co/300x300',
+    image: 'https://placehold.co/300x300.png',
     category: 'Skincare',
   },
 ];

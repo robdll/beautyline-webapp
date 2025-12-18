@@ -17,7 +17,7 @@ const courses: Course[] = [
     description: 'Corso completo per iniziare la tua carriera nel settore dell\'estetica professionale. Impara le tecniche fondamentali e le basi teoriche.',
     duration: '40 ore',
     price: '€ 890',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Base',
   },
   {
@@ -26,7 +26,7 @@ const courses: Course[] = [
     description: 'Specializzazione avanzata nei trattamenti viso, dalle tecniche base ai protocolli più innovativi del settore.',
     duration: '60 ore',
     price: '€ 1.290',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Avanzato',
   },
   {
@@ -35,7 +35,7 @@ const courses: Course[] = [
     description: 'Impara le tecniche di massaggio professionale per il benessere del corpo, con focus su drenaggio e rilassamento.',
     duration: '50 ore',
     price: '€ 1.090',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Specialistico',
   },
   {
@@ -44,7 +44,7 @@ const courses: Course[] = [
     description: 'Tecniche professionali per la cura delle unghie, dalla ricostruzione alle decorazioni più moderne.',
     duration: '30 ore',
     price: '€ 690',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Specialistico',
   },
   {
@@ -53,7 +53,7 @@ const courses: Course[] = [
     description: 'Impara tutte le tecniche di epilazione: ceretta, elettrica e laser. Protocolli completi per ogni tipo di trattamento.',
     duration: '45 ore',
     price: '€ 990',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Avanzato',
   },
   {
@@ -62,7 +62,7 @@ const courses: Course[] = [
     description: 'Tecniche di make-up professionale per ogni occasione, dal trucco giornaliero al trucco da sposa.',
     duration: '35 ore',
     price: '€ 890',
-    image: 'https://placehold.co/400x300',
+    image: 'https://placehold.co/400x300.png',
     category: 'Specialistico',
   },
 ];

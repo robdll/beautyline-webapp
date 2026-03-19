@@ -7,6 +7,8 @@ interface HeroProps {
   title: React.ReactNode;
   description?: React.ReactNode;
   videoSrc?: string;
+  /** When set, replaces the default text button CTA (ctaText / ctaHref are ignored). */
+  cta?: React.ReactNode;
   ctaText?: string;
   ctaHref?: string;
   className?: string;
@@ -16,6 +18,7 @@ export const Hero: React.FC<HeroProps> = ({
   title,
   description,
   videoSrc = '/video/hero.mp4',
+  cta,
   ctaText = 'Scopri di più',
   ctaHref = '/corsi',
   className,
@@ -46,18 +49,22 @@ export const Hero: React.FC<HeroProps> = ({
               {title}
             </h1>
             {description && (
-              <div className="md:max-w-[340px] lg:max-w-[600px] text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed drop-shadow-md text-center">
+              <div className="w-full max-w-md md:max-w-2xl lg:max-w-5xl xl:max-w-6xl text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed drop-shadow-md text-center">
                 {description}
               </div>
             )}
-            {ctaText && (
-              <div className="pt-4 flex justify-center">
-                <Link href={ctaHref}>
-                  <Button variant="primary" size="lg" className="cursor-pointer">
-                    {ctaText}
-                  </Button>
-                </Link>
-              </div>
+            {cta ? (
+              <div className="pt-4 flex justify-center">{cta}</div>
+            ) : (
+              ctaText && (
+                <div className="pt-4 flex justify-center">
+                  <Link href={ctaHref}>
+                    <Button variant="primary" size="lg" className="cursor-pointer">
+                      {ctaText}
+                    </Button>
+                  </Link>
+                </div>
+              )
             )}
           </div>
         </div>

@@ -63,12 +63,25 @@ export default async function ChiSiamo() {
             priority
           />
         }
-        description="La nostra passione, la tua professione."
-        ctaText="Contattaci"
-        ctaHref="/contatti"
+        description={
+          <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-snug">
+            La nostra passione, la tua professione.
+          </p>
+        }
+        cta={
+          <a
+            href="#la-nostra-storia"
+            className="inline-flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/80 text-white shadow-lg transition-all hover:bg-white/10 hover:border-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent motion-safe:animate-bounce"
+            aria-label="Vai alla sezione La Nostra Storia"
+          >
+            <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+        }
       />
 
-      <Section>
+      <Section id="la-nostra-storia" className="scroll-mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6">
             <h2 className="text-3xl md:text-4xl font-bold text-secondary">

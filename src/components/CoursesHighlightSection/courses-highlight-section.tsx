@@ -47,6 +47,11 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                style={
+                  card.imageObjectPosition
+                    ? { objectPosition: card.imageObjectPosition }
+                    : undefined
+                }
               />
               {/* Readability: dark gradient behind bottom-aligned title (avoids busy image center) */}
               <div

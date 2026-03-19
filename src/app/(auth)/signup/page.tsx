@@ -62,7 +62,7 @@ export default function SignUpPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-7">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email
@@ -108,15 +108,17 @@ export default function SignUpPage() {
             />
           </div>
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            className="w-full"
-            disabled={isLoading}
-          >
-            {isLoading ? 'Registrazione in corso...' : 'Registrati'}
-          </Button>
+          <div className="pt-2">
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Registrazione in corso...' : 'Registrati'}
+            </Button>
+          </div>
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-500">

@@ -8,13 +8,13 @@ export const Footer: React.FC = () => {
       <div className="w-full px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
           {/* Sezione 1: Informazioni Aziendali */}
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <Logo />
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               BeautyLine Professional offre corsi di alta formazione nel settore dell&apos;estetica,
               con percorsi professionali e master per diventare esperti del settore.
             </p>
-            <div className="space-y-3 text-sm text-gray-400">
+            <div className="flex flex-col gap-3 text-sm text-gray-400">
               <p className="flex items-center gap-2">
                 <span className="text-primary">Email:</span>
                 <a href="mailto:info@beautylineprofessional.com" className="hover:text-primary transition-colors">
@@ -31,9 +31,21 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Sezione 2: Link Utili */}
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Link Utili</h3>
-            <ul className="space-y-3">
+            <ul className="flex flex-col gap-3">
+              <li>
+                <Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/chi-siamo" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
+                  Chi Siamo
+                </Link>
+              </li>
               <li>
                 <Link href="/corsi" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
                   <span className="w-1 h-1 bg-primary rounded-full"></span>
@@ -41,9 +53,9 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/percorso-master" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                <Link href="/servizi-estetica" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
                   <span className="w-1 h-1 bg-primary rounded-full"></span>
-                  Percorso Master
+                  Servizi Estetica
                 </Link>
               </li>
               <li>
@@ -53,9 +65,9 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/noleggio" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                <Link href="/attrezzature" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
                   <span className="w-1 h-1 bg-primary rounded-full"></span>
-                  Noleggio Attrezzature
+                  Attrezzature
                 </Link>
               </li>
               <li>
@@ -74,12 +86,12 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Sezione 3: Social Media */}
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Seguici</h3>
             <p className="text-gray-400 text-sm">
               Resta aggiornato sulle nostre novità e promozioni
             </p>
-            <div className="flex space-x-4">
+            <div className="flex items-center gap-3">
               <a
                 href="https://facebook.com"
                 target="_blank"

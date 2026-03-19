@@ -5,44 +5,13 @@ import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ParallaxDivider } from '@/components/ParallaxDivider';
 import { DeviceRentSection } from '@/components/DeviceRentSection';
-import { CourseCard } from '@/components/CourseCard';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
 import { ContactSection } from '@/components/ContactSection';
 import { Button } from '@/components/shared/Button';
-import { Course, Product, Testimonial } from '@/types';
+import { Product, Testimonial } from '@/types';
 import { HOME_COURSE_CARDS } from '@/lib/constants';
-
-const featuredCourses: Course[] = [
-  {
-    id: '1',
-    title: 'Corso Base di Estetica',
-    description: 'Corso completo per iniziare la tua carriera nel settore dell\'estetica professionale.',
-    duration: '40 ore',
-    price: '€ 890',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Base',
-  },
-  {
-    id: '2',
-    title: 'Master in Trattamenti Viso',
-    description: 'Specializzazione avanzata nei trattamenti viso, dalle tecniche base ai protocolli più innovativi.',
-    duration: '60 ore',
-    price: '€ 1.290',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Avanzato',
-  },
-  {
-    id: '3',
-    title: 'Corso Massaggio Corpo',
-    description: 'Impara le tecniche di massaggio professionale per il benessere del corpo.',
-    duration: '50 ore',
-    price: '€ 1.090',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Specialistico',
-  },
-];
 
 const featuredProducts: Product[] = [
   {
@@ -283,16 +252,16 @@ export default function Home() {
       </div>
 
       {/* Featured Products Section */}
-      <Section id="prodotti" className="bg-muted">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4 uppercase tracking-wide">
+      <Section id="prodotti" className="bg-muted" containerClassName="gap-8">
+        <div className="mb-16 flex w-full flex-col items-center gap-6">
+          <h2 className="text-center text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
             I Nostri Prodotti
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="max-w-3xl text-center text-lg text-gray-600 leading-relaxed">
             Scopri la nostra linea professionale dedicata alla cura e alla bellezza
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-[30px] mb-10">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -306,49 +275,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Academy Section */}
-      <Section>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
-          <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
-              BeautyLine Academy
-            </h2>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              La nostra accademia offre percorsi formativi completi per chi vuole intraprendere la carriera di estetista o specializzarsi in tecniche avanzate.
-              Dai corsi base ai master specialistici, ti guidiamo verso l&apos;eccellenza professionale.
-            </p>
-            <ul className="space-y-3 text-gray-600">
-              <li className="flex items-center gap-3">
-                <span className="w-2 h-2 bg-primary rounded-full"></span>
-                Docenti qualificati ed esperti del settore
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-2 h-2 bg-primary rounded-full"></span>
-                Attestati riconosciuti
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-2 h-2 bg-primary rounded-full"></span>
-                Pratica su modelle reali
-              </li>
-            </ul>
-            <div className="pt-4">
-              <Link href="/corsi">
-                <Button variant="primary" size="lg">
-                  Scopri i Corsi
-                </Button>
-              </Link>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-6">
-             {featuredCourses.slice(0, 2).map((course) => (
-                <CourseCard key={course.id} course={course} className="shadow-sm border border-gray-100" />
-             ))}
-          </div>
-        </div>
-      </Section>
-
       {/* Reviews Section */}
-      <Section className="bg-secondary text-white">
+      <Section className="bg-secondary text-white" containerClassName="gap-8">
         <div className="text-center mb-14 flex flex-col items-center gap-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase tracking-wide">
             Dicono di Noi

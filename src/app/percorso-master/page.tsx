@@ -34,7 +34,7 @@ export default function PercorsoMasterPage() {
               className="object-cover"
             />
           </div>
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <h2 className="text-3xl md:text-4xl font-bold text-secondary">
               Formazione Completa e Professionale
             </h2>
@@ -42,7 +42,7 @@ export default function PercorsoMasterPage() {
               Il Percorso Master è pensato per chi vuole raggiungere il massimo livello di competenza nel settore estetico.
               Un programma completo che copre tutte le aree fondamentali dell&apos;estetica professionale.
             </p>
-            <ul className="space-y-3">
+            <ul className="flex flex-col gap-3">
               <li className="flex items-start">
                 <svg className="w-6 h-6 text-primary mr-3 shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

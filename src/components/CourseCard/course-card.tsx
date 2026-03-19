@@ -21,7 +21,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
           className="object-cover"
         />
       </div>
-      <div className="p-6 flex-grow flex flex-col">
+      <div className="p-6 grow flex flex-col">
         {course.category && (
           <span className="text-xs font-semibold text-primary uppercase tracking-wide mb-2">
             {course.category}
@@ -30,11 +30,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
         <h3 className="text-xl font-bold text-secondary mb-2">
           {course.title}
         </h3>
-        <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
+        <p className="text-gray-600 text-sm mb-4 grow line-clamp-3">
           {course.description}
         </p>
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-          <div className="space-y-1">
+          <div className="flex flex-col gap-1">
             {course.duration && (
               <p className="text-xs text-gray-500">
                 <span className="font-semibold">Durata:</span> {course.duration}

@@ -43,7 +43,7 @@ export default function CartPage() {
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row gap-8">
-            <div className="flex-1 space-y-4">
+            <div className="flex-1 flex flex-col gap-4">
               {items.map((item) => (
                 <div key={item.id} className="bg-white rounded-xl shadow-sm p-4 flex items-center gap-4">
                   {item.image && (
@@ -66,7 +66,7 @@ export default function CartPage() {
                         >
                           -
                         </button>
-                        <span className="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">
+                        <span className="px-3 py-1 text-sm font-medium min-w-8 text-center">
                           {item.quantity}
                         </span>
                         <button
@@ -94,7 +94,7 @@ export default function CartPage() {
             <div className="lg:w-80">
               <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
                 <h2 className="font-bold text-secondary mb-4">Riepilogo</h2>
-                <div className="space-y-2 text-sm">
+                <div className="flex flex-col gap-2 text-sm">
                   <div className="flex justify-between text-gray-500">
                     <span>Articoli ({totalItems})</span>
                     <span>€ {totalPrice.toFixed(2)}</span>
@@ -115,7 +115,7 @@ export default function CartPage() {
                     Procedi al Checkout
                   </Button>
                 ) : (
-                  <div className="mt-6 space-y-3">
+                  <div className="mt-6 flex flex-col gap-3">
                     <p className="text-xs text-gray-400 text-center">
                       Accedi per completare l&apos;acquisto
                     </p>

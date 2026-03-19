@@ -222,7 +222,7 @@ export const Navbar: React.FC = () => {
             isOpen ? 'max-h-screen opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0'
           )}
         >
-          <div className="py-4 space-y-1">
+          <div className="py-4 flex flex-col gap-1">
             {navigationItems.map((item) =>
               item.children ? (
                 <div key={item.label}>
@@ -262,7 +262,7 @@ export const Navbar: React.FC = () => {
 
             <div className="px-4 pt-4">
               {user ? (
-                <div className="space-y-2">
+                <div className="flex flex-col gap-2">
                   <Link href="/account" onClick={() => setIsOpen(false)}>
                     <Button variant="outline" size="sm" className="w-full uppercase tracking-wider font-bold">
                       Il Mio Account

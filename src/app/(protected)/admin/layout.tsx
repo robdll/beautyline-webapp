@@ -23,7 +23,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-6 border-b border-white/10">
           <h2 className="font-bold text-lg font-raleway uppercase tracking-wider">Admin</h2>
         </div>
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 flex flex-col gap-1">
           {sidebarLinks.map((link) => {
             const isActive = pathname === link.href || (link.href !== '/admin' && pathname.startsWith(link.href));
             return (

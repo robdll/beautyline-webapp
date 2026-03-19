@@ -31,7 +31,7 @@ export const DeviceRentSection: React.FC = () => {
             NOLEGGIO ATTREZZATURE
           </h2>
 
-          <div className="mt-6 space-y-5 text-gray-600 leading-relaxed text-sm md:text-base">
+          <div className="mt-6 flex flex-col gap-5 text-gray-600 leading-relaxed text-sm md:text-base">
             <p className="font-semibold text-gray-700">
               Offri più servizi, senza investimenti rigidi.
             </p>
@@ -43,7 +43,7 @@ export const DeviceRentSection: React.FC = () => {
             </p>
           </div>
 
-          <ul className="mt-8 space-y-3 text-gray-700">
+          <ul className="mt-8 flex flex-col gap-3 text-gray-700">
             <li className="flex items-start gap-3">
               <CheckIcon className="mt-0.5 h-5 w-5 text-green-600 shrink-0" />
               <span>Prova gratuita di 1 ora in sede</span>
@@ -62,7 +62,7 @@ export const DeviceRentSection: React.FC = () => {
             </li>
           </ul>
 
-          <div className="mt-8 space-y-3 text-gray-600 leading-relaxed">
+          <div className="mt-8 flex flex-col gap-3 text-gray-600 leading-relaxed">
             <p>
               Perfetto per estetiste con P.IVA, centri estetici e chi ha già fatto un corso con noi.
             </p>

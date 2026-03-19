@@ -107,7 +107,7 @@ export default function AdminServicesEditPage() {
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 max-w-2xl">
-        <div className="space-y-5">
+        <div className="flex flex-col gap-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
             <input

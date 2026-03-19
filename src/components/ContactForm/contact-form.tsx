@@ -110,7 +110,7 @@ export function ContactForm() {
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <label htmlFor="name" className="text-sm font-medium text-gray-700">
                 Nome <span className="text-red-600">*</span>
               </label>
@@ -127,7 +127,7 @@ export function ContactForm() {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <label htmlFor="email" className="text-sm font-medium text-gray-700">
                 Email <span className="text-red-600">*</span>
               </label>
@@ -145,7 +145,7 @@ export function ContactForm() {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label htmlFor="phone" className="text-sm font-medium text-gray-700">
               Telefono <span className="text-red-600">*</span>
             </label>
@@ -162,7 +162,7 @@ export function ContactForm() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2">
             <label htmlFor="message" className="text-sm font-medium text-gray-700">
               Messaggio
             </label>

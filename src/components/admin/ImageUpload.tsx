@@ -68,7 +68,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   };
 
   return (
-    <div className={cn('space-y-3', className)}>
+    <div className={cn('flex flex-col gap-3', className)}>
       {images.length > 0 && (
         <div className="flex flex-wrap gap-3">
           {images.map((url, i) => (

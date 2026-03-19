@@ -121,7 +121,7 @@ export default function AdminCoursesEditPage() {
       </h1>
 
       <form onSubmit={handleSubmit} className="max-w-2xl">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 space-y-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col gap-6">
           <div>
             <label htmlFor="type" className={labelClass}>
               Tipo

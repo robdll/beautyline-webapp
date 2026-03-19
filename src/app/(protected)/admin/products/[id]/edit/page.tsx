@@ -151,7 +151,7 @@ export default function AdminProductsEditPage() {
           <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm">{error}</div>
         )}
 
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <div>
             <label htmlFor="brand" className={labelClass}>
               Brand
@@ -245,7 +245,7 @@ export default function AdminProductsEditPage() {
               </button>
             </div>
             {availableColors.length > 0 && (
-              <div className="space-y-3">
+              <div className="flex flex-col gap-3">
                 {availableColors.map((color, index) => (
                   <div
                     key={index}

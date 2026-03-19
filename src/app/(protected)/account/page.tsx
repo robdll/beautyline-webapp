@@ -103,7 +103,7 @@ export default function AccountPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm p-6 md:p-8 space-y-6">
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
           <h2 className="text-lg font-bold text-secondary">Informazioni Personali</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -79,7 +79,7 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                 </span>
                 <span className="text-primary font-bold">{course.price}</span>
               </div>
-              <h3 className="text-xl font-bold text-secondary">{course.title}</h3>
+              <h3 className="heading-brand text-xl font-bold">{course.title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">{course.description}</p>
               <div className="pt-2 mt-auto">
                 <a href={`/contatti?corso=${encodeURIComponent(course.title)}`}>

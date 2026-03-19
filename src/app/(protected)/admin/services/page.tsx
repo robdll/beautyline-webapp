@@ -66,7 +66,7 @@ export default function AdminServicesPage() {
   return (
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide">
+        <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide">
           Servizi Estetica
         </h1>
         <Link href="/admin/services/new">

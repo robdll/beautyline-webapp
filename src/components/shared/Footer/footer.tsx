@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
 
           {/* Sezione 2: Link Utili */}
           <div className="flex flex-col gap-6">
-            <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Link Utili</h3>
+            <h3 className="heading-brand text-lg font-bold uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Link Utili</h3>
             <ul className="flex flex-col gap-3">
               <li>
                 <Link href="/" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
 
           {/* Sezione 3: Social Media */}
           <div className="flex flex-col gap-6">
-            <h3 className="text-lg font-bold text-white uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Seguici</h3>
+            <h3 className="heading-brand text-lg font-bold uppercase tracking-wider border-b-2 border-primary inline-block pb-1">Seguici</h3>
             <p className="text-gray-400 text-sm">
               Resta aggiornato sulle nostre novità e promozioni
             </p>

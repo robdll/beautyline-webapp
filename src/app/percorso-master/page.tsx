@@ -15,7 +15,7 @@ export default function PercorsoMasterPage() {
     <>
       <Section className="bg-muted pt-20">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
+          <h1 className="heading-brand text-4xl md:text-5xl font-bold mb-4">
             Percorso Master
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -35,7 +35,7 @@ export default function PercorsoMasterPage() {
             />
           </div>
           <div className="flex flex-col gap-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary">
+            <h2 className="heading-brand text-3xl md:text-4xl font-bold">
               Formazione Completa e Professionale
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -74,7 +74,7 @@ export default function PercorsoMasterPage() {
 
       <Section className="bg-muted">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-8 text-center">
+          <h2 className="heading-brand text-3xl md:text-4xl font-bold mb-8 text-center">
             Moduli del Percorso Master
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -87,7 +87,7 @@ export default function PercorsoMasterPage() {
               { title: 'Trucco Professionale', description: 'Make-up per ogni occasione' },
             ].map((module, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm">
-                <h3 className="text-xl font-semibold text-secondary mb-2">
+                <h3 className="heading-brand text-xl font-semibold mb-2">
                   {module.title}
                 </h3>
                 <p className="text-gray-600">{module.description}</p>
@@ -99,7 +99,7 @@ export default function PercorsoMasterPage() {
 
       <Section>
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
+          <h2 className="heading-brand text-3xl md:text-4xl font-bold mb-4">
             Investi nella Tua Formazione
           </h2>
           <p className="text-lg text-gray-600 mb-8">

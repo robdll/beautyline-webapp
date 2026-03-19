@@ -39,7 +39,7 @@ export default function SignInPage() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-muted">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-secondary text-center mb-2 font-raleway uppercase tracking-wide">
+        <h1 className="heading-brand text-3xl font-bold text-center mb-2 uppercase tracking-wide">
           Accedi
         </h1>
         <p className="text-gray-500 text-center mb-8 text-sm">

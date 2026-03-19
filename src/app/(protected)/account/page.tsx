@@ -87,7 +87,7 @@ export default function AccountPage() {
   return (
     <Section className="bg-muted min-h-[calc(100vh-4rem)]">
       <div className="max-w-2xl mx-auto w-full">
-        <h1 className="text-3xl font-bold text-secondary mb-2 font-raleway uppercase tracking-wide">
+        <h1 className="heading-brand text-3xl font-bold mb-2 uppercase tracking-wide">
           Il Mio Account
         </h1>
         <p className="text-gray-500 mb-8 text-sm">{user.email}</p>
@@ -104,7 +104,7 @@ export default function AccountPage() {
         )}
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
-          <h2 className="text-lg font-bold text-secondary">Informazioni Personali</h2>
+          <h2 className="heading-brand text-lg font-bold">Informazioni Personali</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -130,7 +130,7 @@ export default function AccountPage() {
           </div>
 
           <hr className="border-gray-100" />
-          <h2 className="text-lg font-bold text-secondary">Indirizzo</h2>
+          <h2 className="heading-brand text-lg font-bold">Indirizzo</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">

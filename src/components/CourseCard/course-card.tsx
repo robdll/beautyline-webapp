@@ -27,7 +27,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
             {course.category}
           </span>
         )}
-        <h3 className="text-xl font-bold text-secondary mb-2">
+        <h3 className="heading-brand text-xl font-bold mb-2">
           {course.title}
         </h3>
         <p className="text-gray-600 text-sm mb-4 grow line-clamp-3">

@@ -54,7 +54,7 @@ export default function AdminEquipmentNewPage() {
         >
           ← Torna alle attrezzature
         </Link>
-        <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide mt-2">
+        <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide mt-2">
           Nuova Attrezzatura
         </h1>
       </div>

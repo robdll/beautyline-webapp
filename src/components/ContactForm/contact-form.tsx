@@ -82,7 +82,7 @@ export function ContactForm() {
 
   return (
     <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-      <h3 className="text-2xl font-bold text-secondary mb-6">Scrivici</h3>
+      <h3 className="heading-brand text-2xl font-bold mb-6">Scrivici</h3>
 
       {errorMessage ? (
         <Alert variant="error" title="Non siamo riusciti a inviare il messaggio" className="mb-6">
@@ -104,7 +104,7 @@ export function ContactForm() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h4 className="text-xl font-bold text-secondary">Messaggio inviato!</h4>
+          <h4 className="heading-brand text-xl font-bold">Messaggio inviato!</h4>
           <p className="mt-2 text-gray-600">Ti risponderemo entro 24 ore.</p>
         </div>
       ) : (

@@ -33,7 +33,7 @@ export default function VerifyPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-secondary mb-3 font-raleway uppercase tracking-wide">
+          <h1 className="heading-brand text-2xl font-bold mb-3 uppercase tracking-wide">
             Email Verificata
           </h1>
           <p className="text-gray-500 mb-8 text-sm">
@@ -58,7 +58,7 @@ export default function VerifyPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide">
+          <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide">
             Verifica non riuscita
           </h1>
           <p className="text-gray-500 text-sm">{errorMessage}</p>
@@ -83,7 +83,7 @@ export default function VerifyPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide">
+          <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide">
             Verifica in corso...
           </h1>
           <p className="text-gray-500 text-sm">
@@ -102,7 +102,7 @@ export default function VerifyPage() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide">
+        <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide">
           Controlla la tua Email
         </h1>
         <p className="text-gray-500 text-sm">

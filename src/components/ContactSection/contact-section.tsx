@@ -17,7 +17,7 @@ export function ContactSection({
     <Section className={className}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="flex flex-col gap-8">
-          <h2 className="text-3xl font-bold text-secondary mb-6">{title}</h2>
+          <h2 className="heading-brand text-3xl font-bold mb-6">{title}</h2>
           <p className="text-gray-600 mb-8">{description}</p>
 
           <div className="flex flex-col gap-6">
@@ -29,7 +29,7 @@ export function ContactSection({
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-secondary">Sede</h3>
+                <h3 className="heading-brand text-lg font-semibold">Sede</h3>
                 <p className="text-gray-600">Via Roma 123, 00100 Roma (RM)</p>
               </div>
             </div>
@@ -41,7 +41,7 @@ export function ContactSection({
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-secondary">Email</h3>
+                <h3 className="heading-brand text-lg font-semibold">Email</h3>
                 <a href="mailto:info@beautylineprofessional.com" className="text-gray-600 hover:text-primary transition-colors">
                   info@beautylineprofessional.com
                 </a>
@@ -55,7 +55,7 @@ export function ContactSection({
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-secondary">Telefono</h3>
+                <h3 className="heading-brand text-lg font-semibold">Telefono</h3>
                 <a href="tel:+390123456789" className="text-gray-600 hover:text-primary transition-colors">
                   +39 012 345 6789
                 </a>

@@ -23,7 +23,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
       className="flex flex-col items-center justify-center"
       containerClassName="flex flex-col items-center justify-center gap-12"
     >
-      <h2 className="text-center text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
+      <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold mb-6 tracking-wide">
         I Nostri Corsi
       </h2>
       <p className="text-center text-sm md:text-base text-gray-600 leading-relaxed max-w-3xl">

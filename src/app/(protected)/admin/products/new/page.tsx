@@ -91,7 +91,7 @@ export default function AdminProductsNewPage() {
         >
           ← Torna ai prodotti
         </Link>
-        <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide mt-2">
+        <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide mt-2">
           Nuovo Prodotto
         </h1>
       </div>

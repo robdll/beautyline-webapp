@@ -7,6 +7,7 @@ import { ParallaxDivider } from '@/components/ParallaxDivider';
 import { DeviceRentSection } from '@/components/DeviceRentSection';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
+import { BrandStatsSection } from '@/components/BrandStatsSection';
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
 import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
 import { ContactSection } from '@/components/ContactSection';
@@ -124,10 +125,10 @@ export default function Home() {
         ctaHref="/#servizi"
       />
 
-      {/* Introduction Section */}
-      <Section className="pt-16 md:pt-20">
+      {/* Introduction Section — compact height (not full viewport like other sections) */}
+      <Section className="min-h-0 py-16 md:py-20 lg:py-24">
         <div className="text-center max-w-4xl mx-auto flex flex-col items-center gap-7">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
+          <h2 className="heading-brand text-3xl md:text-4xl font-bold tracking-wide">
             Benvenuti in BeautyLine
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
@@ -145,11 +146,13 @@ export default function Home() {
         </div>
       </Section>
 
+      <ParallaxDivider imageSrc="/images/parallax-bg.jpg" strength={0.95} />
+
       {/* Services Overview */}
       <Section id="servizi" className="bg-white">
         <div className="mb-16 flex w-full flex-col gap-[30px]">
           <div className="flex w-full flex-col items-center gap-6">
-            <h2 className="text-center text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
+            <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold tracking-wide">
               I Nostri Servizi
             </h2>
             <p className="max-w-3xl text-center text-lg leading-relaxed text-gray-600">
@@ -187,14 +190,13 @@ export default function Home() {
       </Section>
 
       {/* Formazione Section */}
+      <BrandStatsSection />
       <CoursesHighlightSection id="formazione" />
-
-      <ParallaxDivider imageSrc="/images/parallax-bg.jpg" strength={0.95} />
 
       {/* Servizi Estetica Section */}
       <Section id="servizi-estetica" className="bg-muted">
         <div className="text-center max-w-4xl mx-auto flex flex-col items-center gap-7">
-          <h2 className="text-3xl md:text-5xl font-medium text-purple uppercase tracking-[0.25em] font-raleway">
+          <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold tracking-wide">
             Servizi Estetica
           </h2>
           <p className="max-w-3xl mx-auto text-center text-lg text-gray-600 leading-relaxed">
@@ -225,7 +227,7 @@ export default function Home() {
       {/* Featured Products Section */}
       <Section id="prodotti" className="bg-muted" containerClassName="gap-8">
         <div className="mb-16 flex w-full flex-col items-center gap-6">
-          <h2 className="text-center text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
+          <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold tracking-wide">
             I Nostri Prodotti
           </h2>
           <p className="max-w-3xl text-center text-lg text-gray-600 leading-relaxed">
@@ -249,8 +251,8 @@ export default function Home() {
       {/* Reviews Section */}
       <Section className="bg-secondary text-white" containerClassName="gap-8">
         <div className="text-center mb-14 flex flex-col items-center gap-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase tracking-wide">
-            Dicono di Noi
+          <h2 className="heading-brand text-3xl md:text-4xl font-bold mb-4 tracking-wide">
+            Dicono di noi
           </h2>
           <p className="text-lg text-gray-200 max-w-3xl mx-auto text-center leading-relaxed">
             Le opinioni di chi ha scelto BeautyLine per la propria formazione e il proprio lavoro

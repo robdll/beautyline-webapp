@@ -81,7 +81,7 @@ export default async function CorsiPage() {
       <Section id="calendario-corsi" className="bg-muted min-h-0">
         <div className="flex flex-col gap-10">
           <div className="text-center flex flex-col items-center gap-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary">Calendario Corsi</h2>
+            <h2 className="heading-brand text-3xl md:text-4xl font-bold">Calendario Corsi</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Scopri i prossimi corsi disponibili, ordinati dalla data più vicina.
             </p>

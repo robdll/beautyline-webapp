@@ -31,7 +31,7 @@ const dashboardCards = [
 export default function AdminDashboardPage() {
   return (
     <div>
-      <h1 className="text-2xl font-bold text-secondary mb-8 font-raleway uppercase tracking-wide">
+      <h1 className="heading-brand text-2xl font-bold mb-8 uppercase tracking-wide">
         Dashboard
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -48,7 +48,7 @@ export default function AdminDashboardPage() {
                 </svg>
               </div>
               <div>
-                <h2 className="font-bold text-secondary text-lg mb-1">{card.title}</h2>
+                <h2 className="heading-brand font-bold text-lg mb-1">{card.title}</h2>
                 <p className="text-sm text-gray-500">{card.description}</p>
               </div>
             </div>

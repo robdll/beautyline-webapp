@@ -21,7 +21,7 @@ export default function CheckoutSuccessPage() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h1 className="text-3xl font-bold text-secondary mb-3 font-raleway uppercase tracking-wide">
+        <h1 className="heading-brand text-3xl font-bold mb-3 uppercase tracking-wide">
           Ordine Confermato
         </h1>
         <p className="text-gray-500 mb-8">

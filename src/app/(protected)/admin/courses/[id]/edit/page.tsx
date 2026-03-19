@@ -120,7 +120,7 @@ export default function AdminCoursesEditPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-secondary mb-8 font-raleway uppercase tracking-wide">
+      <h1 className="heading-brand text-2xl font-bold mb-8 uppercase tracking-wide">
         Modifica Corso
       </h1>
 

@@ -27,7 +27,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
             {product.category}
           </span>
         )}
-        <h3 className="text-xl font-bold text-secondary mb-2">
+        <h3 className="heading-brand text-xl font-bold mb-2">
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">

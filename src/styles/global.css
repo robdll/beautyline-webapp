@@ -50,6 +50,14 @@ body {
   }
 }
 
+@layer components {
+  /** Section & page titles: brand purple + Raleway (Next font variable on <html>) */
+  .heading-brand {
+    color: var(--color-purple);
+    font-family: var(--font-raleway), ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
 @layer utilities {
   .text-shadow-soft-white {
     text-shadow: 0px 0px 1px white;

@@ -28,7 +28,7 @@ export default function CartPage() {
   return (
     <Section className="bg-muted min-h-[calc(100vh-4rem)]">
       <div className="max-w-4xl mx-auto w-full">
-        <h1 className="text-3xl font-bold text-secondary mb-8 font-raleway uppercase tracking-wide">
+        <h1 className="heading-brand text-3xl font-bold mb-8 uppercase tracking-wide">
           Carrello
         </h1>
 
@@ -52,7 +52,7 @@ export default function CartPage() {
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-secondary text-sm truncate">{item.name}</h3>
+                    <h3 className="heading-brand font-medium text-sm truncate">{item.name}</h3>
                     <p className="text-xs text-gray-400 capitalize">{item.type === 'course' ? 'Corso' : 'Prodotto'}</p>
                     <p className="text-primary font-bold mt-1">€ {item.price.toFixed(2)}</p>
                   </div>
@@ -93,7 +93,7 @@ export default function CartPage() {
 
             <div className="lg:w-80">
               <div className="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
-                <h2 className="font-bold text-secondary mb-4">Riepilogo</h2>
+                <h2 className="heading-brand font-bold mb-4">Riepilogo</h2>
                 <div className="flex flex-col gap-2 text-sm">
                   <div className="flex justify-between text-gray-500">
                     <span>Articoli ({totalItems})</span>

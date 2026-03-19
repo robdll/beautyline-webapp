@@ -53,7 +53,7 @@ export default async function AttrezzaturePage() {
     <>
       <Section className="bg-muted pt-20">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-secondary mb-4">
+          <h1 className="heading-brand text-4xl md:text-5xl font-bold mb-4">
             Vendita e Noleggio Attrezzature
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -81,7 +81,7 @@ export default async function AttrezzaturePage() {
                   <span className="text-xs font-semibold text-primary uppercase tracking-wide">
                     {item.type}
                   </span>
-                  <h3 className="text-xl font-bold text-secondary mb-2 mt-1">
+                  <h3 className="heading-brand text-xl font-bold mb-2 mt-1">
                     {item.name}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4">{item.description}</p>
@@ -120,7 +120,7 @@ export default async function AttrezzaturePage() {
 
       <Section className="bg-muted">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-secondary mb-4">
+          <h2 className="heading-brand text-2xl md:text-3xl font-bold mb-4">
             Hai Bisogno di Informazioni?
           </h2>
           <p className="text-gray-600 mb-6">

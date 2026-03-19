@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { BrandStatsSection } from '@/components/BrandStatsSection';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { TestimonialCard } from '@/components/TestimonialCard';
@@ -84,7 +85,7 @@ export default async function ChiSiamo() {
       <Section id="la-nostra-storia" className="scroll-mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-6">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary">
+            <h2 className="heading-brand text-3xl md:text-4xl font-bold">
               La Nostra Storia
             </h2>
             <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
@@ -115,28 +116,12 @@ export default async function ChiSiamo() {
         </div>
       </Section>
 
-      {/* Stats Section */}
-      <Section className="bg-primary/5 py-16 min-h-0">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div className="p-6">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">1000+</div>
-            <div className="text-xl text-secondary font-medium">Formazioni</div>
-          </div>
-          <div className="p-6">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">3000+</div>
-            <div className="text-xl text-secondary font-medium">Corsiste</div>
-          </div>
-          <div className="p-6">
-            <div className="text-4xl md:text-5xl font-bold text-primary mb-2">100%</div>
-            <div className="text-xl text-secondary font-medium">Crescita Professionale</div>
-          </div>
-        </div>
-      </Section>
+      <BrandStatsSection />
 
       <Section className="bg-muted">
         <div className="flex flex-col gap-12">
           <div className="text-center flex flex-col items-center gap-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary">
+            <h2 className="heading-brand text-3xl md:text-4xl font-bold">
               La Nostra Mission
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -151,7 +136,7 @@ export default async function ChiSiamo() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-secondary mb-3">Eccellenza</h3>
+            <h3 className="heading-brand text-xl font-bold mb-3">Eccellenza</h3>
             <p className="text-gray-600">
               Standard formativi elevati e aggiornamento continuo sulle ultime tendenze.
             </p>
@@ -162,7 +147,7 @@ export default async function ChiSiamo() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-secondary mb-3">Community</h3>
+            <h3 className="heading-brand text-xl font-bold mb-3">Community</h3>
             <p className="text-gray-600">
               Un ambiente inclusivo dove crescere insieme e condividere esperienze.
             </p>
@@ -173,7 +158,7 @@ export default async function ChiSiamo() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-secondary mb-3">Innovazione</h3>
+            <h3 className="heading-brand text-xl font-bold mb-3">Innovazione</h3>
             <p className="text-gray-600">
               Utilizzo delle tecnologie e dei metodi più avanzati nel campo estetico.
             </p>
@@ -186,7 +171,7 @@ export default async function ChiSiamo() {
       <Section>
         <div className="flex flex-col gap-12">
           <div className="text-center flex flex-col items-center gap-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary">
+            <h2 className="heading-brand text-3xl md:text-4xl font-bold">
               Dicono di Noi
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">

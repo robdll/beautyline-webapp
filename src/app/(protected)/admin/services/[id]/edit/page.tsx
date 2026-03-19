@@ -101,7 +101,7 @@ export default function AdminServicesEditPage() {
         <Link href="/admin/services" className="text-sm text-gray-500 hover:text-primary transition-colors">
           ← Torna ai servizi
         </Link>
-        <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide mt-2">
+        <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide mt-2">
           Modifica Servizio
         </h1>
       </div>

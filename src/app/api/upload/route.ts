@@ -25,6 +25,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ url });
   } catch (error) {
     console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Errore nel caricamento.' }, { status: 500 });
+    const details =
+      process.env.NODE_ENV === 'development' && error instanceof Error
+        ? error.message
+        : undefined;
+
+    return NextResponse.json({ error: 'Errore nel caricamento.', details }, { status: 500 });
   }
 }

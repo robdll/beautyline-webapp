@@ -20,12 +20,14 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   className,
 }) => {
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
+    setError(null);
     setUploading(true);
     const newUrls: string[] = [];
 
@@ -39,9 +41,20 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       try {
         const res = await fetch('/api/upload', { method: 'POST', body: formData });
         const data = await res.json();
-        if (data.url) newUrls.push(data.url);
+
+        if (!res.ok) {
+          setError(data.details || data.error || 'Upload non riuscito.');
+          continue;
+        }
+
+        if (data.url) {
+          newUrls.push(data.url);
+        } else {
+          setError('Upload non riuscito.');
+        }
       } catch (err) {
         console.error('Upload failed:', err);
+        setError('Errore di rete durante il caricamento.');
       }
     }
 
@@ -109,6 +122,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
             )}
           </button>
         </div>
+      )}
+
+      {error && (
+        <p className="text-sm text-red-600">{error}</p>
       )}
     </div>
   );

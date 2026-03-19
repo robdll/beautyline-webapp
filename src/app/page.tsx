@@ -9,6 +9,7 @@ import { CourseCard } from '@/components/CourseCard';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
+import { ContactSection } from '@/components/ContactSection';
 import { Button } from '@/components/shared/Button';
 import { Course, Product, Testimonial } from '@/types';
 import { HOME_COURSE_CARDS } from '@/lib/constants';
@@ -135,45 +136,69 @@ export default function Home() {
       <Hero
         title="BeautyLine Professional"
         description="L&apos;eccellenza nell&apos;estetica professionale. Formazione, prodotti e attrezzature per il tuo successo."
-        ctaText="Scopri i Prodotti"
-        ctaHref="/prodotti"
+        ctaText="Scopri di più"
+        ctaHref="/#servizi"
       />
+
+      {/* Introduction Section */}
+      <Section className="pt-16 md:pt-20">
+        <div className="text-center max-w-4xl mx-auto flex flex-col gap-7">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
+            Benvenuti in BeautyLine
+          </h2>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Siamo il partner ideale per i professionisti dell&apos;estetica.
+            Offriamo una gamma completa di prodotti di alta qualità, corsi di formazione avanzata e attrezzature all&apos;avanguardia.
+            La nostra missione è supportare la tua crescita professionale con soluzioni innovative e un servizio eccellente.
+          </p>
+          <div className="pt-1">
+            <Link href="/chi-siamo">
+              <Button variant="outline" size="lg">
+                Scopri Chi Siamo
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </Section>
 
       {/* Services Overview */}
       <Section id="servizi" className="bg-white">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4 uppercase tracking-wide">
-            I Nostri Servizi
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Scopri tutto ciò che BeautyLine può offrirti per la tua crescita professionale
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <ServiceOverviewCard
-            title="Formazione"
-            description="Corsi professionali e master per diventare esperti del settore estetico."
-            icon={<FormazioneIcon />}
-            targetId="formazione"
-          />
-          <ServiceOverviewCard
-            title="Servizi Estetica"
-            description="Trattamenti professionali di estetica per la cura del corpo e del viso."
-            icon={<EsteticaIcon />}
-            targetId="servizi-estetica"
-          />
-          <ServiceOverviewCard
-            title="Attrezzature"
-            description="Vendita e noleggio di attrezzature professionali all'avanguardia."
-            icon={<AttrezzatureIcon />}
-            targetId="attrezzature"
-          />
-          <ServiceOverviewCard
-            title="Prodotti"
-            description="Linea completa di prodotti professionali per estetica e benessere."
-            icon={<ProdottiIcon />}
-            targetId="prodotti"
-          />
+        <div className="mb-16 flex w-full flex-col gap-[30px]">
+          <div className="flex w-full flex-col items-center gap-6">
+            <h2 className="text-center text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
+              I Nostri Servizi
+            </h2>
+            <p className="max-w-3xl text-center text-lg leading-relaxed text-gray-600">
+              Scopri tutto ciò che BeautyLine può offrirti per la tua crescita professionale
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <ServiceOverviewCard
+              title="Formazione"
+              description="Corsi professionali e master per diventare esperti del settore estetico."
+              icon={<FormazioneIcon />}
+              targetId="formazione"
+            />
+            <ServiceOverviewCard
+              title="Servizi Estetica"
+              description="Trattamenti professionali di estetica per la cura del corpo e del viso."
+              icon={<EsteticaIcon />}
+              targetId="servizi-estetica"
+            />
+            <ServiceOverviewCard
+              title="Attrezzature"
+              description="Vendita e noleggio di attrezzature professionali all'avanguardia."
+              icon={<AttrezzatureIcon />}
+              targetId="attrezzature"
+            />
+            <ServiceOverviewCard
+              title="Prodotti"
+              description="Linea completa di prodotti professionali per estetica e benessere."
+              icon={<ProdottiIcon />}
+              targetId="prodotti"
+            />
+          </div>
         </div>
       </Section>
 
@@ -215,27 +240,29 @@ export default function Home() {
           ))}
         </div>
 
-        <Link href="/corsi">
-          <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
-            Scopri di più
-          </Button>
-        </Link>
+        <div className="w-full flex justify-center">
+          <Link href="/corsi">
+            <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
+              Scopri di più
+            </Button>
+          </Link>
+        </div>
       </Section>
 
       <ParallaxDivider imageSrc="/images/parallax-bg.jpg" strength={0.95} />
 
       {/* Servizi Estetica Section */}
       <Section id="servizi-estetica" className="bg-muted">
-        <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
+        <div className="text-center max-w-4xl mx-auto flex flex-col gap-7">
+          <h2 className="text-3xl md:text-5xl font-medium text-purple uppercase tracking-[0.25em] font-raleway">
             Servizi Estetica
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed mb-6">
+          <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
             I nostri trattamenti professionali di estetica sono pensati per offrire il massimo
             della qualità e del benessere. Dall&apos;epilazione alla pedicure, ogni servizio è
             eseguito con prodotti di alta gamma e tecniche all&apos;avanguardia.
           </p>
-          <ul className="flex flex-wrap justify-center gap-3 mb-10">
+          <ul className="flex flex-wrap justify-center gap-3 py-1">
             {['Epilazione', 'Pedicure', 'Trattamenti Viso', 'Trattamenti Corpo', 'Manicure'].map((s) => (
               <li key={s} className="px-4 py-2 bg-purple/10 text-purple rounded-full text-sm font-medium">
                 {s}
@@ -254,27 +281,6 @@ export default function Home() {
       <div id="attrezzature">
         <DeviceRentSection />
       </div>
-
-      {/* Introduction Section */}
-      <Section>
-        <div className="text-center max-w-4xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-6 uppercase tracking-wide">
-            Benvenuti in BeautyLine
-          </h2>
-          <p className="text-lg text-gray-600 leading-relaxed">
-            Siamo il partner ideale per i professionisti dell&apos;estetica. 
-            Offriamo una gamma completa di prodotti di alta qualità, corsi di formazione avanzata e attrezzature all&apos;avanguardia. 
-            La nostra missione è supportare la tua crescita professionale con soluzioni innovative e un servizio eccellente.
-          </p>
-          <div className="mt-8">
-            <Link href="/chi-siamo">
-              <Button variant="outline" size="lg">
-                Scopri Chi Siamo
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </Section>
 
       {/* Featured Products Section */}
       <Section id="prodotti" className="bg-muted">
@@ -343,20 +349,25 @@ export default function Home() {
 
       {/* Reviews Section */}
       <Section className="bg-secondary text-white">
-        <div className="text-center mb-12">
+        <div className="text-center mb-14 flex flex-col items-center gap-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 uppercase tracking-wide">
             Dicono di Noi
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-200 max-w-3xl mx-auto text-center leading-relaxed">
             Le opinioni di chi ha scelto BeautyLine per la propria formazione e il proprio lavoro
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-9">
           {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} className="bg-white/5 border border-white/10 text-white" />
+            <TestimonialCard
+              key={testimonial.id}
+              testimonial={testimonial}
+              variant="dark"
+              className="bg-white/10 border border-white/15 text-white"
+            />
           ))}
         </div>
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <Link href="/recensioni">
             <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-secondary">
               Leggi Tutte le Recensioni
@@ -365,22 +376,11 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* CTA Section */}
-      <Section className="bg-primary/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-6">
-            Hai bisogno di informazioni?
-          </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Il nostro team è a tua disposizione per rispondere a tutte le tue domande sui prodotti, i corsi e i servizi offerti.
-          </p>
-          <Link href="/contatti">
-            <Button variant="primary" size="lg">
-              Contattaci Ora
-            </Button>
-          </Link>
-        </div>
-      </Section>
+      <ContactSection
+        className="bg-primary/10"
+        title="Hai bisogno di informazioni?"
+        description="Il nostro team è a tua disposizione per rispondere a tutte le tue domande sui prodotti, i corsi e i servizi offerti."
+      />
     </>
   );
 }

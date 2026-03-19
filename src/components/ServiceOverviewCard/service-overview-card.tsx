@@ -29,7 +29,7 @@ export const ServiceOverviewCard: React.FC<ServiceOverviewCardProps> = ({
     <button
       onClick={handleClick}
       className={cn(
-        'group flex flex-col items-center text-center p-8 rounded-2xl bg-white border border-gray-100 shadow-sm',
+        'group flex flex-col items-center text-center px-6 py-8 rounded-2xl bg-white border border-gray-100 shadow-sm',
         'hover:shadow-lg hover:border-primary/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer',
         className
       )}

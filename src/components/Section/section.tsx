@@ -15,7 +15,7 @@ export const Section: React.FC<SectionProps> = ({
   id,
 }) => {
   return (
-    <section id={id} className={cn('py-12 md:py-16 lg:py-20 flex items-center justify-center', className)}>
+    <section id={id} className={cn('min-h-screen py-12 md:py-16 lg:py-20 flex items-center justify-center', className)}>
       <div
         className={cn(
           // Center the section content area by default

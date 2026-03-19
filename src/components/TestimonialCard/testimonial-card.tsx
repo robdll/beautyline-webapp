@@ -6,12 +6,16 @@ import { cn } from '@/lib/utils';
 interface TestimonialCardProps {
   testimonial: Testimonial;
   className?: string;
+  variant?: 'light' | 'dark';
 }
 
 export const TestimonialCard: React.FC<TestimonialCardProps> = ({
   testimonial,
   className,
+  variant = 'light',
 }) => {
+  const isDark = variant === 'dark';
+
   return (
     <div className={cn('bg-white rounded-lg shadow-md p-6 md:p-8 flex flex-col h-full', className)}>
       {testimonial.rating && (
@@ -21,7 +25,7 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
               key={i}
               className={cn(
                 'w-5 h-5',
-                i < testimonial.rating! ? 'text-yellow-400' : 'text-gray-300'
+                i < testimonial.rating! ? 'text-yellow-400' : isDark ? 'text-gray-500' : 'text-gray-300'
               )}
               fill="currentColor"
               viewBox="0 0 20 20"
@@ -31,12 +35,12 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
           ))}
         </div>
       )}
-      <p className="text-gray-700 mb-6 flex-grow italic leading-relaxed">
+      <p className={cn('mb-6 grow italic leading-relaxed', isDark ? 'text-gray-100' : 'text-gray-700')}>
         "{testimonial.content}"
       </p>
       <div className="flex items-center space-x-4">
         {testimonial.image && (
-          <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+          <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0">
             <Image
               src={testimonial.image}
               alt={testimonial.name}
@@ -46,11 +50,11 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
           </div>
         )}
         <div>
-          <p className="font-semibold text-secondary">
+          <p className={cn('font-semibold', isDark ? 'text-white' : 'text-secondary')}>
             {testimonial.name}
           </p>
           {testimonial.role && (
-            <p className="text-sm text-gray-500">{testimonial.role}</p>
+            <p className={cn('text-sm', isDark ? 'text-gray-300' : 'text-gray-500')}>{testimonial.role}</p>
           )}
         </div>
       </div>

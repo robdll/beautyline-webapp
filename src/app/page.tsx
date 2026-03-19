@@ -142,7 +142,7 @@ export default function Home() {
 
       {/* Introduction Section */}
       <Section className="pt-16 md:pt-20">
-        <div className="text-center max-w-4xl mx-auto flex flex-col gap-7">
+        <div className="text-center max-w-4xl mx-auto flex flex-col items-center gap-7">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary uppercase tracking-wide">
             Benvenuti in BeautyLine
           </h2>
@@ -253,11 +253,11 @@ export default function Home() {
 
       {/* Servizi Estetica Section */}
       <Section id="servizi-estetica" className="bg-muted">
-        <div className="text-center max-w-4xl mx-auto flex flex-col gap-7">
+        <div className="text-center max-w-4xl mx-auto flex flex-col items-center gap-7">
           <h2 className="text-3xl md:text-5xl font-medium text-purple uppercase tracking-[0.25em] font-raleway">
             Servizi Estetica
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
+          <p className="max-w-3xl mx-auto text-center text-lg text-gray-600 leading-relaxed">
             I nostri trattamenti professionali di estetica sono pensati per offrire il massimo
             della qualità e del benessere. Dall&apos;epilazione alla pedicure, ogni servizio è
             eseguito con prodotti di alta gamma e tecniche all&apos;avanguardia.

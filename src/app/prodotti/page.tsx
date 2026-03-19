@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ProductCard } from '@/components/ProductCard';
@@ -37,13 +38,26 @@ export default async function ProdottiPage() {
   return (
     <>
       <Hero
-        title="I Nostri Prodotti"
-        description="Qualità professionale per risultati eccellenti."
-        ctaText="Contattaci per Info"
-        ctaHref="/contatti"
+        title={
+          <Image
+            src="/images/logo-bl.png"
+            alt="BeautyLine"
+            width={280}
+            height={280}
+            className="w-48 md:w-64 lg:w-72 h-auto drop-shadow-lg"
+            priority
+          />
+        }
+        description={
+          <p className="text-2xl font-semibold text-white leading-snug md:text-3xl lg:text-4xl">
+            Qualità professionale per risultati eccellenti.
+          </p>
+        }
+        ctaText="Scopri i prodotti"
+        ctaHref="/prodotti#catalogo"
       />
 
-      <Section>
+      <Section id="catalogo" className="scroll-mt-24">
         {products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (

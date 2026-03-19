@@ -37,5 +37,7 @@ export interface ContactFormData {
   email: string;
   phone?: string;
   message: string;
+  /** Invio consentito solo se true (GDPR). */
+  privacyAccepted?: boolean;
 }
 

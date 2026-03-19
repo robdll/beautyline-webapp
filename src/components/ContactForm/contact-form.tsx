@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
+import Link from 'next/link';
 
 import { Button } from '@/components/shared/Button';
 import { Alert } from '@/components/shared/Alert';
@@ -10,6 +11,7 @@ type ContactFormData = {
   email: string;
   phone: string;
   message: string;
+  privacyAccepted: boolean;
 };
 
 const INITIAL_FORM_DATA: ContactFormData = {
@@ -17,6 +19,7 @@ const INITIAL_FORM_DATA: ContactFormData = {
   email: '',
   phone: '',
   message: '',
+  privacyAccepted: false,
 };
 
 export function ContactForm() {
@@ -49,7 +52,13 @@ export function ContactForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          privacyAccepted: formData.privacyAccepted,
+        }),
       });
 
       const data = (await response.json().catch(() => ({}))) as {
@@ -177,11 +186,37 @@ export function ContactForm() {
             />
           </div>
 
+          <div className="flex items-start gap-3 pt-2">
+            <input
+              type="checkbox"
+              id="privacyAccepted"
+              name="privacyAccepted"
+              required
+              checked={formData.privacyAccepted}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, privacyAccepted: e.target.checked }))
+              }
+              className="mt-1 h-4 w-4 shrink-0 rounded border-gray-300 text-primary focus:ring-primary"
+            />
+            <label htmlFor="privacyAccepted" className="text-sm leading-snug text-gray-700">
+              Dichiaro di aver preso visione dell&apos;{' '}
+              <Link
+                href="/informativa-privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-primary underline-offset-2 hover:underline"
+              >
+                informativa sulla privacy
+              </Link>{' '}
+              ai sensi del Regolamento UE 2016/679 GDPR. <span className="text-red-600">*</span>
+            </label>
+          </div>
+
           <Button
             type="submit"
             variant="primary"
             size="lg"
-            className="w-full"
+            className="w-full mt-2"
             disabled={isSubmitting}
             aria-busy={isSubmitting}
           >

@@ -33,16 +33,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
 
-    const { name, email, phone, message } = body as {
+    const { name, email, phone, message, privacyAccepted } = body as {
       name?: string;
       email?: string;
       phone?: string;
       message?: string;
+      privacyAccepted?: unknown;
     };
 
     // Validate required fields
     if (!name || !email || !phone) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    if (privacyAccepted !== true) {
+      return NextResponse.json(
+        { error: 'È necessario accettare l’informativa sulla privacy per inviare il modulo.' },
+        { status: 400 }
+      );
     }
 
     const safeName = escapeHtml(String(name));

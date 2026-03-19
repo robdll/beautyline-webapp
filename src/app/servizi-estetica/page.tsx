@@ -44,7 +44,7 @@ async function getServices(): Promise<ServiceItem[]> {
 }
 
 const prenotaButtonClass = cn(
-  'inline-flex w-full items-center justify-center rounded-[40px] border-2 border-primary px-4 py-2.5 text-sm font-medium text-primary',
+  'inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-[40px] border-2 border-primary px-4 py-2.5 text-sm font-medium text-primary',
   'transition-all duration-200 hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
 );
 
@@ -66,7 +66,9 @@ export default async function ServiziEsteticaPage() {
         }
         description={
           <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-snug">
-            Trattamenti professionali di estetica. La scienza della bellezza, il tocco del benessere.
+            Trattamenti professionali di estetica.
+            <br />
+            La scienza della bellezza, il tocco del benessere.
           </p>
         }
         ctaText="Scopri i Trattamenti"
@@ -96,8 +98,8 @@ export default async function ServiziEsteticaPage() {
                   </span>
                   <h3 className="heading-brand mb-2 text-xl font-bold">{service.name}</h3>
                   <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">{service.description}</p>
-                  <div className="mt-auto space-y-3 border-t border-gray-100 pt-4">
-                    <p className="text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
+                  <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
+                    <p className="min-w-0 text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
                     <a
                       href={whatsappPrenotaUrl(service.name)}
                       target="_blank"

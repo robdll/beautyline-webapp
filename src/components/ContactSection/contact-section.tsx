@@ -31,7 +31,7 @@ export function ContactSection({
               </div>
               <div>
                 <h3 className="heading-brand text-lg font-semibold">Sede</h3>
-                <p className="text-gray-600">Via Roma 123, 00100 Roma (RM)</p>
+                <p className="text-gray-600">Via M. Buonarroti, 24, 20900 Monza (MB)</p>
               </div>
             </div>
 

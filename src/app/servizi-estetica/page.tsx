@@ -1,10 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Hero } from '@/components/Hero';
+import { ContactSection } from '@/components/ContactSection';
 import { Section } from '@/components/Section';
-import { Button } from '@/components/shared/Button';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappPrenotaUrl } from '@/lib/contact';
 import ServiceModel from '@/models/Service';
@@ -120,21 +119,11 @@ export default async function ServiziEsteticaPage() {
         )}
       </Section>
 
-      <Section className="bg-muted">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="heading-brand mb-4 text-2xl font-bold md:text-3xl">
-            Vuoi Prenotare un Trattamento?
-          </h2>
-          <p className="mb-6 text-gray-600">
-            Contattaci per prenotare un appuntamento o per maggiori informazioni sui nostri servizi
-          </p>
-          <Link href="/contatti">
-            <Button variant="primary" size="lg">
-              Contattaci
-            </Button>
-          </Link>
-        </div>
-      </Section>
+      <ContactSection
+        className="bg-muted"
+        title="Vuoi informazioni su un Trattamento?"
+        description="Compila il modulo o contattaci utilizzando i recapiti qui sotto per prenotare un appuntamento o per maggiori informazioni sui nostri servizi."
+      />
     </>
   );
 }

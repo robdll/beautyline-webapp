@@ -2,10 +2,12 @@ import React from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Hero } from '@/components/Hero';
+import { ContactSection } from '@/components/ContactSection';
 import { Section } from '@/components/Section';
-import { Button } from '@/components/shared/Button';
 import { connectDB } from '@/lib/mongodb';
 import EquipmentModel from '@/models/Equipment';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Vendita e Noleggio Attrezzature',
@@ -24,6 +26,19 @@ interface EquipmentItem {
   rentCostPerDay: number;
   rentCostPerMonth: number;
   sellingCost: number;
+}
+
+function equipmentPriceLabel(item: EquipmentItem): string {
+  if (item.rentCostPerDay > 0) {
+    return `€ ${item.rentCostPerDay.toFixed(2)}/giorno`;
+  }
+  if (item.rentCostPerMonth > 0) {
+    return `€ ${item.rentCostPerMonth.toFixed(2)}/mese`;
+  }
+  if (!item.rentOnly && item.sellingCost > 0) {
+    return `€ ${item.sellingCost.toFixed(2)}`;
+  }
+  return 'Su richiesta';
 }
 
 async function getEquipment(): Promise<EquipmentItem[]> {
@@ -46,93 +61,86 @@ async function getEquipment(): Promise<EquipmentItem[]> {
   }
 }
 
+const contattaciButtonClass = cn(
+  'inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-[40px] border-2 border-primary px-4 py-2.5 text-sm font-medium text-primary',
+  'transition-all duration-200 hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+);
+
 export default async function AttrezzaturePage() {
   const equipment = await getEquipment();
 
   return (
     <>
-      <Section className="bg-muted pt-20">
-        <div className="text-center mb-12">
-          <h1 className="heading-brand text-4xl md:text-5xl font-bold mb-4">
-            Vendita e Noleggio Attrezzature
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Attrezzature professionali all&apos;avanguardia per il tuo centro estetico.
+      <Hero
+        title={
+          <Image
+            src="/images/logo-bl.png"
+            alt="BeautyLine"
+            width={280}
+            height={280}
+            className="w-48 md:w-64 lg:w-72 h-auto drop-shadow-lg"
+            priority
+          />
+        }
+        description={
+          <p className="text-2xl font-semibold text-white leading-snug md:text-3xl lg:text-4xl">
+            Attrezzature professionali all&apos;avanguardia.
+            <br />
             Disponibili in vendita e noleggio.
           </p>
-        </div>
-      </Section>
+        }
+        ctaText="Scopri le Attrezzature"
+        ctaHref="/attrezzature#catalogo"
+      />
 
-      <Section>
+      <Section id="catalogo" className="scroll-mt-24">
         {equipment.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {equipment.map((item) => (
-              <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <div className="relative w-full h-64">
+              <div
+                key={item.id}
+                className="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
+              >
+                <div className="relative h-48 w-full">
                   <Image
                     src={item.image}
                     alt={item.name}
                     fill
                     className="object-cover"
-                    sizes="(min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
                 </div>
-                <div className="p-6">
-                  <span className="text-xs font-semibold text-primary uppercase tracking-wide">
+                <div className="flex grow flex-col p-6">
+                  <span className="mb-1 text-xs font-semibold uppercase tracking-wide text-primary">
                     {item.type}
                   </span>
-                  <h3 className="heading-brand text-xl font-bold mb-2 mt-1">
-                    {item.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4">{item.description}</p>
-                  <div className="flex flex-wrap gap-3 text-sm">
-                    {!item.rentOnly && item.sellingCost > 0 && (
-                      <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full font-medium">
-                        Acquisto: € {item.sellingCost.toFixed(2)}
-                      </span>
-                    )}
-                    {item.rentCostPerDay > 0 && (
-                      <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">
-                        Noleggio: € {item.rentCostPerDay.toFixed(2)}/giorno
-                      </span>
-                    )}
-                    {item.rentCostPerMonth > 0 && (
-                      <span className="px-3 py-1 bg-purple/10 text-purple rounded-full font-medium">
-                        € {item.rentCostPerMonth.toFixed(2)}/mese
-                      </span>
-                    )}
-                    {item.rentOnly && (
-                      <span className="px-3 py-1 bg-yellow-50 text-yellow-700 rounded-full font-medium">
-                        Solo noleggio
-                      </span>
-                    )}
+                  <h3 className="heading-brand mb-2 text-xl font-bold">{item.name}</h3>
+                  <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">{item.description}</p>
+                  <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
+                    <p className="min-w-0 text-lg font-bold text-primary">{equipmentPriceLabel(item)}</p>
+                    <Link
+                      href={`/contatti?attrezzatura=${encodeURIComponent(item.name)}`}
+                      className={contattaciButtonClass}
+                    >
+                      Contattaci
+                    </Link>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-gray-500">
+          <div className="py-12 text-center text-gray-500">
             <p>Le attrezzature saranno disponibili a breve. Torna presto!</p>
           </div>
         )}
       </Section>
 
-      <Section className="bg-muted">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="heading-brand text-2xl md:text-3xl font-bold mb-4">
-            Hai Bisogno di Informazioni?
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Contattaci per preventivi personalizzati e maggiori dettagli sulle nostre attrezzature
-          </p>
-          <Link href="/contatti">
-            <Button variant="primary" size="lg">
-              Contattaci
-            </Button>
-          </Link>
-        </div>
-      </Section>
+      <ContactSection
+        className="bg-muted"
+        title="Vuoi informazioni sulle attrezzature?"
+        description="Compila il modulo o contattaci utilizzando i recapiti qui sotto per preventivi, noleggio o acquisto delle nostre attrezzature."
+      />
     </>
   );
 }

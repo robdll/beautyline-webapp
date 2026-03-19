@@ -32,7 +32,20 @@ export async function POST(request: NextRequest) {
         existingUser.verificationToken = token;
         existingUser.verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
         await existingUser.save();
-        await sendVerificationEmail(existingUser.email, token);
+        try {
+          await sendVerificationEmail(existingUser.email, token);
+        } catch (emailError) {
+          console.error('Signup resend verification error:', emailError);
+          return NextResponse.json(
+            {
+              error:
+                emailError instanceof Error
+                  ? emailError.message
+                  : 'Impossibile inviare l\'email di verifica.',
+            },
+            { status: 502 }
+          );
+        }
 
         return NextResponse.json(
           { message: 'Un\'email di verifica è stata inviata al tuo indirizzo.' },
@@ -56,7 +69,20 @@ export async function POST(request: NextRequest) {
       verificationTokenExpiry: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
-    await sendVerificationEmail(email.toLowerCase(), verificationToken);
+    try {
+      await sendVerificationEmail(email.toLowerCase(), verificationToken);
+    } catch (emailError) {
+      console.error('Signup verification email error:', emailError);
+      return NextResponse.json(
+        {
+          error:
+            emailError instanceof Error
+              ? emailError.message
+              : 'Registrazione avvenuta, ma non è stato possibile inviare l\'email di verifica.',
+        },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json(
       { message: 'Registrazione completata. Controlla la tua email per verificare l\'account.' },

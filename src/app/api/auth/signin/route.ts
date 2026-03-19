@@ -39,7 +39,20 @@ export async function POST(request: NextRequest) {
       user.verificationToken = token;
       user.verificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
       await user.save();
-      await sendVerificationEmail(user.email, token);
+      try {
+        await sendVerificationEmail(user.email, token);
+      } catch (emailError) {
+        console.error('Signin resend verification error:', emailError);
+        return NextResponse.json(
+          {
+            error:
+              emailError instanceof Error
+                ? emailError.message
+                : 'Account non verificato, ma invio email di verifica fallito.',
+          },
+          { status: 502 }
+        );
+      }
 
       return NextResponse.json(
         { error: 'Account non verificato. Una nuova email di verifica è stata inviata.' },

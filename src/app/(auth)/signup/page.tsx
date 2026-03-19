@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/shared/Button';
 
@@ -13,6 +14,7 @@ export default function SignUpPage() {
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +39,7 @@ export default function SignUpPage() {
       setError(result.error);
     } else if (result.message) {
       setSuccess(result.message);
+      router.push(`/verify?email=${encodeURIComponent(email)}`);
     }
   };
 

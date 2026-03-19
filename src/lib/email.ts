@@ -6,9 +6,13 @@ const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'noreply@beautylineprofessi
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
 export async function sendVerificationEmail(email: string, token: string) {
-  const verifyUrl = `${APP_URL}/verify?token=${token}`;
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error('RESEND_API_KEY mancante.');
+  }
 
-  await resend.emails.send({
+  const verifyUrl = `${APP_URL}/api/auth/verify?token=${token}`;
+
+  const result = await resend.emails.send({
     from: FROM_EMAIL,
     to: email,
     subject: 'Verifica il tuo account BeautyLine',
@@ -30,4 +34,8 @@ export async function sendVerificationEmail(email: string, token: string) {
       </div>
     `,
   });
+
+  if (result.error) {
+    throw new Error(`Invio email fallito: ${result.error.message}`);
+  }
 }

@@ -24,6 +24,11 @@ export default function SignInPage() {
     const result = await signin(email, password);
 
     if (result.error) {
+      if (result.error.toLowerCase().includes('account non verificato')) {
+        router.push(`/verify?email=${encodeURIComponent(email)}`);
+        setIsLoading(false);
+        return;
+      }
       setError(result.error);
       setIsLoading(false);
     } else {

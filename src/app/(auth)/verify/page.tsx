@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
@@ -8,11 +8,26 @@ import { Button } from '@/components/shared/Button';
 export default function VerifyPage() {
   const searchParams = useSearchParams();
   const verified = searchParams.get('verified') === 'true';
+  const token = searchParams.get('token');
+  const error = searchParams.get('error');
+
+  useEffect(() => {
+    if (token && !verified && !error) {
+      window.location.href = `/api/auth/verify?token=${encodeURIComponent(token)}`;
+    }
+  }, [token, verified, error]);
+
+  const errorMessage = useMemo(() => {
+    if (error === 'missing-token') return 'Link di verifica mancante o incompleto.';
+    if (error === 'invalid-token') return 'Il link di verifica non è valido o è scaduto.';
+    if (error === 'server-error') return 'Si è verificato un errore durante la verifica.';
+    return null;
+  }, [error]);
 
   if (verified) {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-muted">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center flex flex-col items-center gap-5">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -34,18 +49,63 @@ export default function VerifyPage() {
     );
   }
 
+  if (errorMessage) {
+    return (
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-muted">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center flex flex-col items-center gap-5">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide">
+            Verifica non riuscita
+          </h1>
+          <p className="text-gray-500 text-sm">{errorMessage}</p>
+          <div className="w-full pt-1">
+            <Link href="/signin">
+              <Button variant="primary" size="lg" className="w-full">
+                Torna al login
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (token) {
+    return (
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-muted">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center flex flex-col items-center gap-5">
+          <div className="w-16 h-16 bg-purple/10 rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-purple animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide">
+            Verifica in corso...
+          </h1>
+          <p className="text-gray-500 text-sm">
+            Stiamo verificando il tuo account, attendi qualche secondo.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-muted">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center">
-        <div className="w-16 h-16 bg-purple/10 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 text-center flex flex-col items-center gap-5">
+        <div className="w-16 h-16 bg-purple/10 rounded-full flex items-center justify-center">
           <svg className="w-8 h-8 text-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold text-secondary mb-3 font-raleway uppercase tracking-wide">
+        <h1 className="text-2xl font-bold text-secondary font-raleway uppercase tracking-wide">
           Controlla la tua Email
         </h1>
-        <p className="text-gray-500 mb-8 text-sm">
+        <p className="text-gray-500 text-sm">
           Ti abbiamo inviato un&apos;email con un link di verifica.
           Clicca sul link per attivare il tuo account.
         </p>

@@ -4,8 +4,8 @@ import { Button } from '@/components/shared/Button';
 import { cn } from '@/lib/utils';
 
 interface HeroProps {
-  title: string;
-  description?: string;
+  title: React.ReactNode;
+  description?: React.ReactNode;
   videoSrc?: string;
   ctaText?: string;
   ctaHref?: string;
@@ -39,16 +39,16 @@ export const Hero: React.FC<HeroProps> = ({
       {/* Content */}
       <div className="relative z-20 w-full h-full flex items-center md:items-start justify-center">
         <div className="w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24 flex flex-col items-center">
-          <div className="lg:pt-15 max-w-4xl w-full flex flex-col items-center gap-14 lg:text-lg">
+          <div className="max-w-4xl w-full flex flex-col items-center gap-14 lg:text-lg">
             <h1
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-purple leading-tight text-center text-shadow-soft-white"
             >
               {title}
             </h1>
             {description && (
-              <p className="md:max-w-[340px] lg:max-w-[600px] text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed drop-shadow-md text-center">
+              <div className="md:max-w-[340px] lg:max-w-[600px] text-lg md:text-xl lg:text-2xl text-white/90 leading-relaxed drop-shadow-md text-center">
                 {description}
-              </p>
+              </div>
             )}
             {ctaText && (
               <div className="pt-4 flex justify-center">

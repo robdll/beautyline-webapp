@@ -53,7 +53,16 @@ export default async function ChiSiamo() {
   return (
     <>
       <Hero
-        title="Chi Siamo"
+        title={
+          <Image
+            src="/images/logo-bl.png"
+            alt="BeautyLine Academy"
+            width={280}
+            height={280}
+            className="w-48 md:w-64 lg:w-72 h-auto drop-shadow-lg"
+            priority
+          />
+        }
         description="La nostra passione, la tua professione."
         ctaText="Contattaci"
         ctaHref="/contatti"

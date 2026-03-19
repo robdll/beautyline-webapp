@@ -32,25 +32,29 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
         Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.
       </p>
 
-      <div className="w-full flex flex-col md:flex-row md:flex-wrap gap-5 justify-center">
+      <div className="grid w-full max-w-7xl grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
         {HOME_COURSE_CARDS.map((card) => (
           <Link
             key={card.title}
             href={card.href}
             aria-label={card.title}
-            className="group relative block w-full md:w-[320px] lg:w-[380px] overflow-hidden rounded-2xl shadow-md cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="group relative block min-w-0 overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
-            <div className="relative aspect-video">
+            <div className="relative aspect-4/5 w-full md:aspect-3/4">
               <Image
                 src={card.imageSrc}
-                alt={card.title}
+                alt=""
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] brightness-95 group-hover:brightness-75"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
               />
-              <div className="absolute inset-0 bg-black/10 transition-colors duration-500 group-hover:bg-black/20" />
-              <div className="absolute inset-0 flex items-center justify-center p-6">
-                <h3 className="text-white text-4xl md:text-5xl font-raleway font-light tracking-wide drop-shadow-md text-center">
+              {/* Readability: dark gradient behind bottom-aligned title (avoids busy image center) */}
+              <div
+                className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/10 transition-opacity duration-300 group-hover:from-black/90"
+                aria-hidden
+              />
+              <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-14 md:p-5 md:pt-16 lg:pt-20">
+                <h3 className="font-raleway text-lg font-semibold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.65)] md:text-xl lg:text-2xl">
                   {card.title}
                 </h3>
               </div>

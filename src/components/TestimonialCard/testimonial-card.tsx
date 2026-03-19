@@ -1,7 +1,11 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { Testimonial } from '@/types';
 import { cn } from '@/lib/utils';
+
+const TRUNCATE_LENGTH = 200;
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
@@ -15,11 +19,18 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
   variant = 'light',
 }) => {
   const isDark = variant === 'dark';
+  const isLong = testimonial.content.length > TRUNCATE_LENGTH;
+  const [expanded, setExpanded] = useState(false);
+
+  const displayedContent =
+    isLong && !expanded
+      ? `${testimonial.content.slice(0, TRUNCATE_LENGTH)}…`
+      : testimonial.content;
 
   return (
     <div className={cn('bg-white rounded-lg shadow-md p-6 md:p-8 flex flex-col h-full', className)}>
       {testimonial.rating && (
-        <div className="flex mb-4">
+        <div className="flex mb-6">
           {[...Array(5)].map((_, i) => (
             <svg
               key={i}
@@ -35,10 +46,18 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
           ))}
         </div>
       )}
-      <p className={cn('mb-6 grow italic leading-relaxed', isDark ? 'text-gray-100' : 'text-gray-700')}>
-        "{testimonial.content}"
-      </p>
-      <div className="flex items-center space-x-4">
+      <div className={cn('mb-6 grow italic leading-relaxed', isDark ? 'text-gray-100' : 'text-gray-700')}>
+        <p>&ldquo;{displayedContent}&rdquo;</p>
+        {isLong && (
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="mt-2 text-sm font-medium text-primary hover:text-primary/80 not-italic transition-colors"
+          >
+            {expanded ? 'Mostra meno' : 'Mostra tutto'}
+          </button>
+        )}
+      </div>
+      <div className="flex items-center gap-4">
         {testimonial.image && (
           <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0">
             <Image
@@ -61,4 +80,3 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
     </div>
   );
 };
-

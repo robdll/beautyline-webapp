@@ -37,6 +37,7 @@ Main variables are listed in `.env.example`.
 - `CONTACT_TO_EMAIL`: Recipient email for contact form requests
 - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`: Cloudinary media upload credentials
 - `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Stripe credentials
+- `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACES_PLACE_ID`: Google Places key and place ID for live review snippets
 
 ## Local Data Seeding (Development Only)
 

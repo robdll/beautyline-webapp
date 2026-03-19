@@ -9,9 +9,6 @@ type ContactFormData = {
   name: string;
   email: string;
   phone: string;
-  eventType: string;
-  eventDate: string;
-  guests: string;
   message: string;
 };
 
@@ -19,9 +16,6 @@ const INITIAL_FORM_DATA: ContactFormData = {
   name: '',
   email: '',
   phone: '',
-  eventType: '',
-  eventDate: '',
-  guests: '',
   message: '',
 };
 
@@ -38,7 +32,7 @@ export function ContactForm() {
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -151,78 +145,21 @@ export function ContactForm() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                Telefono <span className="text-red-600">*</span>
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                required
-                autoComplete="tel"
-                value={formData.phone}
-                onChange={handleChange}
-                className={inputClassName}
-                placeholder="Il tuo numero"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="eventType" className="text-sm font-medium text-gray-700">
-                Tipo di evento <span className="text-red-600">*</span>
-              </label>
-              <select
-                id="eventType"
-                name="eventType"
-                required
-                value={formData.eventType}
-                onChange={handleChange}
-                className={`${inputClassName} bg-white`}
-              >
-                <option value="">Seleziona...</option>
-                <option value="festa-privata">Festa privata / Matrimonio</option>
-                <option value="evento-aziendale">Evento aziendale / Team building</option>
-                <option value="festival">Festival / Fiera</option>
-                <option value="noleggio">Noleggio</option>
-                <option value="altro">Altro</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label htmlFor="eventDate" className="text-sm font-medium text-gray-700">
-                Data evento
-              </label>
-              <input
-                type="date"
-                id="eventDate"
-                name="eventDate"
-                value={formData.eventDate}
-                onChange={handleChange}
-                className={inputClassName}
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="guests" className="text-sm font-medium text-gray-700">
-                Numero ospiti
-              </label>
-              <input
-                type="number"
-                id="guests"
-                name="guests"
-                min={1}
-                inputMode="numeric"
-                value={formData.guests}
-                onChange={handleChange}
-                className={inputClassName}
-                placeholder="Es. 50"
-              />
-            </div>
+          <div className="space-y-2">
+            <label htmlFor="phone" className="text-sm font-medium text-gray-700">
+              Telefono <span className="text-red-600">*</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              required
+              autoComplete="tel"
+              value={formData.phone}
+              onChange={handleChange}
+              className={inputClassName}
+              placeholder="Il tuo numero"
+            />
           </div>
 
           <div className="space-y-2">

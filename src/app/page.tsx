@@ -266,13 +266,6 @@ export default function Home() {
             />
           ))}
         </div>
-        <div className="text-center mt-12">
-          <Link href="/recensioni">
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-secondary">
-              Leggi Tutte le Recensioni
-            </Button>
-          </Link>
-        </div>
       </Section>
 
       <ContactSection

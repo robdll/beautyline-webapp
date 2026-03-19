@@ -26,7 +26,6 @@ const navigationItems: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Chi Siamo', href: '/chi-siamo' },
   { label: 'I Nostri Servizi', href: '/#servizi', children: serviceLinks },
-  { label: 'Recensioni', href: '/recensioni' },
   { label: 'Contattaci', href: '/contatti' },
 ];
 

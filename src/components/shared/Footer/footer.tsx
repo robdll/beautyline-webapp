@@ -71,12 +71,6 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/recensioni" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
-                  <span className="w-1 h-1 bg-primary rounded-full"></span>
-                  Recensioni
-                </Link>
-              </li>
-              <li>
                 <Link href="/contatti" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
                   <span className="w-1 h-1 bg-primary rounded-full"></span>
                   Contatti

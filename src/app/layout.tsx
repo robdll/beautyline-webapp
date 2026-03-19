@@ -3,6 +3,8 @@ import { Inter, Raleway } from "next/font/google";
 import "@/styles/global.css";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -51,11 +53,15 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${inter.variable} ${raleway.variable}`}>
       <body className="antialiased min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <CartProvider>
+            <Navbar />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

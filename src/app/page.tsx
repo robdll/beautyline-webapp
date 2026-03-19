@@ -8,11 +8,11 @@ import { DeviceRentSection } from '@/components/DeviceRentSection';
 import { CourseCard } from '@/components/CourseCard';
 import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
+import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
 import { Button } from '@/components/shared/Button';
 import { Course, Product, Testimonial } from '@/types';
 import { HOME_COURSE_CARDS } from '@/lib/constants';
 
-// Mock data
 const featuredCourses: Course[] = [
   {
     id: '1',
@@ -105,10 +105,33 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+const FormazioneIcon = () => (
+  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+  </svg>
+);
+
+const EsteticaIcon = () => (
+  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+  </svg>
+);
+
+const AttrezzatureIcon = () => (
+  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085" />
+  </svg>
+);
+
+const ProdottiIcon = () => (
+  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+  </svg>
+);
+
 export default function Home() {
   return (
     <>
-      {/* Hero Section */}
       <Hero
         title="BeautyLine Professional"
         description="L&apos;eccellenza nell&apos;estetica professionale. Formazione, prodotti e attrezzature per il tuo successo."
@@ -116,8 +139,46 @@ export default function Home() {
         ctaHref="/prodotti"
       />
 
-      {/* Courses Section */}
-      <Section className="flex flex-col items-center justify-center" containerClassName="flex flex-col items-center justify-center gap-12">
+      {/* Services Overview */}
+      <Section id="servizi" className="bg-white">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4 uppercase tracking-wide">
+            I Nostri Servizi
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Scopri tutto ciò che BeautyLine può offrirti per la tua crescita professionale
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <ServiceOverviewCard
+            title="Formazione"
+            description="Corsi professionali e master per diventare esperti del settore estetico."
+            icon={<FormazioneIcon />}
+            targetId="formazione"
+          />
+          <ServiceOverviewCard
+            title="Servizi Estetica"
+            description="Trattamenti professionali di estetica per la cura del corpo e del viso."
+            icon={<EsteticaIcon />}
+            targetId="servizi-estetica"
+          />
+          <ServiceOverviewCard
+            title="Attrezzature"
+            description="Vendita e noleggio di attrezzature professionali all'avanguardia."
+            icon={<AttrezzatureIcon />}
+            targetId="attrezzature"
+          />
+          <ServiceOverviewCard
+            title="Prodotti"
+            description="Linea completa di prodotti professionali per estetica e benessere."
+            icon={<ProdottiIcon />}
+            targetId="prodotti"
+          />
+        </div>
+      </Section>
+
+      {/* Formazione Section */}
+      <Section id="formazione" className="flex flex-col items-center justify-center" containerClassName="flex flex-col items-center justify-center gap-12">
         <h2 className="text-center text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
           I Nostri Corsi
         </h2>
@@ -153,12 +214,46 @@ export default function Home() {
             </Link>
           ))}
         </div>
+
+        <Link href="/corsi">
+          <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
+            Scopri di più
+          </Button>
+        </Link>
       </Section>
 
       <ParallaxDivider imageSrc="/images/parallax-bg.jpg" strength={0.95} />
 
-      {/* Device rent section */}
-      <DeviceRentSection />
+      {/* Servizi Estetica Section */}
+      <Section id="servizi-estetica" className="bg-muted">
+        <div className="text-center max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-medium text-purple mb-6 uppercase tracking-[0.25em] font-raleway">
+            Servizi Estetica
+          </h2>
+          <p className="text-lg text-gray-600 leading-relaxed mb-6">
+            I nostri trattamenti professionali di estetica sono pensati per offrire il massimo
+            della qualità e del benessere. Dall&apos;epilazione alla pedicure, ogni servizio è
+            eseguito con prodotti di alta gamma e tecniche all&apos;avanguardia.
+          </p>
+          <ul className="flex flex-wrap justify-center gap-3 mb-10">
+            {['Epilazione', 'Pedicure', 'Trattamenti Viso', 'Trattamenti Corpo', 'Manicure'].map((s) => (
+              <li key={s} className="px-4 py-2 bg-purple/10 text-purple rounded-full text-sm font-medium">
+                {s}
+              </li>
+            ))}
+          </ul>
+          <Link href="/servizi-estetica">
+            <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
+              Scopri di più
+            </Button>
+          </Link>
+        </div>
+      </Section>
+
+      {/* Attrezzature Section */}
+      <div id="attrezzature">
+        <DeviceRentSection />
+      </div>
 
       {/* Introduction Section */}
       <Section>
@@ -182,7 +277,7 @@ export default function Home() {
       </Section>
 
       {/* Featured Products Section */}
-      <Section className="bg-muted">
+      <Section id="prodotti" className="bg-muted">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4 uppercase tracking-wide">
             I Nostri Prodotti
@@ -198,8 +293,8 @@ export default function Home() {
         </div>
         <div className="text-center">
           <Link href="/prodotti">
-            <Button variant="primary" size="lg">
-              Vedi Tutti i Prodotti
+            <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
+              Scopri di più
             </Button>
           </Link>
         </div>
@@ -239,7 +334,6 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6">
-             {/* Show only top 2 courses on mobile/tablet, maybe 2 in a column on desktop */}
              {featuredCourses.slice(0, 2).map((course) => (
                 <CourseCard key={course.id} course={course} className="shadow-sm border border-gray-100" />
              ))}

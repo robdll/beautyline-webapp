@@ -3,71 +3,37 @@ import { Metadata } from 'next';
 import { Section } from '@/components/Section';
 import { CourseCard } from '@/components/CourseCard';
 import { Course } from '@/types';
+import { connectDB } from '@/lib/mongodb';
+import CourseModel from '@/models/Course';
 
 export const metadata: Metadata = {
   title: 'Corsi di Estetica',
   description: 'Scopri tutti i nostri corsi di formazione nel settore dell\'estetica professionale. Corsi base, avanzati e specialistici.',
 };
 
-// Mock data
-const courses: Course[] = [
-  {
-    id: '1',
-    title: 'Corso Base di Estetica',
-    description: 'Corso completo per iniziare la tua carriera nel settore dell\'estetica professionale. Impara le tecniche fondamentali e le basi teoriche.',
-    duration: '40 ore',
-    price: '€ 890',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Base',
-  },
-  {
-    id: '2',
-    title: 'Master in Trattamenti Viso',
-    description: 'Specializzazione avanzata nei trattamenti viso, dalle tecniche base ai protocolli più innovativi del settore.',
-    duration: '60 ore',
-    price: '€ 1.290',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Avanzato',
-  },
-  {
-    id: '3',
-    title: 'Corso Massaggio Corpo',
-    description: 'Impara le tecniche di massaggio professionale per il benessere del corpo, con focus su drenaggio e rilassamento.',
-    duration: '50 ore',
-    price: '€ 1.090',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Specialistico',
-  },
-  {
-    id: '4',
-    title: 'Corso Manicure e Pedicure',
-    description: 'Tecniche professionali per la cura delle unghie, dalla ricostruzione alle decorazioni più moderne.',
-    duration: '30 ore',
-    price: '€ 690',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Specialistico',
-  },
-  {
-    id: '5',
-    title: 'Corso Epilazione',
-    description: 'Impara tutte le tecniche di epilazione: ceretta, elettrica e laser. Protocolli completi per ogni tipo di trattamento.',
-    duration: '45 ore',
-    price: '€ 990',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Avanzato',
-  },
-  {
-    id: '6',
-    title: 'Corso Trucco Professionale',
-    description: 'Tecniche di make-up professionale per ogni occasione, dal trucco giornaliero al trucco da sposa.',
-    duration: '35 ore',
-    price: '€ 890',
-    image: 'https://placehold.co/400x300.png',
-    category: 'Specialistico',
-  },
-];
+export const dynamic = 'force-dynamic';
 
-export default function CorsiPage() {
+async function getCourses(): Promise<Course[]> {
+  try {
+    await connectDB();
+    const docs = await CourseModel.find().sort({ createdAt: -1 }).lean();
+    return docs.map((doc) => ({
+      id: doc._id.toString(),
+      title: doc.name,
+      description: doc.description,
+      duration: doc.duration,
+      price: `€ ${doc.cost.toFixed(2)}`,
+      image: doc.media?.[0] || 'https://placehold.co/400x300.png',
+      category: `${doc.type} - ${doc.level}`,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+export default async function CorsiPage() {
+  const courses = await getCourses();
+
   return (
     <>
       <Section className="bg-muted pt-20">
@@ -82,11 +48,17 @@ export default function CorsiPage() {
       </Section>
 
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
-        </div>
+        {courses.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {courses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-gray-500">
+            <p>I corsi saranno disponibili a breve. Torna presto!</p>
+          </div>
+        )}
       </Section>
 
       <Section className="bg-muted">
@@ -99,7 +71,7 @@ export default function CorsiPage() {
           </p>
           <a
             href="/contatti"
-            className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-[#B88A5C] transition-colors font-medium"
+            className="inline-block px-6 py-3 bg-primary text-white rounded-[40px] hover:bg-primary/90 transition-colors font-medium"
           >
             Contattaci
           </a>
@@ -108,4 +80,3 @@ export default function CorsiPage() {
     </>
   );
 }
-

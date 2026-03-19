@@ -1,62 +1,39 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ProductCard } from '@/components/ProductCard';
 import { Product } from '@/types';
+import { connectDB } from '@/lib/mongodb';
+import ProductModel from '@/models/Product';
 
-// Mock data
-const products: Product[] = [
-  {
-    id: '1',
-    name: 'Kit Laminazione Ciglia',
-    description: 'Kit completo professionale per trattamenti di laminazione ciglia.',
-    price: '€ 129,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Lashes',
-  },
-  {
-    id: '2',
-    name: 'Siero Viso Anti-Age',
-    description: 'Siero concentrato con acido ialuronico e vitamine.',
-    price: '€ 49,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Skincare',
-  },
-  {
-    id: '3',
-    name: 'Set Pennelli Professionali',
-    description: 'Set di 12 pennelli in fibra sintetica di alta qualità.',
-    price: '€ 89,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Tools',
-  },
-  {
-    id: '4',
-    name: 'Crema Corpo Idratante',
-    description: 'Crema ricca e nutriente per tutti i tipi di pelle.',
-    price: '€ 35,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Body',
-  },
-  {
-    id: '5',
-    name: 'Olio Cuticole',
-    description: 'Olio nutriente per cuticole e unghie sane e forti.',
-    price: '€ 12,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Nails',
-  },
-  {
-    id: '6',
-    name: 'Maschera Viso Purificante',
-    description: 'Maschera all\'argilla per pelli impure e miste.',
-    price: '€ 29,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Skincare',
-  },
-];
+export const metadata: Metadata = {
+  title: 'I Nostri Prodotti',
+  description: 'Scopri la nostra linea completa di prodotti professionali per estetica e benessere.',
+};
 
-export default function Prodotti() {
+export const dynamic = 'force-dynamic';
+
+async function getProducts(): Promise<Product[]> {
+  try {
+    await connectDB();
+    const docs = await ProductModel.find().sort({ createdAt: -1 }).lean();
+    return docs.map((doc) => ({
+      id: doc._id.toString(),
+      name: doc.name,
+      description: doc.description,
+      price: `€ ${doc.cost.toFixed(2)}`,
+      image: doc.media?.[0] || 'https://placehold.co/300x300.png',
+      category: doc.brand,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+export default async function ProdottiPage() {
+  const products = await getProducts();
+
   return (
     <>
       <Hero
@@ -67,11 +44,17 @@ export default function Prodotti() {
       />
 
       <Section>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-gray-500">
+            <p>I prodotti saranno disponibili a breve. Torna presto!</p>
+          </div>
+        )}
       </Section>
     </>
   );

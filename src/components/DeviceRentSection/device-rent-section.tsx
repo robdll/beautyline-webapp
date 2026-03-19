@@ -72,13 +72,13 @@ export const DeviceRentSection: React.FC = () => {
           </div>
 
           <div className="mt-14">
-            <Link href="/noleggio">
+            <Link href="/attrezzature">
               <Button
                 variant="primary"
                 size="lg"
                 className="uppercase tracking-wider font-bold"
               >
-                Maggiori informazioni sul noleggio
+                Scopri di più
               </Button>
             </Link>
           </div>

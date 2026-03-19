@@ -5,6 +5,7 @@ import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
+import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,11 +56,11 @@ export default function RootLayout({
       <body className="antialiased min-h-screen flex flex-col">
         <AuthProvider>
           <CartProvider>
-            <Navbar />
-            <main className="flex-grow">
-              {children}
-            </main>
-            <Footer />
+            <CookieConsentProvider>
+              <Navbar />
+              <main className="grow">{children}</main>
+              <Footer />
+            </CookieConsentProvider>
           </CartProvider>
         </AuthProvider>
       </body>

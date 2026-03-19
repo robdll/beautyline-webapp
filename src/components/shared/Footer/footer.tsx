@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { CookiePreferencesTrigger } from '@/components/CookieConsent';
 import { Logo } from '../Logo';
 import { BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL_HREF } from '@/lib/contact';
 
@@ -77,6 +78,18 @@ export const Footer: React.FC = () => {
                   Contatti
                 </Link>
               </li>
+              <li>
+                <Link href="/informativa-cookie" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
+                  Informativa cookie
+                </Link>
+              </li>
+              <li>
+                <Link href="/informativa-privacy" className="text-gray-400 hover:text-primary transition-colors text-sm flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full"></span>
+                  Privacy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -136,8 +149,23 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+        <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-500 space-y-2">
           <p>&copy; {new Date().getFullYear()} BeautyLine Professional. Tutti i diritti riservati.</p>
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <CookiePreferencesTrigger className="text-gray-500 hover:text-primary transition-colors underline-offset-2 hover:underline" />
+            <span aria-hidden="true" className="text-gray-600">
+              ·
+            </span>
+            <Link href="/informativa-cookie" className="hover:text-primary transition-colors underline-offset-2 hover:underline">
+              Cookie
+            </Link>
+            <span aria-hidden="true" className="text-gray-600">
+              ·
+            </span>
+            <Link href="/informativa-privacy" className="hover:text-primary transition-colors underline-offset-2 hover:underline">
+              Privacy
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

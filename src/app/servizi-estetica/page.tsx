@@ -2,10 +2,13 @@ import React from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { Button } from '@/components/shared/Button';
 import { connectDB } from '@/lib/mongodb';
+import { whatsappPrenotaUrl } from '@/lib/contact';
 import ServiceModel from '@/models/Service';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Servizi Estetica',
@@ -40,29 +43,45 @@ async function getServices(): Promise<ServiceItem[]> {
   }
 }
 
+const prenotaButtonClass = cn(
+  'inline-flex w-full items-center justify-center rounded-[40px] border-2 border-primary px-4 py-2.5 text-sm font-medium text-primary',
+  'transition-all duration-200 hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+);
+
 export default async function ServiziEsteticaPage() {
   const services = await getServices();
 
   return (
     <>
-      <Section className="bg-muted pt-20">
-        <div className="text-center mb-12">
-          <h1 className="heading-brand text-4xl md:text-5xl font-bold mb-4">
-            Servizi Estetica
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Trattamenti professionali di estetica per la cura del corpo e del viso, eseguiti con
-            prodotti di alta gamma e tecniche all&apos;avanguardia.
+      <Hero
+        title={
+          <Image
+            src="/images/logo-bl.png"
+            alt="BeautyLine"
+            width={280}
+            height={280}
+            className="w-48 md:w-64 lg:w-72 h-auto drop-shadow-lg"
+            priority
+          />
+        }
+        description={
+          <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-snug">
+            Trattamenti professionali di estetica. La scienza della bellezza, il tocco del benessere.
           </p>
-        </div>
-      </Section>
+        }
+        ctaText="Scopri i Trattamenti"
+        ctaHref="/servizi-estetica#trattamenti"
+      />
 
-      <Section>
+      <Section id="trattamenti" className="scroll-mt-24">
         {services.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
-              <div key={service.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col">
-                <div className="relative w-full h-48">
+              <div
+                key={service.id}
+                className="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
+              >
+                <div className="relative h-48 w-full">
                   <Image
                     src={service.image}
                     alt={service.name}
@@ -71,38 +90,40 @@ export default async function ServiziEsteticaPage() {
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
                 </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <span className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">
+                <div className="flex grow flex-col p-6">
+                  <span className="mb-1 text-xs font-semibold uppercase tracking-wide text-primary">
                     {service.type}
                   </span>
-                  <h3 className="heading-brand text-xl font-bold mb-2">
-                    {service.name}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
-                    {service.description}
-                  </p>
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                    <p className="text-lg font-bold text-primary">
-                      € {service.cost.toFixed(2)}
-                    </p>
+                  <h3 className="heading-brand mb-2 text-xl font-bold">{service.name}</h3>
+                  <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">{service.description}</p>
+                  <div className="mt-auto space-y-3 border-t border-gray-100 pt-4">
+                    <p className="text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
+                    <a
+                      href={whatsappPrenotaUrl(service.name)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={prenotaButtonClass}
+                    >
+                      Prenota ora
+                    </a>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 text-gray-500">
+          <div className="py-12 text-center text-gray-500">
             <p>I servizi saranno disponibili a breve. Torna presto!</p>
           </div>
         )}
       </Section>
 
       <Section className="bg-muted">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="heading-brand text-2xl md:text-3xl font-bold mb-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="heading-brand mb-4 text-2xl font-bold md:text-3xl">
             Vuoi Prenotare un Trattamento?
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="mb-6 text-gray-600">
             Contattaci per prenotare un appuntamento o per maggiori informazioni sui nostri servizi
           </p>
           <Link href="/contatti">

@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Logo } from '../Logo';
+import { BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL_HREF } from '@/lib/contact';
 
 export const Footer: React.FC = () => {
   return (
@@ -23,8 +24,8 @@ export const Footer: React.FC = () => {
               </p>
               <p className="flex items-center gap-2">
                 <span className="text-primary">Telefono:</span>
-                <a href="tel:+390123456789" className="hover:text-primary transition-colors">
-                  +39 012 345 6789
+                <a href={BUSINESS_PHONE_TEL_HREF} className="hover:text-primary transition-colors">
+                  {BUSINESS_PHONE_DISPLAY}
                 </a>
               </p>
             </div>

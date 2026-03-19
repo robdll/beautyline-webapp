@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from '@/components/Section';
 import { ContactForm } from '@/components/ContactForm';
+import { BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL_HREF } from '@/lib/contact';
 
 interface ContactSectionProps {
   title?: string;
@@ -56,8 +57,8 @@ export function ContactSection({
               </div>
               <div>
                 <h3 className="heading-brand text-lg font-semibold">Telefono</h3>
-                <a href="tel:+390123456789" className="text-gray-600 hover:text-primary transition-colors">
-                  +39 012 345 6789
+                <a href={BUSINESS_PHONE_TEL_HREF} className="text-gray-600 hover:text-primary transition-colors">
+                  {BUSINESS_PHONE_DISPLAY}
                 </a>
               </div>
             </div>

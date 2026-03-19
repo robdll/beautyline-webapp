@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { runLocalSeedIfNeeded } from '@/lib/local-seed';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
@@ -12,7 +13,6 @@ interface MongooseCache {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
   var _mongooseCache: MongooseCache | undefined;
 }
 
@@ -29,5 +29,6 @@ export async function connectDB(): Promise<typeof mongoose> {
   }
 
   cached.conn = await cached.promise;
+  await runLocalSeedIfNeeded();
   return cached.conn;
 }

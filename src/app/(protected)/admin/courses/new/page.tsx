@@ -18,6 +18,7 @@ export default function AdminCoursesNewPage() {
     name: '',
     description: '',
     duration: '',
+    startDate: '',
     cost: '',
     media: [] as string[],
   });
@@ -42,6 +43,7 @@ export default function AdminCoursesNewPage() {
           name: form.name,
           description: form.description,
           duration: form.duration,
+          startDate: form.startDate,
           cost: Number(form.cost) || 0,
           media: form.media,
         }),
@@ -142,6 +144,20 @@ export default function AdminCoursesNewPage() {
               required
               className={inputClass}
               placeholder="es. 2 giorni"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="startDate" className={labelClass}>
+              Data corso
+            </label>
+            <input
+              id="startDate"
+              name="startDate"
+              type="date"
+              value={form.startDate}
+              onChange={handleChange}
+              className={inputClass}
             />
           </div>
 

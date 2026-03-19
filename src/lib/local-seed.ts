@@ -74,6 +74,7 @@ async function seedCourses() {
       description: 'Percorso pratico e teorico per specializzarsi nella laminazione professionale.',
       media: [],
       duration: '2 giorni',
+      startDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14),
       cost: 490,
     },
     {
@@ -83,6 +84,7 @@ async function seedCourses() {
       description: 'Fondamenti tecnici, igiene, preparazione unghia e modellatura gel.',
       media: [],
       duration: '3 giorni',
+      startDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
       cost: 650,
     },
   ]);

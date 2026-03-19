@@ -4,6 +4,12 @@ import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
 import Course from '@/models/Course';
 
+function parseStartDate(value: unknown): Date | null {
+  if (typeof value !== 'string' || !value.trim()) return null;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -48,7 +54,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { type, level, name, description, duration, cost, media } = body;
+    const { type, level, name, description, duration, cost, media, startDate } = body;
 
     if (!type || !level || !name || !description || !duration || cost === undefined) {
       return NextResponse.json(
@@ -62,6 +68,11 @@ export async function PUT(
       return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
     }
 
+    const parsedStartDate = parseStartDate(startDate);
+    if (typeof startDate === 'string' && startDate.trim() && !parsedStartDate) {
+      return NextResponse.json({ error: 'Data corso non valida.' }, { status: 400 });
+    }
+
     await connectDB();
     const course = await Course.findByIdAndUpdate(
       id,
@@ -73,6 +84,7 @@ export async function PUT(
         duration: String(duration).trim(),
         cost: numCost,
         media: Array.isArray(media) ? media : [],
+        startDate: parsedStartDate,
       },
       { new: true }
     ).lean();

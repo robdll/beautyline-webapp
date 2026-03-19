@@ -16,6 +16,7 @@ interface Course {
   name: string;
   description: string;
   duration: string;
+  startDate?: string;
   cost: number;
   media?: string[];
 }
@@ -33,6 +34,7 @@ export default function AdminCoursesEditPage() {
     name: '',
     description: '',
     duration: '',
+    startDate: '',
     cost: '',
     media: [] as string[],
   });
@@ -49,6 +51,7 @@ export default function AdminCoursesEditPage() {
             name: course.name || '',
             description: course.description || '',
             duration: course.duration || '',
+            startDate: course.startDate ? new Date(course.startDate).toISOString().slice(0, 10) : '',
             cost: String(course.cost ?? ''),
             media: course.media || [],
           });
@@ -87,6 +90,7 @@ export default function AdminCoursesEditPage() {
           name: form.name,
           description: form.description,
           duration: form.duration,
+          startDate: form.startDate,
           cost: Number(form.cost) || 0,
           media: form.media,
         }),
@@ -195,6 +199,20 @@ export default function AdminCoursesEditPage() {
               required
               className={inputClass}
               placeholder="es. 2 giorni"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="startDate" className={labelClass}>
+              Data corso
+            </label>
+            <input
+              id="startDate"
+              name="startDate"
+              type="date"
+              value={form.startDate}
+              onChange={handleChange}
+              className={inputClass}
             />
           </div>
 

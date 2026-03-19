@@ -9,6 +9,7 @@ export interface ICourse extends Document {
   media: string[];
   duration: string;
   cost: number;
+  startDate?: Date | null;
   deletedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -25,6 +26,7 @@ const CourseSchema = new Schema<ICourse>(
     media: [{ type: String }],
     duration: { type: String, required: true },
     cost: { type: Number, required: true, min: 0 },
+    startDate: { type: Date, required: false, default: null },
   },
   { timestamps: true }
 );

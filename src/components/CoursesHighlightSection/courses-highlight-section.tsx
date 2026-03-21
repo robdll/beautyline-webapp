@@ -42,7 +42,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
       <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold mb-3 tracking-wide">
         I Nostri Corsi
       </h2>
-      <p className="text-center text-sm md:text-base text-gray-600 leading-relaxed max-w-3xl">
+      <p className="text-center text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl">
         Che tu voglia iniziare da zero o migliorare ciò che già fai, qui trovi percorsi pratici e concreti.
         <br className="hidden md:block" />
         Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.
@@ -62,7 +62,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
               aria-label={card.title}
               className="group relative block min-w-0 overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
-              <div className="relative aspect-3/4 w-full">
+              <div className="relative aspect-square w-full">
                 <Image
                   src={card.imageSrc}
                   alt=""
@@ -80,11 +80,11 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
                   }
                 />
                 <div
-                  className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/10 transition-opacity duration-300 group-hover:from-black/90"
+                  className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/10 transition-opacity duration-300 group-hover:from-black/95"
                   aria-hidden
                 />
-                <div className="absolute inset-x-0 bottom-0 z-10 p-3 pt-10 md:p-4 md:pt-12">
-                  <h3 className="font-raleway text-base font-semibold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.65)] md:text-lg">
+                <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
+                  <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
                     {card.title}
                   </h3>
                 </div>

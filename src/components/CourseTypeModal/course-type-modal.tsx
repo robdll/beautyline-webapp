@@ -202,7 +202,7 @@ export function CourseTypeModalHighlightGrid({ cards, gridClassName }: CourseTyp
             aria-label={`Apri elenco: ${card.title}`}
             className="group relative block min-w-0 w-full overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
           >
-            <div className="relative aspect-3/4 w-full">
+            <div className="relative aspect-square w-full">
               <Image
                 src={card.imageSrc}
                 alt=""
@@ -214,11 +214,11 @@ export function CourseTypeModalHighlightGrid({ cards, gridClassName }: CourseTyp
                 }
               />
               <div
-                className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/45 to-black/10 transition-opacity duration-300 group-hover:from-black/90"
+                className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/10 transition-opacity duration-300 group-hover:from-black/95"
                 aria-hidden
               />
-              <div className="absolute inset-x-0 bottom-0 z-10 p-3 pt-10 md:p-4 md:pt-12">
-                <h3 className="font-raleway text-base font-semibold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.65)] md:text-lg">
+              <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
+                <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
                   {card.title}
                 </h3>
               </div>

@@ -84,12 +84,17 @@ export default async function CorsiPage() {
       />
 
       <CoursesHighlightSection
+        mode="typeModal"
         cards={CORSI_UNGHIE_OCCHI_CARDS}
         ctaText="Calendario Corsi"
         ctaHref="#calendario-corsi"
       />
 
-      <AcademicPathsSection id="percorsi-accademici" />
+      <AcademicPathsSection
+        id="percorsi-accademici"
+        imageSrc="/images/card-3.png"
+        imageAlt="Percorsi accademici e formazione Beautyline Academy"
+      />
 
       <Section id="calendario-corsi" className="bg-muted min-h-0">
         <div className="flex flex-col gap-10">

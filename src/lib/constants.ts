@@ -1,9 +1,13 @@
+import type { CourseType } from '@/lib/course-types';
+
 export type HomeCourseCard = {
   title: string;
   imageSrc: string;
   href: string;
   /** CSS `object-position` for `object-fit: cover` (e.g. center a focal point). */
   imageObjectPosition?: string;
+  /** Per modal elenco corsi su /corsi (mode typeModal). */
+  courseType?: CourseType;
 };
 
 export const HOME_COURSE_CARDS: HomeCourseCard[] = [
@@ -27,7 +31,8 @@ export const HOME_COURSE_CARDS: HomeCourseCard[] = [
 ];
 
 /** Corsi page — “I Nostri Corsi”: solo Unghie e Occhi (senza Percorsi Master). */
-export const CORSI_UNGHIE_OCCHI_CARDS: HomeCourseCard[] = HOME_COURSE_CARDS.filter((c) =>
-  ['Corsi Unghie', 'Corsi Occhi'].includes(c.title)
-);
+export const CORSI_UNGHIE_OCCHI_CARDS: HomeCourseCard[] = [
+  { ...HOME_COURSE_CARDS[0], courseType: 'unghie' },
+  { ...HOME_COURSE_CARDS[1], courseType: 'occhi' },
+];
 

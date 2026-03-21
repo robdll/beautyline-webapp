@@ -4,18 +4,22 @@ import Link from 'next/link';
 
 import { Section } from '@/components/Section';
 import { Button } from '@/components/shared/Button';
-import { HOME_COURSE_CARDS } from '@/lib/constants';
+import { HomeCourseCard, HOME_COURSE_CARDS } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 interface CoursesHighlightSectionProps {
   id?: string;
   ctaText?: string;
   ctaHref?: string;
+  /** Defaults to all home cards; corsi page passes only Unghie + Occhi. */
+  cards?: HomeCourseCard[];
 }
 
 export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = ({
   id,
   ctaText = 'Scopri di più',
   ctaHref = '/corsi',
+  cards = HOME_COURSE_CARDS,
 }) => {
   return (
     <Section
@@ -32,8 +36,13 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
         Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.
       </p>
 
-      <div className="grid w-full max-w-7xl grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
-        {HOME_COURSE_CARDS.map((card) => (
+      <div
+        className={cn(
+          'grid w-full max-w-7xl grid-cols-1 gap-5 md:gap-6',
+          cards.length <= 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'
+        )}
+      >
+        {cards.map((card) => (
           <Link
             key={card.title}
             href={card.href}
@@ -45,7 +54,11 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
                 src={card.imageSrc}
                 alt=""
                 fill
-                sizes="(min-width: 768px) 33vw, 100vw"
+                sizes={
+                  cards.length <= 2
+                    ? '(min-width: 768px) 50vw, 100vw'
+                    : '(min-width: 768px) 33vw, 100vw'
+                }
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                 style={
                   card.imageObjectPosition

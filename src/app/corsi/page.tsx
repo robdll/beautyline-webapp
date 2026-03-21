@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ContactSection } from '@/components/ContactSection';
+import { AcademicPathsSection } from '@/components/AcademicPathsSection/academic-paths-section';
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
+import { CORSI_UNGHIE_OCCHI_CARDS } from '@/lib/constants';
 import { CourseCarousel, UpcomingCourseItem } from '@/components/CourseCarousel';
 import { connectDB } from '@/lib/mongodb';
 import CourseModel from '@/models/Course';
@@ -31,13 +33,18 @@ async function getUpcomingCourses(): Promise<UpcomingCourseItem[]> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
+    // Include future-dated courses and courses with no date yet (admin often omits startDate).
     const docs = await CourseModel.find({
-      startDate: { $gte: today },
-    })
-      .sort({ startDate: 1 })
-      .lean();
+      $or: [{ startDate: { $gte: today } }, { startDate: null }],
+    }).lean();
 
-    return docs.map((doc) => ({
+    const sorted = [...docs].sort((a, b) => {
+      const aTime = a.startDate ? new Date(a.startDate).getTime() : Number.POSITIVE_INFINITY;
+      const bTime = b.startDate ? new Date(b.startDate).getTime() : Number.POSITIVE_INFINITY;
+      return aTime - bTime;
+    });
+
+    return sorted.map((doc) => ({
       id: doc._id.toString(),
       title: `${doc.name} (${doc.level})`,
       description: doc.description,
@@ -76,7 +83,13 @@ export default async function CorsiPage() {
         ctaText=""
       />
 
-      <CoursesHighlightSection ctaText="Calendario Corsi" ctaHref="#calendario-corsi" />
+      <CoursesHighlightSection
+        cards={CORSI_UNGHIE_OCCHI_CARDS}
+        ctaText="Calendario Corsi"
+        ctaHref="#calendario-corsi"
+      />
+
+      <AcademicPathsSection id="percorsi-accademici" />
 
       <Section id="calendario-corsi" className="bg-muted min-h-0">
         <div className="flex flex-col gap-10">

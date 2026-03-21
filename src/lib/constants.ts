@@ -26,3 +26,8 @@ export const HOME_COURSE_CARDS: HomeCourseCard[] = [
   },
 ];
 
+/** Corsi page — “I Nostri Corsi”: solo Unghie e Occhi (senza Percorsi Master). */
+export const CORSI_UNGHIE_OCCHI_CARDS: HomeCourseCard[] = HOME_COURSE_CARDS.filter((c) =>
+  ['Corsi Unghie', 'Corsi Occhi'].includes(c.title)
+);
+

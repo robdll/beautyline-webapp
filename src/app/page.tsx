@@ -136,10 +136,15 @@ export default function Home() {
             Offriamo una gamma completa di prodotti di alta qualità, corsi di formazione avanzata e attrezzature all&apos;avanguardia.
             La nostra missione è supportare la tua crescita professionale con soluzioni innovative e un servizio eccellente.
           </p>
-          <div className="pt-1">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-1">
             <Link href="/chi-siamo">
               <Button variant="outline" size="lg">
                 Scopri Chi Siamo
+              </Button>
+            </Link>
+            <Link href="/#servizi">
+              <Button variant="outline" size="lg">
+                Scopri i Servizi
               </Button>
             </Link>
           </div>

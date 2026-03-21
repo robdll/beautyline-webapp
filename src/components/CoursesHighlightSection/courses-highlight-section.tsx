@@ -29,7 +29,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
   const gridClassName = cn(
     'mx-auto grid w-full grid-cols-1 gap-4 md:gap-5',
     cards.length <= 2
-      ? 'max-w-3xl md:grid-cols-2 lg:max-w-lg lg:gap-3 xl:max-w-md'
+      ? 'max-w-3xl md:grid-cols-2 lg:max-w-[40rem] lg:gap-5 xl:max-w-2xl'
       : 'max-w-5xl md:grid-cols-3 lg:max-w-2xl lg:gap-3 xl:max-w-xl'
   );
 
@@ -42,7 +42,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
       <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold mb-3 tracking-wide">
         I Nostri Corsi
       </h2>
-      <p className="text-center text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl">
+      <p className="text-center text-base md:text-lg text-gray-700 leading-relaxed max-w-4xl">
         Che tu voglia iniziare da zero o migliorare ciò che già fai, qui trovi percorsi pratici e concreti.
         <br className="hidden md:block" />
         Dalle basi dell&apos;estetica ai master più avanzati, ti seguiamo passo dopo passo, senza giudicare e senza lasciare indietro nessuno.
@@ -60,7 +60,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
               key={card.title}
               href={card.href}
               aria-label={card.title}
-              className="group relative block min-w-0 overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="group relative block min-w-0 cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <div className="relative aspect-square w-full">
                 <Image
@@ -69,7 +69,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
                   fill
                   sizes={
                     cards.length <= 2
-                      ? '(min-width: 1280px) 216px, (min-width: 1024px) 248px, (min-width: 768px) 360px, 92vw'
+                      ? '(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw'
                       : '(min-width: 1280px) 176px, (min-width: 1024px) 216px, (min-width: 768px) 320px, 92vw'
                   }
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"

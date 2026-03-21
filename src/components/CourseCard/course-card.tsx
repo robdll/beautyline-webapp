@@ -46,7 +46,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
               </p>
             )}
           </div>
-          <Link href={`/corsi/${course.id}`}>
+          <Link href={course.catalogPath ? `/corsi/${course.catalogPath}` : '/corsi'}>
             <Button variant="outline" size="sm">
               Dettagli
             </Button>

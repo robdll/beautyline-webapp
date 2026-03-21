@@ -7,6 +7,8 @@ export interface Course {
   image: string;
   category?: string;
   startDate?: string;
+  /** Path relativo sotto /corsi, es. `unghie/percorso-gel` */
+  catalogPath?: string;
 }
 
 export interface Product {

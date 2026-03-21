@@ -183,5 +183,16 @@ export async function insertCatalogCoursesIfMissing(): Promise<{
     inserted += 1;
   }
 
+  await ensureAllCoursesHaveSlugs();
+
   return { inserted, skipped };
+}
+
+/** Assegna slug ai documenti creati prima dell’introduzione del campo (pre-save). */
+export async function ensureAllCoursesHaveSlugs(): Promise<void> {
+  const all = await Course.find({});
+  for (const doc of all) {
+    if (doc.slug && String(doc.slug).length > 0) continue;
+    await doc.save();
+  }
 }

@@ -2,8 +2,10 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Button } from '@/components/shared/Button';
+import type { CourseType } from '@/lib/course-types';
 
 export interface UpcomingCourseItem {
   id: string;
@@ -12,6 +14,8 @@ export interface UpcomingCourseItem {
   date: string;
   image: string;
   price: string;
+  courseType: CourseType;
+  slug: string;
 }
 
 interface CourseCarouselProps {
@@ -81,7 +85,14 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
               </div>
               <h3 className="heading-brand text-xl font-bold">{course.title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">{course.description}</p>
-              <div className="pt-2 mt-auto">
+              <div className="pt-2 mt-auto flex flex-wrap gap-2">
+                {course.slug ? (
+                  <Link href={`/corsi/${course.courseType}/${course.slug}`}>
+                    <Button variant="primary" size="sm">
+                      Dettagli
+                    </Button>
+                  </Link>
+                ) : null}
                 <a href={`/contatti?corso=${encodeURIComponent(course.title)}`}>
                   <Button variant="outline" size="sm">
                     Richiedi info

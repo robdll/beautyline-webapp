@@ -83,28 +83,26 @@ export async function PUT(
     }
 
     await connectDB();
-    const course = await Course.findByIdAndUpdate(
-      id,
-      {
-        type: parsedType,
-        level: String(level).trim(),
-        name: String(name).trim(),
-        description: String(description),
-        duration: String(duration).trim(),
-        cost: numCost,
-        media: Array.isArray(media) ? media : [],
-        startDate: parsedStartDate,
-      },
-      { new: true }
-    ).lean();
-
+    const course = await Course.findById(id);
     if (!course) {
       return NextResponse.json({ error: 'Corso non trovato.' }, { status: 404 });
     }
 
+    course.type = parsedType;
+    course.level = String(level).trim();
+    course.name = String(name).trim();
+    course.description = String(description);
+    course.duration = String(duration).trim();
+    course.cost = numCost;
+    course.media = Array.isArray(media) ? media : [];
+    course.startDate = parsedStartDate;
+
+    await course.save();
+
+    const lean = course.toObject();
     const serialized = {
-      ...course,
-      _id: course._id.toString(),
+      ...lean,
+      _id: lean._id.toString(),
     };
     return NextResponse.json(serialized);
   } catch (err) {

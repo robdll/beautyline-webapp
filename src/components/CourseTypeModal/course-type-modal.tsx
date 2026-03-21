@@ -1,31 +1,15 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { HomeCourseCard } from '@/lib/constants';
-import type { CourseType } from '@/lib/course-types';
+import { getCourseTypeLabel, parseCourseType, type CourseType } from '@/lib/course-types';
+import type { PublicCourseJson } from '@/lib/public-course';
 
 const modalIconBtnClass =
   'inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-primary text-primary transition-colors hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2';
-
-function BackArrowIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="m15 18-6-6 6-6" />
-    </svg>
-  );
-}
 
 function CloseIcon({ className }: { className?: string }) {
   return (
@@ -48,19 +32,18 @@ function CloseIcon({ className }: { className?: string }) {
 
 export type CourseCardWithType = HomeCourseCard & { courseType: CourseType };
 
-export interface PublicCourseItem {
-  id: string;
-  name: string;
-  description: string;
-  duration: string;
-  cost: number;
-  level: string;
-  type: CourseType;
-  media: string[];
-  startDate: string | null;
-}
+export type PublicCourseItem = PublicCourseJson;
 
-/** Fallback locale (no CDN esterni obbligatori). */
+/**
+ * Condividi catalogo: `/corsi?tipo=unghie|occhi` (o `type=`).
+ * Singolo corso: pagina `/corsi/[tipo]/[slug]` oppure query `?tipo=…&corso=<slug>` (reindirizza alla pagina).
+ * `corso` accetta anche slug con `course=`; `id=` solo per ObjectId legacy.
+ */
+export const COURSE_CATALOG_URL_PARAMS = {
+  tipo: ['tipo', 'type'] as const,
+  corso: ['corso', 'course', 'id'] as const,
+};
+
 const COURSE_IMAGE_FALLBACK = '/images/course-placeholder.svg';
 
 function firstValidMediaUrl(media: string[] | undefined): string | null {
@@ -81,12 +64,10 @@ function CourseImageFill({
   course,
   className,
   sizes,
-  priority,
 }: {
   course: PublicCourseItem;
   className?: string;
   sizes: string;
-  priority?: boolean;
 }) {
   const [src, setSrc] = useState(() => resolveCourseImageUrl(course));
 
@@ -99,7 +80,6 @@ function CourseImageFill({
       fill
       className={className}
       sizes={sizes}
-      priority={priority}
       unoptimized={isRemote}
       onError={() => {
         setSrc((s) => (s === COURSE_IMAGE_FALLBACK ? s : COURSE_IMAGE_FALLBACK));
@@ -113,32 +93,42 @@ interface CourseTypeModalHighlightGridProps {
   gridClassName: string;
 }
 
-function formatCourseDate(iso: string | null): string {
-  if (!iso) return 'Data da definire';
-  return new Intl.DateTimeFormat('it-IT', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date(iso));
+function readCorsoSlug(sp: URLSearchParams): string {
+  for (const key of COURSE_CATALOG_URL_PARAMS.corso) {
+    const v = sp.get(key)?.trim();
+    if (v) return v;
+  }
+  return '';
 }
 
-export function CourseTypeModalHighlightGrid({ cards, gridClassName }: CourseTypeModalHighlightGridProps) {
+function CourseTypeModalGridFallback({ gridClassName }: { gridClassName: string }) {
+  return (
+    <div
+      className={`${gridClassName} min-h-[min(50vw,280px)] rounded-2xl bg-muted/25`}
+      aria-busy
+    />
+  );
+}
+
+function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeModalHighlightGridProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [open, setOpen] = useState(false);
   const [activeCardTitle, setActiveCardTitle] = useState<string | null>(null);
-  const [view, setView] = useState<'list' | 'detail'>('list');
   const [courses, setCourses] = useState<PublicCourseItem[]>([]);
-  const [selected, setSelected] = useState<PublicCourseItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const closeModal = useCallback(() => {
     setOpen(false);
-    setView('list');
-    setSelected(null);
     setCourses([]);
     setError(null);
     setActiveCardTitle(null);
-  }, []);
+    setLoading(false);
+    router.replace(pathname, { scroll: false });
+  }, [router, pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -158,37 +148,121 @@ export function CourseTypeModalHighlightGrid({ cards, gridClassName }: CourseTyp
     return () => window.removeEventListener('keydown', onKey);
   }, [open, closeModal]);
 
-  const openForType = async (card: CourseCardWithType) => {
-    setActiveCardTitle(card.title);
-    setOpen(true);
-    setView('list');
-    setSelected(null);
-    setError(null);
-    setLoading(true);
-    setCourses([]);
-    try {
-      const res = await fetch(`/api/courses?type=${encodeURIComponent(card.courseType)}`);
-      const data = await res.json();
-      if (!res.ok) {
-        setError(typeof data.error === 'string' ? data.error : 'Errore di caricamento.');
+  useEffect(() => {
+    const tipoParam = parseCourseType(
+      searchParams.get(COURSE_CATALOG_URL_PARAMS.tipo[0]) ??
+        searchParams.get(COURSE_CATALOG_URL_PARAMS.tipo[1])
+    );
+    const corsoParam = readCorsoSlug(searchParams);
+
+    if (!tipoParam && !corsoParam) {
+      setOpen(false);
+      setCourses([]);
+      setError(null);
+      setActiveCardTitle(null);
+      setLoading(false);
+      return;
+    }
+
+    const ac = new AbortController();
+
+    (async () => {
+      if (corsoParam) {
+        const qs = new URLSearchParams();
+        qs.set('corso', corsoParam);
+        if (tipoParam) qs.set('tipo', tipoParam);
+        try {
+          const res = await fetch(`/api/courses?${qs.toString()}`, { signal: ac.signal });
+          const data = await res.json();
+          if (ac.signal.aborted) return;
+          if (res.ok) {
+            const course = data as PublicCourseItem;
+            router.replace(`/corsi/${course.type}/${course.slug}`);
+            return;
+          }
+          const msg = typeof data.error === 'string' ? data.error : 'Corso non trovato.';
+          setOpen(true);
+          setError(msg);
+          if (tipoParam) {
+            setActiveCardTitle(
+              cards.find((c) => c.courseType === tipoParam)?.title ?? getCourseTypeLabel(tipoParam)
+            );
+            setLoading(true);
+            try {
+              const resList = await fetch(`/api/courses?type=${encodeURIComponent(tipoParam)}`, {
+                signal: ac.signal,
+              });
+              const listData = await resList.json();
+              if (ac.signal.aborted) return;
+              if (resList.ok && Array.isArray(listData)) {
+                setCourses(listData as PublicCourseItem[]);
+              } else {
+                setCourses([]);
+              }
+            } finally {
+              if (!ac.signal.aborted) setLoading(false);
+            }
+            router.replace(
+              `${pathname}?${new URLSearchParams({ tipo: tipoParam }).toString()}`,
+              { scroll: false }
+            );
+          } else {
+            setActiveCardTitle(null);
+            setCourses([]);
+            setLoading(false);
+          }
+        } catch {
+          if (ac.signal.aborted) return;
+          setOpen(true);
+          setError('Errore di rete.');
+          setCourses([]);
+          setLoading(false);
+        }
         return;
       }
-      setCourses(data as PublicCourseItem[]);
-    } catch {
-      setError('Errore di rete.');
-    } finally {
-      setLoading(false);
-    }
+
+      if (tipoParam) {
+        setOpen(true);
+        setLoading(true);
+        setError(null);
+        setCourses([]);
+        setActiveCardTitle(
+          cards.find((c) => c.courseType === tipoParam)?.title ?? getCourseTypeLabel(tipoParam)
+        );
+        try {
+          const res = await fetch(`/api/courses?type=${encodeURIComponent(tipoParam)}`, {
+            signal: ac.signal,
+          });
+          const data = await res.json();
+          if (ac.signal.aborted) return;
+          if (!res.ok) {
+            setError(typeof data.error === 'string' ? data.error : 'Errore di caricamento.');
+            setCourses([]);
+          } else {
+            setCourses(data as PublicCourseItem[]);
+          }
+        } catch {
+          if (ac.signal.aborted) return;
+          setError('Errore di rete.');
+          setCourses([]);
+        } finally {
+          if (!ac.signal.aborted) setLoading(false);
+        }
+      }
+    })();
+
+    return () => ac.abort();
+  }, [searchParams, pathname, router, cards]);
+
+  const openForType = (card: CourseCardWithType) => {
+    router.replace(
+      `${pathname}?${new URLSearchParams({ tipo: card.courseType }).toString()}`,
+      { scroll: false }
+    );
   };
 
-  const openDetail = (c: PublicCourseItem) => {
-    setSelected(c);
-    setView('detail');
-  };
-
-  const backToList = () => {
-    setSelected(null);
-    setView('list');
+  const openCoursePage = (c: PublicCourseItem) => {
+    router.push(`/corsi/${c.type}/${c.slug}`);
   };
 
   return (
@@ -200,14 +274,14 @@ export function CourseTypeModalHighlightGrid({ cards, gridClassName }: CourseTyp
             type="button"
             onClick={() => openForType(card)}
             aria-label={`Apri elenco: ${card.title}`}
-            className="group relative block min-w-0 w-full overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
+            className="group relative block min-w-0 w-full cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
           >
             <div className="relative aspect-square w-full">
               <Image
                 src={card.imageSrc}
                 alt=""
                 fill
-                sizes="(min-width: 1280px) 216px, (min-width: 1024px) 248px, (min-width: 768px) 360px, 92vw"
+                sizes="(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw"
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                 style={
                   card.imageObjectPosition ? { objectPosition: card.imageObjectPosition } : undefined
@@ -236,24 +310,13 @@ export function CourseTypeModalHighlightGrid({ cards, gridClassName }: CourseTyp
         >
           <header className="flex shrink-0 items-center gap-2 border-b border-gray-200 px-4 py-3 md:px-6">
             <div className="flex h-10 w-10 shrink-0 items-center justify-start">
-              {view === 'detail' ? (
-                <button
-                  type="button"
-                  onClick={backToList}
-                  aria-label="Indietro"
-                  className={modalIconBtnClass}
-                >
-                  <BackArrowIcon className="h-5 w-5" />
-                </button>
-              ) : (
-                <span className="block h-10 w-10 shrink-0" aria-hidden />
-              )}
+              <span className="block h-10 w-10 shrink-0" aria-hidden />
             </div>
             <h2
               id="course-modal-title"
               className="heading-brand min-w-0 flex-1 hyphens-auto wrap-break-word text-center text-lg font-bold tracking-wide md:text-xl"
             >
-              {view === 'detail' && selected ? selected.name : activeCardTitle}
+              {activeCardTitle ?? 'Catalogo corsi'}
             </h2>
             <div className="flex h-10 w-10 shrink-0 items-center justify-end">
               <button
@@ -267,102 +330,66 @@ export function CourseTypeModalHighlightGrid({ cards, gridClassName }: CourseTyp
             </div>
           </header>
 
-          <div className="min-h-0 flex-1 overflow-y-auto">
-            {view === 'list' && (
-              <div className="mx-auto max-w-4xl px-4 py-6 md:px-6">
-                {loading && (
-                  <div className="flex justify-center py-16">
-                    <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                  </div>
-                )}
-                {error && !loading && (
-                  <p className="text-center text-red-600 py-8" role="alert">
-                    {error}
-                  </p>
-                )}
-                {!loading && !error && courses.length === 0 && (
-                  <p className="text-center text-gray-500 py-12">Nessun corso in questo catalogo.</p>
-                )}
-                {!loading && !error && courses.length > 0 && (
-                  <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-                    <table className="w-full min-w-[320px] text-left text-sm">
-                      <thead className="bg-gray-50 text-gray-700">
-                        <tr>
-                          <th className="w-36 px-3 py-3 font-semibold md:w-44">Immagine</th>
-                          <th className="px-3 py-3 font-semibold">Titolo</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-100 bg-white">
-                        {courses.map((c) => (
-                          <tr
-                            key={c.id}
-                            className="cursor-pointer transition-colors hover:bg-primary/5"
-                            onClick={() => openDetail(c)}
-                          >
-                            <td className="p-3 align-middle">
-                              <div className="relative h-16 w-28 overflow-hidden rounded-lg bg-muted md:h-20 md:w-36">
-                                <CourseImageFill
-                                  key={c.id}
-                                  course={c}
-                                  className="object-cover"
-                                  sizes="144px"
-                                />
-                              </div>
-                            </td>
-                            <td className="p-3 align-middle font-medium text-gray-900">{c.name}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {view === 'detail' && selected && (
-              <div className="mx-auto max-w-2xl px-4 py-6 md:px-6">
-                {/* flex + gap evita il margin collapse tra immagine e blocco testo */}
-                <div className="flex flex-col gap-8 md:gap-10">
-                  <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-muted">
-                    <CourseImageFill
-                      key={selected.id}
-                      course={selected}
-                      className="object-cover"
-                      sizes="(min-width: 768px) 672px, 100vw"
-                      priority
-                    />
-                  </div>
-                  {/* Tipo / livello (es. Occhi · Intermedio) — nascosto per ora
-                <p className="mb-4 text-sm font-medium text-primary">
-                  {getCourseTypeLabel(selected.type)} · {selected.level}
-                </p>
-                */}
-                  <dl className="flex flex-col gap-4 text-sm text-gray-600">
-                  <div>
-                    <dt className="font-medium text-gray-700">Descrizione</dt>
-                    <dd className="mt-1 whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
-                      {selected.description}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-gray-700">Durata</dt>
-                    <dd>{selected.duration}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-gray-700">Data corso</dt>
-                    <dd>{formatCourseDate(selected.startDate)}</dd>
-                  </div>
-                  <div>
-                    <dt className="font-medium text-gray-700">Prezzo</dt>
-                    <dd>€ {selected.cost.toFixed(2)}</dd>
-                  </div>
-                  </dl>
+          <div className="flex min-h-0 w-full flex-1 justify-center overflow-y-auto">
+            <div className="w-full max-w-4xl px-4 py-6 md:px-6">
+              {loading && (
+                <div className="flex justify-center py-16">
+                  <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                 </div>
-              </div>
-            )}
+              )}
+              {error && !loading && (
+                <p className="text-center text-red-600 py-8" role="alert">
+                  {error}
+                </p>
+              )}
+              {!loading && !error && courses.length === 0 && (
+                <p className="text-center text-gray-500 py-12">Nessun corso in questo catalogo.</p>
+              )}
+              {!loading && !error && courses.length > 0 && (
+                <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                  <table className="w-full min-w-[320px] text-left text-sm">
+                    <thead className="bg-gray-50 text-gray-700">
+                      <tr>
+                        <th className="w-36 px-3 py-3 font-semibold md:w-44">Immagine</th>
+                        <th className="px-3 py-3 font-semibold">Titolo</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100 bg-white">
+                      {courses.map((c) => (
+                        <tr
+                          key={c.id}
+                          className="cursor-pointer transition-colors hover:bg-primary/5"
+                          onClick={() => openCoursePage(c)}
+                        >
+                          <td className="p-3 align-middle">
+                            <div className="relative h-16 w-28 overflow-hidden rounded-lg bg-muted md:h-20 md:w-36">
+                              <CourseImageFill
+                                key={c.id}
+                                course={c}
+                                className="object-cover"
+                                sizes="144px"
+                              />
+                            </div>
+                          </td>
+                          <td className="p-3 align-middle font-medium text-gray-900">{c.name}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
     </>
+  );
+}
+
+export function CourseTypeModalHighlightGrid(props: CourseTypeModalHighlightGridProps) {
+  return (
+    <Suspense fallback={<CourseTypeModalGridFallback gridClassName={props.gridClassName} />}>
+      <CourseTypeModalHighlightGridInner {...props} />
+    </Suspense>
   );
 }

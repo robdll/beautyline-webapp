@@ -9,6 +9,7 @@ import { AcademicPathsSection } from '@/components/AcademicPathsSection/academic
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
 import { CORSI_UNGHIE_OCCHI_CARDS } from '@/lib/constants';
 import { CourseCarousel, UpcomingCourseItem } from '@/components/CourseCarousel';
+import type { CourseType } from '@/lib/course-types';
 import { connectDB } from '@/lib/mongodb';
 import CourseModel from '@/models/Course';
 
@@ -51,6 +52,8 @@ async function getUpcomingCourses(): Promise<UpcomingCourseItem[]> {
       date: doc.startDate ? formatCourseDate(new Date(doc.startDate)) : 'Data da definire',
       image: doc.media?.[0] || 'https://placehold.co/800x450.png',
       price: `€ ${doc.cost.toFixed(2)}`,
+      courseType: doc.type as CourseType,
+      slug: typeof (doc as { slug?: string }).slug === 'string' ? (doc as { slug: string }).slug : '',
     }));
   } catch {
     return [];

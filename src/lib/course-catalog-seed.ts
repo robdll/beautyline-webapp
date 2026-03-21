@@ -10,7 +10,7 @@ export type CatalogCourseSeed = {
 };
 
 /**
- * Catalogo corsi unghie — date e immagini vanno aggiunte da admin.
+ * Catalogo corsi (unghie e occhi) — date e immagini vanno aggiunte da admin.
  * Inserimento idempotente per nome (vedi insertCatalogCoursesIfMissing).
  */
 export const CATALOG_COURSE_SEED_DATA: CatalogCourseSeed[] = [
@@ -99,6 +99,55 @@ export const CATALOG_COURSE_SEED_DATA: CatalogCourseSeed[] = [
     cost: 89,
     level: 'Intermedio',
     type: 'unghie',
+  },
+
+  // Occhi / lash & brow
+  {
+    name: 'LAMINAZIONE CIGLIA',
+    description:
+      'Allunga, incurva e nutre la ciglia naturale. Teoria + pratica guidata e protocolli.',
+    cost: 150,
+    level: 'Base',
+    type: 'occhi',
+  },
+  {
+    name: 'LAMINAZIONE CIGLIA E SOPRACCIGLIA COREANA',
+    description:
+      "Innovazione dall'Asia con cisteammina: risultati naturali, sani e di lunga durata senza colle.",
+    cost: 299,
+    level: 'Avanzato',
+    type: 'occhi',
+  },
+  {
+    name: 'EXTENSION CIGLIA ONE TO ONE',
+    description: 'Impara da zero la tecnica più richiesta nei centri estetici.',
+    cost: 350,
+    level: 'Base',
+    type: 'occhi',
+  },
+  {
+    name: 'EXTENSION 2D - 3D',
+    description:
+      'Scopri le tecniche avanzate di applicazione delle extension ciglia.',
+    cost: 350,
+    level: 'Avanzato',
+    type: 'occhi',
+  },
+  {
+    name: 'MASCARA SEMIPERMANENTE',
+    description:
+      'Effetto mascara 24/7 senza residui. Tecnica, rimozione e ritocchi. Risultato immediato.',
+    cost: 50,
+    level: 'Intermedio',
+    type: 'occhi',
+  },
+  {
+    name: "LAMINAZIONE SOPRACCIGLIA E BIO TATTOO CON L'HENNÉ",
+    description:
+      "Riempie, definisce e ordina l'arcata. Studio della forma e miscelazioni henné.",
+    cost: 150,
+    level: 'Intermedio',
+    type: 'occhi',
   },
 ];
 

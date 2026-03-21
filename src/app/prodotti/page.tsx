@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
+import { ProductBrandsSection } from '@/components/ProductBrandsSection';
 import { ProductCard } from '@/components/ProductCard';
 import { Product } from '@/types';
 import { connectDB } from '@/lib/mongodb';
@@ -53,11 +54,13 @@ export default async function ProdottiPage() {
             Qualità professionale per risultati eccellenti.
           </p>
         }
-        ctaText="Scopri i prodotti"
-        ctaHref="/prodotti#catalogo"
+        ctaText="Scopri le linee"
+        ctaHref="/prodotti#linee-prodotti"
       />
 
-      <Section id="catalogo" className="scroll-mt-24">
+      <ProductBrandsSection ctaHref="#catalogo" />
+
+      <Section id="catalogo" className="scroll-mt-24 min-h-0">
         {products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (

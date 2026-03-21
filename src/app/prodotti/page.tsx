@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
+
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ProductBrandsSection } from '@/components/ProductBrandsSection';
-import { ProductCard } from '@/components/ProductCard';
-import { Product } from '@/types';
-import { connectDB } from '@/lib/mongodb';
-import ProductModel from '@/models/Product';
+import { ProductCatalogModal } from '@/components/ProductCatalogModal';
 
 export const metadata: Metadata = {
   title: 'I Nostri Prodotti',
@@ -16,26 +14,15 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-async function getProducts(): Promise<Product[]> {
-  try {
-    await connectDB();
-    const docs = await ProductModel.find().sort({ createdAt: -1 }).lean();
-    return docs.map((doc) => ({
-      id: doc._id.toString(),
-      name: doc.name,
-      description: doc.description,
-      price: `€ ${doc.cost.toFixed(2)}`,
-      image: doc.media?.[0] || 'https://placehold.co/300x300.png',
-      category: doc.brand,
-    }));
-  } catch {
-    return [];
-  }
+function CatalogSectionFallback() {
+  return (
+    <div className="flex min-h-[160px] w-full items-center justify-center rounded-2xl bg-muted/30 py-10 text-gray-500">
+      Caricamento catalogo…
+    </div>
+  );
 }
 
-export default async function ProdottiPage() {
-  const products = await getProducts();
-
+export default function ProdottiPage() {
   return (
     <>
       <Hero
@@ -58,20 +45,16 @@ export default async function ProdottiPage() {
         ctaHref="/prodotti#linee-prodotti"
       />
 
-      <ProductBrandsSection ctaHref="#catalogo" />
+      <ProductBrandsSection />
 
-      <Section id="catalogo" className="scroll-mt-24 min-h-0">
-        {products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 text-gray-500">
-            <p>I prodotti saranno disponibili a breve. Torna presto!</p>
-          </div>
-        )}
+      <Section
+        id="catalogo"
+        className="scroll-mt-24 min-h-0"
+        containerClassName="flex flex-col items-center gap-8"
+      >
+        <Suspense fallback={<CatalogSectionFallback />}>
+          <ProductCatalogModal />
+        </Suspense>
       </Section>
     </>
   );

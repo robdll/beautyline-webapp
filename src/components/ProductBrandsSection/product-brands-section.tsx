@@ -10,7 +10,10 @@ interface ProductBrandsSectionProps {
   id?: string;
   brands?: ProductBrand[];
   ctaText?: string;
+  /** URL completo del pulsante catalogo (default: `?catalogo=1` su `catalogBasePath`). */
   ctaHref?: string;
+  /** Base path per link al catalogo modale (es. `/prodotti`). */
+  catalogBasePath?: string;
 }
 
 function SubcategoryCard({
@@ -64,8 +67,11 @@ export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
   id = 'linee-prodotti',
   brands = PRODUCT_BRANDS,
   ctaText = 'Vai al catalogo',
-  ctaHref = '#catalogo',
+  ctaHref,
+  catalogBasePath = '/prodotti',
 }) => {
+  const catalogOpenHref = ctaHref ?? `${catalogBasePath}?catalogo=1`;
+
   return (
     <Section
       id={id}
@@ -118,7 +124,7 @@ export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
                 <SubcategoryCard
                   key={sub.id}
                   sub={sub}
-                  catalogHref={ctaHref}
+                  catalogHref={`${catalogBasePath}?marca=${encodeURIComponent(brand.id)}&linea=${encodeURIComponent(sub.id)}`}
                   variant={brand.id === 'skin-renew' ? 'skin' : 'nails'}
                 />
               ))}
@@ -128,7 +134,7 @@ export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
       </div>
 
       <div className="flex w-full justify-center pt-2">
-        <Link href={ctaHref}>
+        <Link href={catalogOpenHref}>
           <Button variant="primary" size="lg" className="font-bold uppercase tracking-wider">
             {ctaText}
           </Button>

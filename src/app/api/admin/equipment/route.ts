@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
+import { parseEquipmentType } from '@/lib/equipment-types';
 import Equipment from '@/models/Equipment';
 
 export async function GET() {
@@ -36,6 +37,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const parsedType = parseEquipmentType(type);
+    if (!parsedType) {
+      return NextResponse.json(
+        { error: 'Tipo non valido. Scegli una delle categorie: viso, corpo, epilazione, multifunzione.' },
+        { status: 400 }
+      );
+    }
+
     const numRentDay = Number(rentCostPerDay);
     const numRentMonth = Number(rentCostPerMonth);
     const numSelling = Number(sellingCost);
@@ -52,7 +61,7 @@ export async function POST(request: NextRequest) {
 
     await connectDB();
     const equipment = await Equipment.create({
-      type: String(type).trim(),
+      type: parsedType,
       name: String(name).trim(),
       description: String(description),
       media: Array.isArray(media) ? media : [],

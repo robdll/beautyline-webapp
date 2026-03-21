@@ -1,4 +1,5 @@
 import type { CourseType } from '@/lib/course-types';
+import type { EquipmentType } from '@/lib/equipment-types';
 
 export type HomeCourseCard = {
   title: string;
@@ -34,5 +35,41 @@ export const HOME_COURSE_CARDS: HomeCourseCard[] = [
 export const CORSI_UNGHIE_OCCHI_CARDS: HomeCourseCard[] = [
   { ...HOME_COURSE_CARDS[0], courseType: 'unghie' },
   { ...HOME_COURSE_CARDS[1], courseType: 'occhi' },
+];
+
+export type EquipmentHighlightCard = {
+  title: string;
+  imageSrc: string;
+  href: string;
+  imageObjectPosition?: string;
+  equipmentType: EquipmentType;
+};
+
+/** Sezione “Attrezzature e Tecnologie” su /attrezzature — modal catalogo per categoria. */
+export const ATTREZZATURE_HIGHLIGHT_CARDS: EquipmentHighlightCard[] = [
+  {
+    title: 'Trattamenti Viso',
+    imageSrc: '/images/attrezzature-1.webp',
+    href: '/attrezzature',
+    equipmentType: 'viso',
+  },
+  {
+    title: 'Trattamenti Corpo',
+    imageSrc: '/images/attrezzature-2.webp',
+    href: '/attrezzature',
+    equipmentType: 'corpo',
+  },
+  {
+    title: 'Epilazione',
+    imageSrc: '/images/attrezzature-3.webp',
+    href: '/attrezzature',
+    equipmentType: 'epilazione',
+  },
+  {
+    title: 'Multifunzione',
+    imageSrc: '/images/attrezzature-4.webp',
+    href: '/attrezzature',
+    equipmentType: 'multifunzione',
+  },
 ];
 

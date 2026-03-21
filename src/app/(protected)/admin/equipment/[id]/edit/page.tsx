@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
+import { EQUIPMENT_TYPES, EQUIPMENT_TYPE_LABELS, parseEquipmentType } from '@/lib/equipment-types';
 
 interface EquipmentData {
   _id: string;
@@ -35,7 +36,8 @@ export default function AdminEquipmentEditPage() {
           return;
         }
         const data = await res.json();
-        setForm(data);
+        const normalizedType = parseEquipmentType(data.type) ?? '';
+        setForm({ ...data, type: normalizedType });
       } catch (err) {
         console.error(err);
         router.push('/admin/equipment');
@@ -97,14 +99,22 @@ export default function AdminEquipmentEditPage() {
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="grid gap-6">
           <div>
-            <label className={labelClass}>Tipo *</label>
-            <input
-              type="text"
+            <label className={labelClass}>Categoria *</label>
+            <select
               value={form.type}
               onChange={(e) => setForm((f) => (f ? { ...f, type: e.target.value } : f))}
               className={inputClass}
               required
-            />
+            >
+              <option value="" disabled>
+                Seleziona una categoria
+              </option>
+              {EQUIPMENT_TYPES.map((t) => (
+                <option key={t} value={t}>
+                  {EQUIPMENT_TYPE_LABELS[t]}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className={labelClass}>Nome *</label>

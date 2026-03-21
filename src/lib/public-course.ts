@@ -28,8 +28,14 @@ export interface LeanCourseDoc {
   startDate?: Date | null;
 }
 
+/** Slug usato in URL e API: coincide con il catalogo anche se `slug` in DB è assente (dati legacy). */
+export function getPublicCourseSlug(c: LeanCourseDoc): string {
+  const stored = c.slug?.trim();
+  return stored || slugifyCourseName(c.name);
+}
+
 export function serializePublicCourse(c: LeanCourseDoc): PublicCourseJson {
-  const slug = (c.slug && c.slug.trim()) || slugifyCourseName(c.name);
+  const slug = getPublicCourseSlug(c);
   return {
     id: c._id.toString(),
     slug,

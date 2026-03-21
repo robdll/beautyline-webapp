@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
+import { getEquipmentTypeLabel } from '@/lib/equipment-types';
 
 interface EquipmentItem {
   _id: string;
@@ -100,7 +101,9 @@ export default function AdminEquipmentPage() {
                 {equipment.map((item) => (
                   <tr key={item._id} className="border-b border-gray-100 hover:bg-gray-50/50">
                     <td className="px-6 py-4 text-sm font-medium text-secondary">{item.name}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{item.type}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {getEquipmentTypeLabel(item.type)}
+                    </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {item.rentOnly ? 'Sì' : 'No'}
                     </td>

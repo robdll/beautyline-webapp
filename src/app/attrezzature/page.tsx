@@ -4,8 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Hero } from '@/components/Hero';
 import { ContactSection } from '@/components/ContactSection';
+import { EquipmentHighlightSection } from '@/components/EquipmentHighlightSection';
 import { Section } from '@/components/Section';
 import { connectDB } from '@/lib/mongodb';
+import { getEquipmentTypeLabel, parseEquipmentType } from '@/lib/equipment-types';
 import EquipmentModel from '@/models/Equipment';
 import { cn } from '@/lib/utils';
 
@@ -21,6 +23,8 @@ interface EquipmentItem {
   name: string;
   description: string;
   type: string;
+  /** Slug categoria per URL dettaglio; assente se il tipo in DB non è tra le 4 categorie. */
+  detailTypeSlug: string | null;
   image: string;
   rentOnly: boolean;
   rentCostPerDay: number;
@@ -50,6 +54,7 @@ async function getEquipment(): Promise<EquipmentItem[]> {
       name: doc.name,
       description: doc.description,
       type: doc.type,
+      detailTypeSlug: parseEquipmentType(doc.type),
       image: doc.media?.[0] || 'https://placehold.co/400x300.png',
       rentOnly: doc.rentOnly,
       rentCostPerDay: doc.rentCostPerDay,
@@ -90,8 +95,10 @@ export default async function AttrezzaturePage() {
           </p>
         }
         ctaText="Scopri le Attrezzature"
-        ctaHref="/attrezzature#catalogo"
+        ctaHref="/attrezzature#attrezzature-tecnologie"
       />
+
+      <EquipmentHighlightSection />
 
       <Section id="catalogo" className="scroll-mt-24">
         {equipment.length > 0 ? (
@@ -112,18 +119,28 @@ export default async function AttrezzaturePage() {
                 </div>
                 <div className="flex grow flex-col p-6">
                   <span className="mb-1 text-xs font-semibold uppercase tracking-wide text-primary">
-                    {item.type}
+                    {getEquipmentTypeLabel(item.type)}
                   </span>
                   <h3 className="heading-brand mb-2 text-xl font-bold">{item.name}</h3>
                   <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">{item.description}</p>
                   <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
                     <p className="min-w-0 text-lg font-bold text-primary">{equipmentPriceLabel(item)}</p>
-                    <Link
-                      href={`/contatti?attrezzatura=${encodeURIComponent(item.name)}`}
-                      className={contattaciButtonClass}
-                    >
-                      Contattaci
-                    </Link>
+                    <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center">
+                      {item.detailTypeSlug ? (
+                        <Link
+                          href={`/attrezzature/${encodeURIComponent(item.detailTypeSlug)}/${encodeURIComponent(item.id)}`}
+                          className="text-sm font-medium text-primary hover:underline"
+                        >
+                          Dettagli
+                        </Link>
+                      ) : null}
+                      <Link
+                        href={`/contatti?attrezzatura=${encodeURIComponent(item.name)}`}
+                        className={contattaciButtonClass}
+                      >
+                        Contattaci
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

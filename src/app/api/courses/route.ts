@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { parseCourseType } from '@/lib/course-types';
-import { serializePublicCourse, type LeanCourseDoc } from '@/lib/public-course';
+import {
+  getPublicCourseSlug,
+  serializePublicCourse,
+  type LeanCourseDoc,
+} from '@/lib/public-course';
 import Course from '@/models/Course';
 
 function isMongoObjectIdString(s: string): boolean {
@@ -35,9 +39,18 @@ export async function GET(request: NextRequest) {
       let c = null;
       if (tipoHint) {
         c = await Course.findOne({ type: tipoHint, slug }).lean();
+        if (!c) {
+          const list = await Course.find({ type: tipoHint }).lean();
+          c =
+            list.find((doc) => getPublicCourseSlug(doc as LeanCourseDoc) === slug) ?? null;
+        }
       }
       if (!c) {
         c = await Course.findOne({ slug }).lean();
+      }
+      if (!c) {
+        const all = await Course.find({}).lean();
+        c = all.find((doc) => getPublicCourseSlug(doc as LeanCourseDoc) === slug) ?? null;
       }
       if (!c) {
         return NextResponse.json({ error: 'Corso non trovato.' }, { status: 404 });

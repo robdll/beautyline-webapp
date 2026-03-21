@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
+import { parseCourseType } from '@/lib/course-types';
 import Course from '@/models/Course';
 
 function parseStartDate(value: unknown): Date | null {
@@ -42,6 +43,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const parsedType = parseCourseType(type);
+    if (!parsedType) {
+      return NextResponse.json(
+        { error: 'Tipo corso non valido. Consentiti: unghie, occhi.' },
+        { status: 400 }
+      );
+    }
+
     const numCost = Number(cost);
     if (isNaN(numCost) || numCost < 0) {
       return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
@@ -54,7 +63,7 @@ export async function POST(request: NextRequest) {
 
     await connectDB();
     const course = await Course.create({
-      type: String(type).trim(),
+      type: parsedType,
       level: String(level).trim(),
       name: String(name).trim(),
       description: String(description),

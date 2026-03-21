@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "seed:local": "tsx scripts/seed-local.ts",
+    "seed:courses": "tsx scripts/seed-courses-catalog.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { CourseTypeSelect } from '@/components/admin/CourseTypeSelect';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 
@@ -24,7 +25,7 @@ export default function AdminCoursesNewPage() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -75,10 +76,8 @@ export default function AdminCoursesNewPage() {
             <label htmlFor="type" className={labelClass}>
               Tipo
             </label>
-            <input
+            <CourseTypeSelect
               id="type"
-              name="type"
-              type="text"
               value={form.type}
               onChange={handleChange}
               required

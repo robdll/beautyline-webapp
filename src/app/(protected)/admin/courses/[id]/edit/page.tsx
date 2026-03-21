@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { CourseTypeSelect } from '@/components/admin/CourseTypeSelect';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
+import { parseCourseType } from '@/lib/course-types';
 
 const inputClass =
   'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm';
@@ -46,7 +48,7 @@ export default function AdminCoursesEditPage() {
         if (res.ok) {
           const course: Course = await res.json();
           setForm({
-            type: course.type || '',
+            type: parseCourseType(course.type) ?? '',
             level: course.level || '',
             name: course.name || '',
             description: course.description || '',
@@ -71,7 +73,7 @@ export default function AdminCoursesEditPage() {
   }, [id, router]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -130,10 +132,8 @@ export default function AdminCoursesEditPage() {
             <label htmlFor="type" className={labelClass}>
               Tipo
             </label>
-            <input
+            <CourseTypeSelect
               id="type"
-              name="type"
-              type="text"
               value={form.type}
               onChange={handleChange}
               required

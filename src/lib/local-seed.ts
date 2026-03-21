@@ -68,7 +68,7 @@ async function seedCourses() {
 
   await Course.insertMany([
     {
-      type: 'Master',
+      type: 'occhi',
       level: 'Avanzato',
       name: 'Master Laminazione Ciglia',
       description: 'Percorso pratico e teorico per specializzarsi nella laminazione professionale.',
@@ -78,7 +78,7 @@ async function seedCourses() {
       cost: 490,
     },
     {
-      type: 'Corso Base',
+      type: 'unghie',
       level: 'Principiante',
       name: 'Corso Ricostruzione Unghie',
       description: 'Fondamenti tecnici, igiene, preparazione unghia e modellatura gel.',

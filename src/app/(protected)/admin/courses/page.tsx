@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
+import { getCourseTypeLabel } from '@/lib/course-types';
 
 interface Course {
   _id: string;
@@ -101,7 +102,7 @@ export default function AdminCoursesPage() {
                 courses.map((course) => (
                   <tr key={course._id} className="hover:bg-gray-50/50">
                     <td className="px-6 py-4 text-sm font-medium text-gray-900">{course.name}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{course.type}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{getCourseTypeLabel(course.type)}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{course.level}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">€{course.cost}</td>
                     <td className="px-6 py-4 text-right">

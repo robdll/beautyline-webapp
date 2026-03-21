@@ -36,13 +36,13 @@ function SubcategoryCard({
     >
       <Link
         href={catalogHref}
-        className="group relative block min-h-34 flex-1 px-4 py-5 text-center md:min-h-38 md:px-5 md:py-6"
+        className="group relative flex min-h-34 flex-1 flex-col items-center justify-around px-4 py-5 md:min-h-38 md:px-5 md:py-6"
         aria-label={`${sub.title} — vai al catalogo`}
       >
-        <h4 className="heading-brand text-lg font-bold leading-snug tracking-wide text-balance text-secondary md:text-xl">
+        <h4 className="heading-brand text-lg font-bold leading-snug tracking-wide text-balance text-center text-secondary md:text-xl">
           {sub.title}
         </h4>
-        <span className="mt-3 block text-sm font-semibold text-primary underline-offset-4 group-hover:underline">
+        <span className="text-sm font-semibold text-primary underline-offset-4 group-hover:underline">
           Vedi nel catalogo
         </span>
       </Link>
@@ -89,7 +89,7 @@ export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
           <article
             key={brand.id}
             id={brand.id}
-            className="scroll-mt-24 border-t border-black/10 pt-12 text-center first:border-t-0 first:pt-0 md:pt-16 first:md:pt-0"
+            className="scroll-mt-24 border-t border-black/10 pt-12 text-center first:border-t-0 first:pt-0 md:pt-16 first:md:pt-0 flex flex-col items-center gap-4"
           >
             <header className="mb-6 md:mb-8">
               <h3 className="heading-brand text-2xl font-bold tracking-wide md:text-3xl">{brand.title}</h3>

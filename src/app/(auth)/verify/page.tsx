@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React, { Suspense, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
 
-export default function VerifyPage() {
+function VerifyContent() {
   const searchParams = useSearchParams();
   const verified = searchParams.get('verified') === 'true';
   const token = searchParams.get('token');
@@ -117,5 +117,25 @@ export default function VerifyPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+function VerifyFallback() {
+  return (
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-muted">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <div className="mx-auto mb-6 h-16 w-16 animate-pulse rounded-full bg-gray-100" />
+        <div className="mx-auto mb-4 h-7 w-48 animate-pulse rounded bg-gray-200" />
+        <div className="mx-auto h-4 w-full max-w-xs animate-pulse rounded bg-gray-100" />
+      </div>
+    </div>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={<VerifyFallback />}>
+      <VerifyContent />
+    </Suspense>
   );
 }

@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/shared/Button';
 
-export default function SignInPage() {
+function SignInForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -104,5 +104,29 @@ export default function SignInPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+function SignInFallback() {
+  return (
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-muted">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <div className="mx-auto mb-4 h-9 w-48 animate-pulse rounded bg-gray-200" />
+        <div className="mx-auto mb-8 h-4 w-64 max-w-full animate-pulse rounded bg-gray-100" />
+        <div className="space-y-6">
+          <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100" />
+          <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100" />
+          <div className="h-11 w-full animate-pulse rounded-lg bg-primary/20" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<SignInFallback />}>
+      <SignInForm />
+    </Suspense>
   );
 }

@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { getAuthUser } from '@/lib/auth';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2026-02-25.clover',
-});
+const STRIPE_API_VERSION = '2026-02-25.clover' as const;
+
+function getStripe(): Stripe {
+  const key = process.env.STRIPE_SECRET_KEY?.trim();
+  if (!key) {
+    throw new Error('STRIPE_SECRET_KEY is not configured');
+  }
+  return new Stripe(key, { apiVersion: STRIPE_API_VERSION });
+}
 
 interface CheckoutItem {
   id: string;
@@ -17,6 +23,16 @@ interface CheckoutItem {
 
 export async function POST(request: NextRequest) {
   try {
+    let stripe: Stripe;
+    try {
+      stripe = getStripe();
+    } catch {
+      return NextResponse.json(
+        { error: 'Pagamenti non configurati sul server.' },
+        { status: 503 }
+      );
+    }
+
     const user = await getAuthUser();
     if (!user) {
       return NextResponse.json({ error: 'Non autenticato.' }, { status: 401 });

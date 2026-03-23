@@ -15,11 +15,11 @@ export const Logo: React.FC<LogoProps> = ({
   return (
     <div className={className}>
       <Image
-        src="/images/logo-circle.png"
+        src="/images/logo-bl.png"
         alt="BeautyLine Professional"
         width={width}
         height={height}
-        className="w-auto h-auto"
+        className="w-auto h-[50px]"
         priority
       />
     </div>

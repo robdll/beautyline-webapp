@@ -5,6 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
+import { PRODUCT_BRANDS } from '@/lib/product-brands';
 
 interface ColorOption {
   name: string;
@@ -30,6 +31,10 @@ export default function AdminProductsEditPage() {
   const [media, setMedia] = useState<string[]>([]);
   const [cost, setCost] = useState('');
   const [availableColors, setAvailableColors] = useState<ColorOption[]>([]);
+  const selectedBrand = PRODUCT_BRANDS.find((b) => b.title === brand);
+  const typeOptions = selectedBrand?.subcategories ?? [];
+  const showLegacyBrandOption = Boolean(brand) && !PRODUCT_BRANDS.some((item) => item.title === brand);
+  const showLegacyTypeOption = Boolean(type) && !typeOptions.some((item) => item.title === type);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -154,30 +159,50 @@ export default function AdminProductsEditPage() {
         <div className="flex flex-col gap-4">
           <div>
             <label htmlFor="brand" className={labelClass}>
-              Brand
+              Categoria principale
             </label>
-            <input
+            <select
               id="brand"
-              type="text"
               value={brand}
-              onChange={(e) => setBrand(e.target.value)}
+              onChange={(e) => {
+                setBrand(e.target.value);
+                setType('');
+              }}
               className={inputClass}
               required
-            />
+            >
+              <option value="">Seleziona categoria principale</option>
+              {showLegacyBrandOption && <option value={brand}>{brand}</option>}
+              {PRODUCT_BRANDS.map((item) => (
+                <option key={item.id} value={item.title}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
             <label htmlFor="type" className={labelClass}>
-              Tipo
+              Sottocategoria
             </label>
-            <input
+            <select
               id="type"
-              type="text"
               value={type}
               onChange={(e) => setType(e.target.value)}
               className={inputClass}
               required
-            />
+              disabled={!brand}
+            >
+              <option value="">
+                {brand ? 'Seleziona sottocategoria' : 'Seleziona prima la categoria principale'}
+              </option>
+              {showLegacyTypeOption && <option value={type}>{type}</option>}
+              {typeOptions.map((item) => (
+                <option key={item.id} value={item.title}>
+                  {item.title}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>

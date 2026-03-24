@@ -67,13 +67,13 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
           <h1 className="heading-brand text-3xl md:text-4xl font-bold text-balance">{course.name}</h1>
         </header>
 
-        <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted">
+        <div className="relative aspect-video w-full md:max-w-[760px] md:mx-auto overflow-hidden rounded-2xl bg-muted">
           <Image
             src={imageSrc}
             alt=""
             fill
             className="object-cover"
-            sizes="(min-width: 768px) 672px, 100vw"
+            sizes="(min-width: 768px) 760px, 100vw"
             priority
             unoptimized={isRemote}
           />
@@ -101,7 +101,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
               <h2 className="font-semibold text-gray-800">Prossime Date</h2>
             </div>
             {nextThree.length > 0 ? (
-              <ul className="space-y-2 text-sm text-gray-700">
+              <ul className="space-y-2 text-center text-sm text-gray-700">
                 {nextThree.map((occ, idx) => (
                   <li key={`${occ.startDate}-${idx}`}>{formatDateRange(occ.startDate, occ.endDate)}</li>
                 ))}

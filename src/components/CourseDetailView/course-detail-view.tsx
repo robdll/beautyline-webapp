@@ -52,7 +52,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
   const programSections = [...course.programSections, '', '', ''].slice(0, 3);
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 py-10 md:py-14 md:px-6">
+    <div className="w-full max-w-2xl mx-auto flex flex-col gap-8 md:gap-7">
       <div className="mb-8">
         <Link
           href={`/corsi?tipo=${encodeURIComponent(course.type)}`}
@@ -62,7 +62,11 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
         </Link>
       </div>
 
-      <div className="flex flex-col gap-8 md:gap-10">
+      <div className="flex flex-col gap-8 md:gap-7">
+        <header className="flex flex-col gap-2">
+          <h1 className="heading-brand text-3xl md:text-4xl font-bold text-balance">{course.name}</h1>
+        </header>
+
         <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted">
           <Image
             src={imageSrc}
@@ -74,19 +78,6 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
             unoptimized={isRemote}
           />
         </div>
-
-        <header className="flex flex-col gap-2">
-          <h1 className="heading-brand text-3xl md:text-4xl font-bold text-balance">{course.name}</h1>
-        </header>
-
-        <dl className="flex flex-col gap-4 text-sm text-gray-600">
-          <div>
-            <dt className="font-medium text-gray-700">Descrizione</dt>
-            <dd className="mt-1 whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
-              {course.description}
-            </dd>
-          </div>
-        </dl>
 
         <div className="grid gap-4 md:grid-cols-2">
           <article className="rounded-xl border border-gray-200 p-4">
@@ -120,6 +111,13 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
             <p className="text-2xl font-bold text-primary">€ {course.cost.toFixed(2)}</p>
           </article>
         </div>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="heading-brand text-2xl font-bold">Descrizione</h2>
+          <p className="whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
+            {course.description}
+          </p>
+        </section>
 
         <section className="flex flex-col gap-3">
           <h2 className="heading-brand text-2xl font-bold">Programma del corso</h2>

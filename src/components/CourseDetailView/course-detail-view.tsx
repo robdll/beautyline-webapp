@@ -79,10 +79,10 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
           />
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
-          <article className="rounded-xl border border-gray-200 p-4">
-            <div className="mb-3 flex items-center gap-2">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <div className="flex gap-4 justify-around">
+          <article className="rounded-xl border border-gray-200 p-4 w-full">
+            <div className="mb-3 flex flex-col items-center gap-2">
+              <span className="inline-flex h-8 w-8 items-center text-center justify-center rounded-full bg-primary/10 text-primary">
                 <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
                   <path d="M8 2v3M16 2v3M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
@@ -96,11 +96,11 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-gray-500">Date da definire</p>
+              <p className="text-center text-sm text-gray-500">Date da definire</p>
             )}
           </article>
-          <article className="rounded-xl border border-gray-200 p-4">
-            <div className="mb-3 flex items-center gap-2">
+          <article className="rounded-xl border border-gray-200 p-4 w-full">
+            <div className="mb-3 flex flex-col items-center gap-2">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden>
                   <path d="M12 3v18M17 7a4 4 0 1 0-4 4 4 4 0 1 1-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -108,7 +108,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
               </span>
               <h2 className="font-semibold text-gray-800">Prezzo</h2>
             </div>
-            <p className="text-2xl font-bold text-primary">€ {course.cost.toFixed(2)}</p>
+            <p className="text-center text-2xl font-bold text-primary">€ {course.cost.toFixed(2)}</p>
           </article>
         </div>
 

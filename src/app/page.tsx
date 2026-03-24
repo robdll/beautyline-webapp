@@ -151,7 +151,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <ParallaxDivider imageSrc="/images/parallax-bg.jpg" strength={0.95} />
+      <ParallaxDivider imageSrc="/images/chisiamo.webp" />
 
       {/* Services Overview */}
       <Section id="servizi" className="bg-white">

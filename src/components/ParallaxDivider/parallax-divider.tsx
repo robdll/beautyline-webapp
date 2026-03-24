@@ -9,7 +9,7 @@ interface ParallaxDividerProps {
   heightClassName?: string;
   overlayClassName?: string;
   showOverlay?: boolean;
-  /** 0..1-ish. Higher = more movement */
+  /** Higher = more movement */
   strength?: number;
 }
 
@@ -19,7 +19,7 @@ export const ParallaxDivider: React.FC<ParallaxDividerProps> = ({
   heightClassName = 'h-48 sm:h-64 md:h-80 lg:h-[420px]',
   overlayClassName,
   showOverlay = false,
-  strength = 2.9,
+  strength = 1.25,
 }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const layerRef = useRef<HTMLDivElement | null>(null);
@@ -34,7 +34,7 @@ export const ParallaxDivider: React.FC<ParallaxDividerProps> = ({
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
     if (prefersReducedMotion) {
-      layer.style.backgroundPosition = '50% 50%';
+      layer.style.transform = 'translate3d(0, 0, 0) scale(1.12)';
       return;
     }
 
@@ -46,15 +46,14 @@ export const ParallaxDivider: React.FC<ParallaxDividerProps> = ({
       const rect = root.getBoundingClientRect();
       const vh = window.innerHeight || 0;
 
-      // 0 when just below viewport, 1 when just above viewport
-      const progress = (vh - rect.top) / (vh + rect.height);
-      const clamped = Math.max(0, Math.min(1, progress));
+      const centerOffset = rect.top + rect.height / 2 - vh / 2;
+      const maxDistance = vh / 2 + rect.height / 2;
+      const normalized = Math.max(-1, Math.min(1, centerOffset / maxDistance));
 
-      // Move background position instead of translating an oversized layer.
-      // This avoids the “zoomed” feeling while still giving a parallax effect.
-      const maxShiftPct = 28 * strength; // total range: +/- (maxShiftPct)%
-      const y = 50 + (clamped - 0.5) * 2 * maxShiftPct;
-      layer.style.backgroundPosition = `50% ${y.toFixed(2)}%`;
+      // Translate an oversized layer for a clear parallax effect without clipping.
+      const maxShiftPx = Math.min(vh * 0.18, rect.height * 0.22) * strength;
+      const y = -normalized * maxShiftPx;
+      layer.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) scale(1.12)`;
     };
 
     const onScrollOrResize = () => {
@@ -89,11 +88,11 @@ export const ParallaxDivider: React.FC<ParallaxDividerProps> = ({
       <div
         ref={layerRef}
         className={cn(
-          'absolute inset-0 bg-cover bg-center will-change-[background-position]',
+          'absolute inset-0 bg-cover bg-center will-change-transform',
         )}
         style={{
           backgroundImage: `url(${imageSrc})`,
-          backgroundPosition: '50% 50%',
+          transform: 'translate3d(0, 0, 0) scale(1.12)',
         }}
       />
 

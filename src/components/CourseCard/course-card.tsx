@@ -35,9 +35,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
         </p>
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
           <div className="flex flex-col gap-1">
-            {course.duration && (
+            {course.nextDate && (
               <p className="text-xs text-gray-500">
-                <span className="font-semibold">Durata:</span> {course.duration}
+                <span className="font-semibold">Prossima data:</span> {course.nextDate}
               </p>
             )}
             {course.price && (

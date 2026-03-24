@@ -2,18 +2,29 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/shared/Button';
 import { getCourseTypeLabel } from '@/lib/course-types';
+import { formatDateRange } from '@/lib/course-occurrences';
 
 interface Course {
   _id: string;
   type: string;
-  level: string;
   name: string;
   description: string;
-  duration: string;
   cost: number;
+  occurrences?: { startDate: string; endDate: string }[];
   media?: string[];
+}
+
+function getNextDate(occurrences: { startDate: string; endDate: string }[] | undefined): string {
+  if (!occurrences || occurrences.length === 0) return 'Data da definire';
+  const now = Date.now();
+  const sorted = [...occurrences].sort(
+    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
+  const next = sorted.find((occ) => new Date(occ.endDate).getTime() >= now) ?? sorted[0];
+  return formatDateRange(next.startDate, next.endDate);
 }
 
 export default function AdminCoursesPage() {
@@ -84,9 +95,10 @@ export default function AdminCoursesPage() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Immagine</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Nome</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Tipo</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Livello</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Prossima Data</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Costo</th>
                 <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Azioni</th>
               </tr>
@@ -94,16 +106,27 @@ export default function AdminCoursesPage() {
             <tbody className="divide-y divide-gray-100">
               {courses.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
                     Nessun corso presente. Crea il primo corso.
                   </td>
                 </tr>
               ) : (
                 courses.map((course) => (
                   <tr key={course._id} className="hover:bg-gray-50/50">
+                    <td className="px-6 py-4">
+                      <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-muted">
+                        <Image
+                          src={course.media?.[0] || '/images/course-placeholder.svg'}
+                          alt={course.name}
+                          fill
+                          className="object-cover"
+                          sizes="64px"
+                        />
+                      </div>
+                    </td>
                     <td className="px-6 py-4 text-sm font-medium text-gray-900">{course.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{getCourseTypeLabel(course.type)}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{course.level}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{getNextDate(course.occurrences)}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">€{course.cost}</td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">

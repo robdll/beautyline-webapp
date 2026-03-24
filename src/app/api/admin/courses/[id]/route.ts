@@ -3,13 +3,12 @@ import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
 import { parseCourseType } from '@/lib/course-types';
+import {
+  parseOccurrences,
+  sanitizeProgramSections,
+  validateOccurrencesShape,
+} from '@/lib/course-occurrences';
 import Course from '@/models/Course';
-
-function parseStartDate(value: unknown): Date | null {
-  if (typeof value !== 'string' || !value.trim()) return null;
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? null : parsed;
-}
 
 export async function GET(
   _request: NextRequest,
@@ -55,11 +54,11 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { type, level, name, description, duration, cost, media, startDate } = body;
+    const { type, name, description, cost, media, occurrences, programSections } = body;
 
-    if (!type || !level || !name || !description || !duration || cost === undefined) {
+    if (!type || !name || !description || cost === undefined) {
       return NextResponse.json(
-        { error: 'Campi obbligatori mancanti: type, level, name, description, duration, cost.' },
+        { error: 'Campi obbligatori mancanti: type, name, description, cost.' },
         { status: 400 }
       );
     }
@@ -77,10 +76,15 @@ export async function PUT(
       return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
     }
 
-    const parsedStartDate = parseStartDate(startDate);
-    if (typeof startDate === 'string' && startDate.trim() && !parsedStartDate) {
-      return NextResponse.json({ error: 'Data corso non valida.' }, { status: 400 });
+    const parsedOccurrences = parseOccurrences(occurrences);
+    if (!parsedOccurrences) {
+      return NextResponse.json({ error: 'Date corso non valide.' }, { status: 400 });
     }
+    const occurrenceError = validateOccurrencesShape(parsedOccurrences);
+    if (occurrenceError) {
+      return NextResponse.json({ error: occurrenceError }, { status: 400 });
+    }
+    const safeProgramSections = sanitizeProgramSections(programSections);
 
     await connectDB();
     const course = await Course.findById(id);
@@ -89,13 +93,12 @@ export async function PUT(
     }
 
     course.type = parsedType;
-    course.level = String(level).trim();
     course.name = String(name).trim();
     course.description = String(description);
-    course.duration = String(duration).trim();
     course.cost = numCost;
     course.media = Array.isArray(media) ? media : [];
-    course.startDate = parsedStartDate;
+    course.occurrences = parsedOccurrences;
+    course.programSections = safeProgramSections;
 
     await course.save();
 

@@ -6,6 +6,7 @@
     "dev": "next dev --turbo",
     "seed:local": "tsx scripts/seed-local.ts",
     "seed:courses": "tsx scripts/seed-courses-catalog.ts",
+    "migrate:courses:multidate": "tsx scripts/migrate-courses-multidate.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

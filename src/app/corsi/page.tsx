@@ -12,6 +12,7 @@ import { CourseCarousel, UpcomingCourseItem } from '@/components/CourseCarousel'
 import type { CourseType } from '@/lib/course-types';
 import { connectDB } from '@/lib/mongodb';
 import CourseModel from '@/models/Course';
+import { formatDateRange } from '@/lib/course-occurrences';
 
 export const metadata: Metadata = {
   title: 'Corsi di Estetica',
@@ -20,36 +21,43 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-function formatCourseDate(date: Date): string {
-  return new Intl.DateTimeFormat('it-IT', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  }).format(date);
-}
-
 async function getUpcomingCourses(): Promise<UpcomingCourseItem[]> {
   try {
     await connectDB();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Include future-dated courses and courses with no date yet (admin often omits startDate).
-    const docs = await CourseModel.find({
-      $or: [{ startDate: { $gte: today } }, { startDate: null }],
-    }).lean();
+    const docs = await CourseModel.find().lean();
 
-    const sorted = [...docs].sort((a, b) => {
-      const aTime = a.startDate ? new Date(a.startDate).getTime() : Number.POSITIVE_INFINITY;
-      const bTime = b.startDate ? new Date(b.startDate).getTime() : Number.POSITIVE_INFINITY;
+    const withNextDate = docs.map((doc) => {
+      const occurrences = Array.isArray(doc.occurrences)
+        ? [...doc.occurrences].sort(
+            (a, b) =>
+              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          )
+        : [];
+      const nextOccurrence =
+        occurrences.find((occ) => new Date(occ.endDate).getTime() >= today.getTime()) ?? occurrences[0] ?? null;
+      return { doc, nextOccurrence };
+    });
+
+    const sorted = withNextDate.sort((a, b) => {
+      const aTime = a.nextOccurrence
+        ? new Date(a.nextOccurrence.startDate).getTime()
+        : Number.POSITIVE_INFINITY;
+      const bTime = b.nextOccurrence
+        ? new Date(b.nextOccurrence.startDate).getTime()
+        : Number.POSITIVE_INFINITY;
       return aTime - bTime;
     });
 
-    return sorted.map((doc) => ({
+    return sorted.map(({ doc, nextOccurrence }) => ({
       id: doc._id.toString(),
-      title: `${doc.name} (${doc.level})`,
+      title: doc.name,
       description: doc.description,
-      date: doc.startDate ? formatCourseDate(new Date(doc.startDate)) : 'Data da definire',
+      date: nextOccurrence
+        ? formatDateRange(String(nextOccurrence.startDate), String(nextOccurrence.endDate))
+        : 'Data da definire',
       image: doc.media?.[0] || 'https://placehold.co/800x450.png',
       price: `€ ${doc.cost.toFixed(2)}`,
       courseType: doc.type as CourseType,

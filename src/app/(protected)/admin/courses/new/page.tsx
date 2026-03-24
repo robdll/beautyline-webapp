@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { CourseTypeSelect } from '@/components/admin/CourseTypeSelect';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
+import { formatDateRange } from '@/lib/course-occurrences';
 
 const inputClass =
   'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm';
@@ -15,13 +16,12 @@ export default function AdminCoursesNewPage() {
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     type: '',
-    level: '',
     name: '',
     description: '',
-    duration: '',
-    startDate: '',
     cost: '',
     media: [] as string[],
+    occurrences: [{ startDate: '', endDate: '' }],
+    programSections: ['', '', ''],
   });
 
   const handleChange = (
@@ -29,6 +29,36 @@ export default function AdminCoursesNewPage() {
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const updateOccurrence = (
+    index: number,
+    field: 'startDate' | 'endDate',
+    value: string
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      occurrences: prev.occurrences.map((occ, i) =>
+        i === index ? { ...occ, [field]: value } : occ
+      ),
+    }));
+  };
+
+  const addOccurrence = () => {
+    setForm((prev) => ({
+      ...prev,
+      occurrences: [...prev.occurrences, { startDate: '', endDate: '' }],
+    }));
+  };
+
+  const removeOccurrence = (index: number) => {
+    setForm((prev) => ({
+      ...prev,
+      occurrences:
+        prev.occurrences.length === 1
+          ? prev.occurrences
+          : prev.occurrences.filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,13 +70,12 @@ export default function AdminCoursesNewPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: form.type,
-          level: form.level,
           name: form.name,
           description: form.description,
-          duration: form.duration,
-          startDate: form.startDate,
           cost: Number(form.cost) || 0,
           media: form.media,
+          occurrences: form.occurrences,
+          programSections: form.programSections,
         }),
       });
 
@@ -86,21 +115,6 @@ export default function AdminCoursesNewPage() {
           </div>
 
           <div>
-            <label htmlFor="level" className={labelClass}>
-              Livello
-            </label>
-            <input
-              id="level"
-              name="level"
-              type="text"
-              value={form.level}
-              onChange={handleChange}
-              required
-              className={inputClass}
-            />
-          </div>
-
-          <div>
             <label htmlFor="name" className={labelClass}>
               Nome
             </label>
@@ -130,34 +144,82 @@ export default function AdminCoursesNewPage() {
             />
           </div>
 
-          <div>
-            <label htmlFor="duration" className={labelClass}>
-              Durata
-            </label>
-            <input
-              id="duration"
-              name="duration"
-              type="text"
-              value={form.duration}
-              onChange={handleChange}
-              required
-              className={inputClass}
-              placeholder="es. 2 giorni"
-            />
+          <div className="flex flex-col gap-3">
+            <label className={labelClass}>Date corso</label>
+            {form.occurrences.map((occ, idx) => (
+              <div key={`occ-${idx}`} className="rounded-lg border border-gray-200 p-3">
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor={`startDate-${idx}`} className={labelClass}>
+                      Inizio #{idx + 1}
+                    </label>
+                    <input
+                      id={`startDate-${idx}`}
+                      type="date"
+                      value={occ.startDate}
+                      onChange={(e) => updateOccurrence(idx, 'startDate', e.target.value)}
+                      className={inputClass}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor={`endDate-${idx}`} className={labelClass}>
+                      Fine #{idx + 1}
+                    </label>
+                    <input
+                      id={`endDate-${idx}`}
+                      type="date"
+                      value={occ.endDate}
+                      onChange={(e) => updateOccurrence(idx, 'endDate', e.target.value)}
+                      className={inputClass}
+                    />
+                  </div>
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <p className="text-xs text-gray-500">
+                    {occ.startDate && occ.endDate
+                      ? formatDateRange(occ.startDate, occ.endDate)
+                      : 'Range da definire'}
+                  </p>
+                  {form.occurrences.length > 1 ? (
+                    <button
+                      type="button"
+                      onClick={() => removeOccurrence(idx)}
+                      className="text-xs font-medium text-red-600 hover:underline"
+                    >
+                      Rimuovi
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addOccurrence}
+              className="self-start text-sm font-medium text-primary hover:underline"
+            >
+              + Aggiungi data
+            </button>
           </div>
 
-          <div>
-            <label htmlFor="startDate" className={labelClass}>
-              Data corso
-            </label>
-            <input
-              id="startDate"
-              name="startDate"
-              type="date"
-              value={form.startDate}
-              onChange={handleChange}
-              className={inputClass}
-            />
+          <div className="flex flex-col gap-3">
+            <label className={labelClass}>Programma del corso</label>
+            {form.programSections.map((section, idx) => (
+              <textarea
+                key={`program-${idx}`}
+                value={section}
+                onChange={(e) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    programSections: prev.programSections.map((entry, i) =>
+                      i === idx ? e.target.value : entry
+                    ),
+                  }))
+                }
+                rows={3}
+                className={inputClass}
+                placeholder={`Contenuto sezione ${idx + 1}`}
+              />
+            ))}
           </div>
 
           <div>

@@ -7,12 +7,12 @@ export interface PublicCourseJson {
   slug: string;
   name: string;
   description: string;
-  duration: string;
   cost: number;
-  level: string;
   type: CourseType;
   media: string[];
-  startDate: string | null;
+  occurrences: { startDate: string; endDate: string }[];
+  nextDate: string | null;
+  programSections: string[];
 }
 
 export interface LeanCourseDoc {
@@ -20,12 +20,11 @@ export interface LeanCourseDoc {
   slug?: string;
   name: string;
   description: string;
-  duration: string;
   cost: number;
-  level: string;
   type: string;
   media?: unknown;
-  startDate?: Date | null;
+  occurrences?: { startDate?: Date | string; endDate?: Date | string }[];
+  programSections?: unknown;
 }
 
 /** Slug usato in URL e API: coincide con il catalogo anche se `slug` in DB è assente (dati legacy). */
@@ -36,16 +35,38 @@ export function getPublicCourseSlug(c: LeanCourseDoc): string {
 
 export function serializePublicCourse(c: LeanCourseDoc): PublicCourseJson {
   const slug = getPublicCourseSlug(c);
+  const occurrences = Array.isArray(c.occurrences)
+    ? c.occurrences
+        .map((o) => {
+          const start = o?.startDate ? new Date(o.startDate) : null;
+          const end = o?.endDate ? new Date(o.endDate) : null;
+          if (!start || !end || Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+            return null;
+          }
+          return {
+            startDate: start.toISOString(),
+            endDate: end.toISOString(),
+          };
+        })
+        .filter((o): o is { startDate: string; endDate: string } => Boolean(o))
+        .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+    : [];
+
+  const now = Date.now();
+  const nextOccurrence = occurrences.find((o) => new Date(o.endDate).getTime() >= now) ?? occurrences[0] ?? null;
+
   return {
     id: c._id.toString(),
     slug,
     name: c.name,
     description: c.description,
-    duration: c.duration,
     cost: c.cost,
-    level: c.level,
     type: c.type as CourseType,
     media: Array.isArray(c.media) ? c.media : [],
-    startDate: c.startDate ? new Date(c.startDate).toISOString() : null,
+    occurrences,
+    nextDate: nextOccurrence?.startDate ?? null,
+    programSections: Array.isArray(c.programSections)
+      ? c.programSections.filter((s): s is string => typeof s === 'string').slice(0, 3)
+      : [],
   };
 }

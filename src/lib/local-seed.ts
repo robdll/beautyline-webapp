@@ -4,6 +4,7 @@ import Equipment from '@/models/Equipment';
 import Product from '@/models/Product';
 import Service from '@/models/Service';
 import User from '@/models/User';
+import { normalizeExistingCourses } from '@/lib/course-catalog-seed';
 
 declare global {
   var _localSeedPromise: Promise<void> | undefined;
@@ -69,22 +70,30 @@ async function seedCourses() {
   await Course.insertMany([
     {
       type: 'occhi',
-      level: 'Avanzato',
       name: 'Master Laminazione Ciglia',
       description: 'Percorso pratico e teorico per specializzarsi nella laminazione professionale.',
       media: [],
-      duration: '2 giorni',
-      startDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14),
+      occurrences: [
+        {
+          startDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14),
+          endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 15),
+        },
+      ],
+      programSections: ['Analisi viso e ciglia', 'Tecnica professionale', 'Sessione pratica guidata'],
       cost: 490,
     },
     {
       type: 'unghie',
-      level: 'Principiante',
       name: 'Corso Ricostruzione Unghie',
       description: 'Fondamenti tecnici, igiene, preparazione unghia e modellatura gel.',
       media: [],
-      duration: '3 giorni',
-      startDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+      occurrences: [
+        {
+          startDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+          endDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 32),
+        },
+      ],
+      programSections: ['Teoria e protocolli', 'Pratica in aula', 'Conclusione e verifica'],
       cost: 650,
     },
   ]);
@@ -148,6 +157,7 @@ async function seedLocalData() {
   await seedUsers();
   await seedServices();
   await seedCourses();
+  await normalizeExistingCourses();
   await seedProducts();
   await seedEquipment();
 

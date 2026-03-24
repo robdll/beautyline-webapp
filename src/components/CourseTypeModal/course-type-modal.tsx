@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { HomeCourseCard } from '@/lib/constants';
 import { getCourseTypeLabel, parseCourseType, type CourseType } from '@/lib/course-types';
+import { formatDateRange } from '@/lib/course-occurrences';
 import type { PublicCourseJson } from '@/lib/public-course';
 
 const modalIconBtnClass =
@@ -58,6 +59,16 @@ function firstValidMediaUrl(media: string[] | undefined): string | null {
 
 function resolveCourseImageUrl(c: PublicCourseItem): string {
   return firstValidMediaUrl(c.media) ?? COURSE_IMAGE_FALLBACK;
+}
+
+function getCourseNextDate(c: PublicCourseItem): string {
+  if (c.occurrences.length === 0) return 'Data da definire';
+  const now = Date.now();
+  const sorted = [...c.occurrences].sort(
+    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
+  const next = sorted.find((occ) => new Date(occ.endDate).getTime() >= now) ?? sorted[0];
+  return formatDateRange(next.startDate, next.endDate);
 }
 
 function CourseImageFill({
@@ -350,8 +361,9 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                   <table className="w-full min-w-[320px] text-left text-sm">
                     <thead className="bg-gray-50 text-gray-700">
                       <tr>
-                        <th className="w-36 px-3 py-3 font-semibold md:w-44">Immagine</th>
+                        <th className="w-24 px-3 py-3 font-semibold">Immagine</th>
                         <th className="px-3 py-3 font-semibold">Titolo</th>
+                        <th className="px-3 py-3 font-semibold">Prossima Data</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
@@ -362,16 +374,17 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                           onClick={() => openCoursePage(c)}
                         >
                           <td className="p-3 align-middle">
-                            <div className="relative h-16 w-28 overflow-hidden rounded-lg bg-muted md:h-20 md:w-36">
+                            <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-muted md:h-20 md:w-20">
                               <CourseImageFill
                                 key={c.id}
                                 course={c}
                                 className="object-cover"
-                                sizes="144px"
+                                sizes="80px"
                               />
                             </div>
                           </td>
                           <td className="p-3 align-middle font-medium text-gray-900">{c.name}</td>
+                          <td className="p-3 align-middle text-gray-600">{getCourseNextDate(c)}</td>
                         </tr>
                       ))}
                     </tbody>

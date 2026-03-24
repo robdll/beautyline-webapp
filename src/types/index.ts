@@ -2,11 +2,10 @@ export interface Course {
   id: string;
   title: string;
   description: string;
-  duration: string;
   price: string;
   image: string;
   category?: string;
-  startDate?: string;
+  nextDate?: string;
   /** Path relativo sotto /corsi, es. `unghie/percorso-gel` */
   catalogPath?: string;
 }

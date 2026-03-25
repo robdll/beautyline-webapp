@@ -54,7 +54,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { type, name, description, cost, media, occurrences, programSections } = body;
+    const { type, name, description, cost, media, occurrences, programSections, orario } = body;
 
     if (!type || !name || !description || cost === undefined) {
       return NextResponse.json(
@@ -85,6 +85,7 @@ export async function PUT(
       return NextResponse.json({ error: occurrenceError }, { status: 400 });
     }
     const safeProgramSections = sanitizeProgramSections(programSections);
+    const safeOrario = typeof orario === 'string' ? orario.trim() : '';
 
     await connectDB();
     const course = await Course.findById(id);
@@ -99,6 +100,7 @@ export async function PUT(
     course.media = Array.isArray(media) ? media : [];
     course.occurrences = parsedOccurrences;
     course.programSections = safeProgramSections;
+    course.orario = safeOrario;
 
     await course.save();
 

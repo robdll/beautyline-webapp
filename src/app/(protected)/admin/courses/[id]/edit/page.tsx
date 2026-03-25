@@ -19,6 +19,7 @@ interface Course {
   description: string;
   occurrences?: { startDate: string; endDate: string }[];
   programSections?: string[];
+  orario?: string;
   cost: number;
   media?: string[];
 }
@@ -38,6 +39,7 @@ export default function AdminCoursesEditPage() {
     media: [] as string[],
     occurrences: [{ startDate: '', endDate: '' }],
     programSections: ['', '', ''],
+    orario: '',
   });
 
   useEffect(() => {
@@ -61,6 +63,7 @@ export default function AdminCoursesEditPage() {
               Array.isArray(course.programSections) && course.programSections.length > 0
                 ? [...course.programSections, '', ''].slice(0, 3)
                 : ['', '', ''],
+            orario: typeof course.orario === 'string' ? course.orario : '',
           });
         } else {
           const data = await res.json();
@@ -129,6 +132,7 @@ export default function AdminCoursesEditPage() {
           media: form.media,
           occurrences: form.occurrences,
           programSections: form.programSections,
+          orario: form.orario,
         }),
       });
 
@@ -260,6 +264,21 @@ export default function AdminCoursesEditPage() {
             >
               + Aggiungi data
             </button>
+          </div>
+
+          <div>
+            <label htmlFor="orario" className={labelClass}>
+              Orario (uguale per tutte le date)
+            </label>
+            <input
+              id="orario"
+              name="orario"
+              type="text"
+              value={form.orario}
+              onChange={handleChange}
+              className={inputClass}
+              placeholder="Es. 9:30 - 17:30"
+            />
           </div>
 
           <div className="flex flex-col gap-3">

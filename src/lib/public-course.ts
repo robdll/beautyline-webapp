@@ -13,6 +13,7 @@ export interface PublicCourseJson {
   occurrences: { startDate: string; endDate: string }[];
   nextDate: string | null;
   programSections: string[];
+  orario: string;
 }
 
 export interface LeanCourseDoc {
@@ -25,6 +26,7 @@ export interface LeanCourseDoc {
   media?: unknown;
   occurrences?: { startDate?: Date | string; endDate?: Date | string }[];
   programSections?: unknown;
+  orario?: unknown;
 }
 
 /** Slug usato in URL e API: coincide con il catalogo anche se `slug` in DB è assente (dati legacy). */
@@ -68,5 +70,6 @@ export function serializePublicCourse(c: LeanCourseDoc): PublicCourseJson {
     programSections: Array.isArray(c.programSections)
       ? c.programSections.filter((s): s is string => typeof s === 'string').slice(0, 3)
       : [],
+    orario: typeof c.orario === 'string' ? c.orario : '',
   };
 }

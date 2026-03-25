@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { type, name, description, cost, media, occurrences, programSections } = body;
+    const { type, name, description, cost, media, occurrences, programSections, orario } = body;
 
     if (!type || !name || !description || cost === undefined) {
       return NextResponse.json(
@@ -64,6 +64,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: occurrenceError }, { status: 400 });
     }
     const safeProgramSections = sanitizeProgramSections(programSections);
+    const safeOrario = typeof orario === 'string' ? orario.trim() : '';
 
     await connectDB();
     const course = await Course.create({
@@ -74,6 +75,7 @@ export async function POST(request: NextRequest) {
       media: Array.isArray(media) ? media : [],
       occurrences: parsedOccurrences,
       programSections: safeProgramSections,
+      orario: safeOrario,
     });
 
     const serialized = {

@@ -46,7 +46,7 @@ export default async function CorsoDetailPage({ params }: PageProps) {
   const course = serializePublicCourse(raw as LeanCourseDoc);
 
   return (
-    <Section className="min-h-0 bg-white py-12 md:py-16" containerClassName="max-w-4xl">
+    <Section className="min-h-0 bg-white py-12 md:py-16" containerClassName="max-w-6xl">
       <CourseDetailView course={course} />
     </Section>
   );

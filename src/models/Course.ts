@@ -16,6 +16,7 @@ export interface ICourse extends Document {
   }[];
   programSections: string[];
   cost: number;
+  orario?: string;
   deletedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -38,6 +39,7 @@ const CourseSchema = new Schema<ICourse>(
     ],
     programSections: [{ type: String, trim: true }],
     cost: { type: Number, required: true, min: 0 },
+    orario: { type: String, trim: true, default: '' },
   },
   { timestamps: true }
 );

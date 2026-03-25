@@ -22,6 +22,7 @@ export default function AdminCoursesNewPage() {
     media: [] as string[],
     occurrences: [{ startDate: '', endDate: '' }],
     programSections: ['', '', ''],
+    orario: '',
   });
 
   const handleChange = (
@@ -76,6 +77,7 @@ export default function AdminCoursesNewPage() {
           media: form.media,
           occurrences: form.occurrences,
           programSections: form.programSections,
+          orario: form.orario,
         }),
       });
 
@@ -199,6 +201,21 @@ export default function AdminCoursesNewPage() {
             >
               + Aggiungi data
             </button>
+          </div>
+
+          <div>
+            <label htmlFor="orario" className={labelClass}>
+              Orario (uguale per tutte le date)
+            </label>
+            <input
+              id="orario"
+              name="orario"
+              type="text"
+              value={form.orario}
+              onChange={handleChange}
+              className={inputClass}
+              placeholder="Es. 9:30 - 17:30"
+            />
           </div>
 
           <div className="flex flex-col gap-3">

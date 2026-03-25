@@ -14,6 +14,7 @@ interface Course {
   description: string;
   cost: number;
   occurrences?: { startDate: string; endDate: string }[];
+  orario?: string;
   media?: string[];
 }
 
@@ -99,6 +100,7 @@ export default function AdminCoursesPage() {
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Nome</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Tipo</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Prossima Data</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Orario</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Costo</th>
                 <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Azioni</th>
               </tr>
@@ -106,7 +108,7 @@ export default function AdminCoursesPage() {
             <tbody className="divide-y divide-gray-100">
               {courses.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={7} className="px-6 py-12 text-center text-gray-500">
                     Nessun corso presente. Crea il primo corso.
                   </td>
                 </tr>
@@ -127,6 +129,7 @@ export default function AdminCoursesPage() {
                     <td className="px-6 py-4 text-sm font-medium text-gray-900">{course.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{getCourseTypeLabel(course.type)}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{getNextDate(course.occurrences)}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{course.orario || 'Da definire'}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">€{course.cost}</td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">

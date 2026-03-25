@@ -15,10 +15,6 @@ export default function AdminEquipmentNewPage() {
     name: '',
     description: '',
     media: [] as string[],
-    rentOnly: false,
-    rentCostPerDay: 0,
-    rentCostPerMonth: 0,
-    sellingCost: 0,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -107,58 +103,6 @@ export default function AdminEquipmentNewPage() {
               onChange={(images) => setForm((f) => ({ ...f, media: images }))}
               folder="beautyline/equipment"
             />
-          </div>
-          <div>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={form.rentOnly}
-                onChange={(e) => setForm((f) => ({ ...f, rentOnly: e.target.checked }))}
-                className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
-              />
-              <span className={labelClass}>Solo noleggio</span>
-            </label>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div>
-              <label className={labelClass}>Costo noleggio/giorno (€)</label>
-              <input
-                type="number"
-                min={0}
-                step={0.01}
-                value={form.rentCostPerDay || ''}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, rentCostPerDay: parseFloat(e.target.value) || 0 }))
-                }
-                className={inputClass}
-              />
-            </div>
-            <div>
-              <label className={labelClass}>Costo noleggio/mese (€)</label>
-              <input
-                type="number"
-                min={0}
-                step={0.01}
-                value={form.rentCostPerMonth || ''}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, rentCostPerMonth: parseFloat(e.target.value) || 0 }))
-                }
-                className={inputClass}
-              />
-            </div>
-            <div>
-              <label className={labelClass}>Prezzo vendita (€)</label>
-              <input
-                type="number"
-                min={0}
-                step={0.01}
-                value={form.sellingCost || ''}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, sellingCost: parseFloat(e.target.value) || 0 }))
-                }
-                className={inputClass}
-              />
-            </div>
           </div>
         </div>
 

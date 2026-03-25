@@ -47,7 +47,7 @@ export async function PUT(
 
   try {
     const body = await request.json();
-    const { type, name, description, media, rentOnly, rentCostPerDay, rentCostPerMonth, sellingCost } = body;
+    const { type, name, description, media } = body;
 
     if (!type || !name || !description) {
       return NextResponse.json(
@@ -64,20 +64,6 @@ export async function PUT(
       );
     }
 
-    const numRentDay = Number(rentCostPerDay);
-    const numRentMonth = Number(rentCostPerMonth);
-    const numSelling = Number(sellingCost);
-
-    if (isNaN(numRentDay) || numRentDay < 0) {
-      return NextResponse.json({ error: 'Costo noleggio giornaliero non valido.' }, { status: 400 });
-    }
-    if (isNaN(numRentMonth) || numRentMonth < 0) {
-      return NextResponse.json({ error: 'Costo noleggio mensile non valido.' }, { status: 400 });
-    }
-    if (isNaN(numSelling) || numSelling < 0) {
-      return NextResponse.json({ error: 'Prezzo di vendita non valido.' }, { status: 400 });
-    }
-
     await connectDB();
     const equipment = await Equipment.findByIdAndUpdate(
       id,
@@ -86,10 +72,6 @@ export async function PUT(
         name: String(name).trim(),
         description: String(description),
         media: Array.isArray(media) ? media : [],
-        rentOnly: Boolean(rentOnly),
-        rentCostPerDay: numRentDay,
-        rentCostPerMonth: numRentMonth,
-        sellingCost: numSelling,
       },
       { new: true }
     ).lean();

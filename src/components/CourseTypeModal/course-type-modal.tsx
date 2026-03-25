@@ -31,7 +31,11 @@ function CloseIcon({ className }: { className?: string }) {
   );
 }
 
-export type CourseCardWithType = HomeCourseCard & { courseType: CourseType };
+export type CourseHighlightCard = HomeCourseCard & { courseType?: CourseType };
+export type CourseCardWithType = CourseHighlightCard & { courseType: CourseType };
+function hasCourseType(card: CourseHighlightCard): card is CourseCardWithType {
+  return typeof card.courseType === 'string';
+}
 
 export type PublicCourseItem = PublicCourseJson;
 
@@ -100,7 +104,7 @@ function CourseImageFill({
 }
 
 interface CourseTypeModalHighlightGridProps {
-  cards: CourseCardWithType[];
+  cards: CourseHighlightCard[];
   gridClassName: string;
 }
 
@@ -280,35 +284,68 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
     <>
       <div className={gridClassName}>
         {cards.map((card) => (
-          <button
-            key={card.title}
-            type="button"
-            onClick={() => openForType(card)}
-            aria-label={`Apri elenco: ${card.title}`}
-            className="group relative block min-w-0 w-full cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
-          >
-            <div className="relative aspect-square w-full">
-              <Image
-                src={card.imageSrc}
-                alt=""
-                fill
-                sizes="(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw"
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                style={
-                  card.imageObjectPosition ? { objectPosition: card.imageObjectPosition } : undefined
-                }
-              />
-              <div
-                className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/10 transition-opacity duration-300 group-hover:from-black/95"
-                aria-hidden
-              />
-              <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
-                <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
-                  {card.title}
-                </h3>
+          hasCourseType(card) ? (
+            <button
+              key={card.title}
+              type="button"
+              onClick={() => openForType(card)}
+              aria-label={`Apri elenco: ${card.title}`}
+              className="group relative block min-w-0 w-full cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
+            >
+              <div className="relative aspect-square w-full">
+                <Image
+                  src={card.imageSrc}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  style={
+                    card.imageObjectPosition ? { objectPosition: card.imageObjectPosition } : undefined
+                  }
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/10 transition-opacity duration-300 group-hover:from-black/95"
+                  aria-hidden
+                />
+                <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
+                  <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
+                    {card.title}
+                  </h3>
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
+          ) : (
+            <a
+              key={card.title}
+              href={card.href}
+              target={card.openInNewTab ? '_blank' : undefined}
+              rel={card.openInNewTab ? 'noopener noreferrer' : undefined}
+              aria-label={card.title}
+              className="group relative block min-w-0 w-full cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
+            >
+              <div className="relative aspect-square w-full">
+                <Image
+                  src={card.imageSrc}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  style={
+                    card.imageObjectPosition ? { objectPosition: card.imageObjectPosition } : undefined
+                  }
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/10 transition-opacity duration-300 group-hover:from-black/95"
+                  aria-hidden
+                />
+                <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
+                  <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
+                    {card.title}
+                  </h3>
+                </div>
+              </div>
+            </a>
+          )
         ))}
       </div>
 

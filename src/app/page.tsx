@@ -196,7 +196,7 @@ export default function Home() {
 
       {/* Formazione Section */}
       <BrandStatsSection />
-      <CoursesHighlightSection id="formazione" />
+      <CoursesHighlightSection id="formazione" mode="typeModal" />
 
       {/* Servizi Estetica Section */}
       <Section id="servizi-estetica" className="bg-muted">

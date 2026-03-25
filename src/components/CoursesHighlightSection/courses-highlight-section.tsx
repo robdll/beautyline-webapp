@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { CourseTypeModalHighlightGrid } from '@/components/CourseTypeModal';
-import type { CourseCardWithType } from '@/components/CourseTypeModal';
 import { Section } from '@/components/Section';
 import { Button } from '@/components/shared/Button';
 import { HomeCourseCard, HOME_COURSE_CARDS } from '@/lib/constants';
@@ -50,7 +49,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
 
       {mode === 'typeModal' ? (
         <CourseTypeModalHighlightGrid
-          cards={cards as CourseCardWithType[]}
+          cards={cards}
           gridClassName={gridClassName}
         />
       ) : (

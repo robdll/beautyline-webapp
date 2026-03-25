@@ -84,6 +84,15 @@ export default async function ChiSiamo() {
 
       <Section id="la-nostra-storia" className="scroll-mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="w-full">
+            <Image
+              src="/images/chisiamo.webp"
+              alt="Christian e Barbara presso l'accademia BeautyLine"
+              width={1280}
+              height={900}
+              className="w-full h-auto object-contain"
+            />
+          </div>
           <div className="flex flex-col gap-6">
             <h2 className="heading-brand text-3xl md:text-4xl font-bold">
               La Nostra Storia
@@ -103,15 +112,6 @@ export default async function ChiSiamo() {
             <p className="text-base lg:text-lg text-gray-600 leading-relaxed">
               Con la stessa passione di sempre, continuiamo a innovare e a supportare chi desidera crescere in questo settore unico e affascinante.
             </p>
-          </div>
-          <div className="w-full">
-            <Image
-              src="/images/chisiamo.webp"
-              alt="Christian e Barbara presso l'accademia BeautyLine"
-              width={1280}
-              height={900}
-              className="w-full h-auto object-contain"
-            />
           </div>
         </div>
       </Section>

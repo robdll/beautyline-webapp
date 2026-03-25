@@ -28,6 +28,20 @@ function getNextDate(occurrences: { startDate: string; endDate: string }[] | und
   return formatDateRange(next.startDate, next.endDate);
 }
 
+function getNextDateTimestamp(occurrences: { startDate: string; endDate: string }[] | undefined): number {
+  if (!occurrences || occurrences.length === 0) return Number.POSITIVE_INFINITY;
+  const now = Date.now();
+  const sorted = [...occurrences].sort(
+    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
+  const next = sorted.find((occ) => new Date(occ.endDate).getTime() >= now) ?? sorted[0];
+  return new Date(next.startDate).getTime();
+}
+
+function sortByNextDate(courses: Course[]): Course[] {
+  return [...courses].sort((a, b) => getNextDateTimestamp(a.occurrences) - getNextDateTimestamp(b.occurrences));
+}
+
 export default function AdminCoursesPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +52,7 @@ export default function AdminCoursesPage() {
       const res = await fetch('/api/admin/courses');
       if (res.ok) {
         const data = await res.json();
-        setCourses(data);
+        setCourses(sortByNextDate(data));
       }
     } catch (err) {
       console.error('Errore nel caricamento dei corsi:', err);

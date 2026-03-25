@@ -35,32 +35,165 @@ async function seedUsers() {
 }
 
 async function seedServices() {
-  const existingCount = await Service.countDocuments();
-  if (existingCount > 0) return;
+  const services = [
+    {
+      type: 'Pressoterapia',
+      name: 'Pressoterapia silver',
+      description: 'Seduta drenante delicata, ideale per gambe leggere e microcircolazione attiva.',
+      media: [],
+      cost: 39,
+    },
+    {
+      type: 'Pressoterapia',
+      name: 'Pressoterapia gold',
+      description: 'Protocollo intensivo con pressoterapia mirata per gonfiore localizzato e tonicita.',
+      media: [],
+      cost: 49,
+    },
+    {
+      type: 'Pressoterapia',
+      name: 'Pacchetto 5 sedute',
+      description: 'Percorso da 5 trattamenti pressoterapia con 1 seduta omaggio inclusa.',
+      media: [],
+      cost: 195,
+    },
+    {
+      type: 'Pressoterapia',
+      name: 'Pacchetto 10 sedute',
+      description: 'Programma completo da 10 sedute pressoterapia con 2 sedute omaggio.',
+      media: [],
+      cost: 390,
+    },
+    {
+      type: 'Pulizia Viso',
+      name: 'Pulizia viso classica',
+      description: 'Detersione profonda e riequilibrio cutaneo per una pelle luminosa e uniforme.',
+      media: [],
+      cost: 40,
+    },
+    {
+      type: 'Oxymesio Therapy',
+      name: 'Pulizia viso + ossigeno',
+      description: 'Pulizia viso con ossigenazione cosmetica per idratazione e incarnato piu fresco.',
+      media: [],
+      cost: 45,
+    },
+    {
+      type: 'Oxymesio Therapy',
+      name: 'Trattamento viso completo',
+      description: 'Trattamento completo con azione rivitalizzante, nutriente e distensiva.',
+      media: [],
+      cost: 60,
+    },
+    {
+      type: 'Multi 360',
+      name: 'Trattamento viso',
+      description: 'Tecnologia Multi 360 per migliorare grana, tono e luminosita del viso.',
+      media: [],
+      cost: 49,
+    },
+    {
+      type: 'Multi 360',
+      name: 'Addome',
+      description: 'Trattamento specifico addome per compattare i tessuti e migliorare l elasticita.',
+      media: [],
+      cost: 49,
+    },
+    {
+      type: 'Multi 360',
+      name: 'Braccia',
+      description: 'Protocollo rassodante braccia con stimolazione dolce e risultato progressivo.',
+      media: [],
+      cost: 49,
+    },
+    {
+      type: 'Multi 360',
+      name: 'Gambe e glutei',
+      description: 'Azione combinata su gambe e glutei per una silhouette piu tonica e armoniosa.',
+      media: [],
+      cost: 69,
+    },
+    {
+      type: 'Multi 360',
+      name: 'Gambe glutei e addome',
+      description: 'Trattamento completo body contour su tre aree strategiche in un unica seduta.',
+      media: [],
+      cost: 99,
+    },
+    {
+      type: 'Lipolaser + Presso',
+      name: 'Seduta',
+      description: 'Combinazione lipolaser e pressoterapia per modellamento e drenaggio profondo.',
+      media: [],
+      cost: 60,
+    },
+    {
+      type: 'Infrasonic',
+      name: 'Drenaggio',
+      description: 'Trattamento infrasonic drenante per alleggerire i tessuti e ridurre la ritenzione.',
+      media: [],
+      cost: 49,
+    },
+    {
+      type: 'Infrasonic',
+      name: 'Trattamento cellulite / tonificazione',
+      description: 'Protocollo infrasonic per lavorare su adiposita localizzate, cellulite e tonicita.',
+      media: [],
+      cost: 60,
+    },
+    {
+      type: 'Radiofrequenza',
+      name: 'Radio silver',
+      description: 'Percorso viso con detersione, radiofrequenza e crema finale ad azione liftante.',
+      media: [],
+      cost: 50,
+    },
+    {
+      type: 'Radiofrequenza',
+      name: 'Radio gold',
+      description: 'Trattamento viso premium con detersione, radio, maschera, crema e massaggio.',
+      media: [],
+      cost: 65,
+    },
+    {
+      type: 'Radiofrequenza',
+      name: 'Corpo zona singola',
+      description: 'Radiofrequenza corpo su una zona mirata per compattare e tonificare i tessuti.',
+      media: [],
+      cost: 55,
+    },
+    {
+      type: 'Radiofrequenza',
+      name: 'Corpo 2 zone',
+      description: 'Seduta radiofrequenza su due zone corpo per un risultato piu completo.',
+      media: [],
+      cost: 90,
+    },
+    {
+      type: 'Radiofrequenza',
+      name: 'Pacchetto 5 sedute',
+      description: 'Pacchetto corpo da 5 sedute radiofrequenza con sconto 10% sul totale.',
+      media: [],
+      cost: 247.5,
+    },
+    {
+      type: 'Radiofrequenza',
+      name: 'Pacchetto 10 sedute',
+      description: 'Pacchetto corpo da 10 sedute radiofrequenza con sconto 15% dedicato.',
+      media: [],
+      cost: 467.5,
+    },
+  ];
 
-  await Service.insertMany([
-    {
-      type: 'Viso',
-      name: 'Pulizia Viso Profonda',
-      description: 'Trattamento completo per detersione, esfoliazione e riequilibrio della pelle.',
-      media: [],
-      cost: 59,
-    },
-    {
-      type: 'Corpo',
-      name: 'Massaggio Linfodrenante',
-      description: 'Massaggio specifico per stimolare la circolazione e ridurre il senso di gonfiore.',
-      media: [],
-      cost: 75,
-    },
-    {
-      type: 'Mani',
-      name: 'Manicure Semipermanente',
-      description: 'Preparazione, applicazione colore e finish lucido a lunga durata.',
-      media: [],
-      cost: 35,
-    },
-  ]);
+  await Service.bulkWrite(
+    services.map((service) => ({
+      updateOne: {
+        filter: { type: service.type, name: service.name },
+        update: { $set: service },
+        upsert: true,
+      },
+    }))
+  );
 }
 
 async function seedCourses() {

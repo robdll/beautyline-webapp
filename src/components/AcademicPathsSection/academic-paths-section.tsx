@@ -26,7 +26,7 @@ export const AcademicPathsSection: React.FC<AcademicPathsSectionProps> = ({
       containerClassName="max-w-6xl mx-auto gap-10 lg:gap-12"
     >
       <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold tracking-wide">
-        Percorsi accademici
+        Percorsi Master
       </h2>
 
       <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">

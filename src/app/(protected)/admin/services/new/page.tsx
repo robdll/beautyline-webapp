@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
+import { SERVICE_CATEGORIES } from '@/lib/service-categories';
 
 export default function AdminServicesNewPage() {
   const router = useRouter();
@@ -65,14 +66,20 @@ export default function AdminServicesNewPage() {
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 max-w-2xl">
         <div className="flex flex-col gap-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
-            <input
-              type="text"
+            <label className="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
+            <select
               value={form.type}
               onChange={(e) => setForm((f) => ({ ...f, type: e.target.value }))}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
-            />
+            >
+              <option value="">Seleziona categoria</option>
+              {SERVICE_CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>

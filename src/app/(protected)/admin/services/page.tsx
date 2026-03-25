@@ -82,7 +82,7 @@ export default function AdminServicesPage() {
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Nome</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Tipo</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Categoria</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Costo</th>
                 <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Azioni</th>
               </tr>

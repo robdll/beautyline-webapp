@@ -47,7 +47,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
   const durationsLabel =
     sortedOccurrences.length === 0
       ? 'Da definire'
-      : `${sortedOccurrences.length} ${sortedOccurrences.length === 1 ? 'data' : 'date'}`;
+      : `${sortedOccurrences.length} ${sortedOccurrences.length === 1 ? 'giorno' : 'giorni'}`;
   const isMultiDate =
     sortedOccurrences.length > 0
       ? daySpanInclusive(sortedOccurrences[0].startDate, sortedOccurrences[0].endDate) > 1

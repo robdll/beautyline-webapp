@@ -56,7 +56,7 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
             src={imageSrc}
             alt=""
             fill
-            className="object-cover"
+            className="object-contain"
             sizes="(min-width: 768px) 672px, 100vw"
             priority
             unoptimized={isRemote}

@@ -19,6 +19,8 @@ export const AcademicPathsSection: React.FC<AcademicPathsSectionProps> = ({
   imageAlt = '',
   ctaHref = '/percorso-master',
 }) => {
+  const isExternalCta = /^https?:\/\//.test(ctaHref);
+
   return (
     <Section
       id={id}
@@ -61,7 +63,11 @@ export const AcademicPathsSection: React.FC<AcademicPathsSectionProps> = ({
           </p>
 
           <div className="pt-2">
-            <Link href={ctaHref}>
+            <Link
+              href={ctaHref}
+              target={isExternalCta ? '_blank' : undefined}
+              rel={isExternalCta ? 'noopener noreferrer' : undefined}
+            >
               <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
                 Scopri di più
               </Button>

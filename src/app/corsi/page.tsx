@@ -105,6 +105,7 @@ export default async function CorsiPage() {
         id="percorsi-accademici"
         imageSrc="/images/card-3.png"
         imageAlt="Percorsi accademici e formazione Beautyline Academy"
+        ctaHref="https://percorsomaster.it"
       />
 
       <Section id="calendario-corsi" className="bg-muted min-h-0">

@@ -231,7 +231,7 @@ export default function Home() {
 
       {/* Featured Products Section */}
       <Section id="prodotti" className="bg-muted" containerClassName="gap-8">
-        <div className="mb-16 flex w-full flex-col items-center gap-6">
+        <div className="mb-4 flex w-full flex-col items-center gap-6">
           <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold tracking-wide">
             I Nostri Prodotti
           </h2>
@@ -239,7 +239,7 @@ export default function Home() {
             Scopri la nostra linea professionale dedicata alla cura e alla bellezza
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-[30px] mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -256,7 +256,7 @@ export default function Home() {
       {/* Reviews Section */}
       <Section className="bg-secondary text-white" containerClassName="gap-8">
         <div className="text-center mb-14 flex flex-col items-center gap-4">
-          <h2 className="heading-brand text-3xl md:text-4xl font-bold mb-4 tracking-wide">
+          <h2 className="heading-brand text-3xl md:text-4xl font-bold tracking-wide">
             Dicono di noi
           </h2>
           <p className="text-lg text-gray-200 max-w-3xl mx-auto text-center leading-relaxed">

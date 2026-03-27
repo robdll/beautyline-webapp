@@ -31,7 +31,7 @@ export const DeviceRentSection: React.FC = () => {
             Noleggio e Vendita Tecnologie per l&apos;Estetica
           </h2>
 
-          <div className="mt-6 flex flex-col gap-5 text-gray-600 leading-relaxed text-sm md:text-base">
+          <div className="flex flex-col gap-5 text-gray-600 leading-relaxed text-sm md:text-base">
             <p className="font-semibold text-gray-700">
               Offri più servizi, senza investimenti rigidi.
             </p>
@@ -62,7 +62,7 @@ export const DeviceRentSection: React.FC = () => {
             </li>
           </ul>
 
-          <div className="mt-8 flex flex-col gap-3 text-gray-600 leading-relaxed">
+          <div className="flex flex-col gap-3 text-gray-600 leading-relaxed">
             <p>
               Perfetto per estetiste con P.IVA, centri estetici e chi ha già fatto un corso con noi.
             </p>
@@ -71,7 +71,7 @@ export const DeviceRentSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="mt-14">
+          <div className="mt-2">
             <Link href="/attrezzature">
               <Button
                 variant="primary"

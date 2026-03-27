@@ -57,14 +57,12 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
 
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col gap-8 md:gap-7">
-      <div className="mb-8">
-        <Link
-          href={`/corsi?tipo=${encodeURIComponent(course.type)}`}
-          className="text-sm font-medium text-primary hover:underline"
-        >
-          ← Torna al catalogo {getCourseTypeLabel(course.type)}
-        </Link>
-      </div>
+      <Link
+        href={`/corsi?tipo=${encodeURIComponent(course.type)}`}
+        className="text-sm font-medium text-primary hover:underline"
+      >
+        ← Torna al catalogo {getCourseTypeLabel(course.type)}
+      </Link>
 
       <div className="flex flex-col gap-8 md:gap-7">
         <header className="flex flex-col gap-2">

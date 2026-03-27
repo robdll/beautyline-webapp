@@ -47,7 +47,7 @@ export async function PUT(
 
   try {
     const body = await request.json();
-    const { type, name, description, media } = body;
+    const { type, name, description, media, technicalSheet } = body;
 
     if (!type || !name || !description) {
       return NextResponse.json(
@@ -72,6 +72,7 @@ export async function PUT(
         name: String(name).trim(),
         description: String(description),
         media: Array.isArray(media) ? media : [],
+        technicalSheet: typeof technicalSheet === 'string' ? technicalSheet.trim() : '',
       },
       { new: true }
     ).lean();

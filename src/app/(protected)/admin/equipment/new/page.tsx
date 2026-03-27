@@ -10,12 +10,60 @@ import { EQUIPMENT_TYPES, EQUIPMENT_TYPE_LABELS } from '@/lib/equipment-types';
 export default function AdminEquipmentNewPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [uploadingPdf, setUploadingPdf] = useState(false);
+  const [pdfError, setPdfError] = useState<string | null>(null);
   const [form, setForm] = useState({
     type: '',
     name: '',
     description: '',
     media: [] as string[],
+    technicalSheet: '',
   });
+
+  const toSlug = (value: string) =>
+    value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+  const handlePdfUpload = async (file: File) => {
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      setPdfError('Puoi caricare solo file PDF.');
+      return;
+    }
+
+    const slug = toSlug(form.name);
+    if (!slug) {
+      setPdfError('Inserisci prima il nome dell\'attrezzatura.');
+      return;
+    }
+
+    setUploadingPdf(true);
+    setPdfError(null);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'beautyline/equipment/schede-tecniche');
+      formData.append('publicId', slug);
+      formData.append('resourceType', 'raw');
+      formData.append('format', 'pdf');
+
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.details || data.error || 'Upload non riuscito.');
+      }
+
+      setForm((prev) => ({ ...prev, technicalSheet: data.url }));
+    } catch (err) {
+      setPdfError(err instanceof Error ? err.message : 'Errore durante il caricamento del PDF.');
+    } finally {
+      setUploadingPdf(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,6 +151,53 @@ export default function AdminEquipmentNewPage() {
               onChange={(images) => setForm((f) => ({ ...f, media: images }))}
               folder="beautyline/equipment"
             />
+          </div>
+          <div className="mb-4">
+            <label className={labelClass}>Scheda Tecnica (PDF)</label>
+            <input
+              id="technical-sheet-upload"
+              type="file"
+              accept=".pdf,application/pdf"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handlePdfUpload(file);
+                e.currentTarget.value = '';
+              }}
+              disabled={uploadingPdf}
+              className="hidden"
+            />
+            <label
+              htmlFor="technical-sheet-upload"
+              className={`inline-flex items-center gap-2 px-4 py-2 border border-dashed border-gray-300 rounded-lg text-sm text-gray-500 hover:border-primary hover:text-primary transition-colors ${
+                uploadingPdf ? 'opacity-50 pointer-events-none' : 'cursor-pointer'
+              }`}
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Carica Scheda Tecnica
+            </label>
+            {uploadingPdf && <p className="mt-2 text-sm text-gray-500">Caricamento PDF...</p>}
+            {form.technicalSheet && (
+              <div className="mt-2 flex items-center gap-3">
+                <a
+                  href={form.technicalSheet}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-primary hover:underline"
+                >
+                  Visualizza PDF caricato
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setForm((f) => ({ ...f, technicalSheet: '' }))}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Rimuovi
+                </button>
+              </div>
+            )}
+            {pdfError && <p className="mt-2 text-sm text-red-600">{pdfError}</p>}
           </div>
         </div>
 

@@ -77,6 +77,21 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
               {equipment.description}
             </dd>
           </div>
+          {equipment.technicalSheet && (
+            <div>
+              <dt className="font-medium text-gray-700">Scheda Tecnica</dt>
+              <dd className="mt-1">
+                <a
+                  href={equipment.technicalSheet}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Scarica la scheda tecnica
+                </a>
+              </dd>
+            </div>
+          )}
           <div>
             <dt className="font-medium text-gray-700">Disponibilità</dt>
             <dd>{equipment.rentOnly ? 'Solo noleggio' : 'Vendita e/o noleggio'}</dd>

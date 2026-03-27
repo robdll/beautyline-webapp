@@ -6,6 +6,7 @@ export interface IEquipment extends Document {
   name: string;
   description: string;
   media: string[];
+  technicalSheet?: string;
   rentOnly: boolean;
   rentCostPerDay: number;
   rentCostPerMonth: number;
@@ -23,6 +24,7 @@ const EquipmentSchema = new Schema<IEquipment>(
     name: { type: String, required: true, trim: true },
     description: { type: String, required: true },
     media: [{ type: String }],
+    technicalSheet: { type: String, default: '' },
     rentOnly: { type: Boolean, default: false },
     rentCostPerDay: { type: Number, default: 0, min: 0 },
     rentCostPerMonth: { type: Number, default: 0, min: 0 },

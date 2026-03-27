@@ -27,16 +27,31 @@ function ensureCloudinaryConfigured() {
 
 export async function uploadToCloudinary(
   fileBuffer: Buffer,
-  folder: string = 'beautyline'
+  folder: string = 'beautyline',
+  options?: {
+    publicId?: string;
+    resourceType?: 'image' | 'raw' | 'video' | 'auto';
+    format?: string;
+  }
 ): Promise<string> {
   ensureCloudinaryConfigured();
 
   return new Promise((resolve, reject) => {
     cloudinary.uploader
-      .upload_stream({ folder, resource_type: 'auto' }, (error, result) => {
-        if (error) return reject(error);
-        resolve(result!.secure_url);
-      })
+      .upload_stream(
+        {
+          folder,
+          resource_type: options?.resourceType ?? 'auto',
+          public_id: options?.publicId,
+          format: options?.format,
+          unique_filename: false,
+          overwrite: true,
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result!.secure_url);
+        }
+      )
       .end(fileBuffer);
   });
 }

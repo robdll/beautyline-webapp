@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { type, name, description, media } = body;
+    const { type, name, description, media, technicalSheet } = body;
 
     if (!type || !name || !description) {
       return NextResponse.json(
@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
       name: String(name).trim(),
       description: String(description),
       media: Array.isArray(media) ? media : [],
+      technicalSheet: typeof technicalSheet === 'string' ? technicalSheet.trim() : '',
     });
 
     const serialized = {

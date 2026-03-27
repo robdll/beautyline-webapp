@@ -20,7 +20,21 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     const folder = (formData.get('folder') as string) || 'beautyline';
-    const url = await uploadToCloudinary(buffer, folder);
+    const publicIdRaw = (formData.get('publicId') as string) || '';
+    const publicId = publicIdRaw.trim();
+    const resourceTypeRaw = ((formData.get('resourceType') as string) || 'auto').trim();
+    const formatRaw = ((formData.get('format') as string) || '').trim();
+
+    const normalizedResourceType =
+      resourceTypeRaw === 'image' || resourceTypeRaw === 'raw' || resourceTypeRaw === 'video'
+        ? resourceTypeRaw
+        : 'auto';
+
+    const url = await uploadToCloudinary(buffer, folder, {
+      publicId: publicId.length > 0 ? publicId : undefined,
+      resourceType: normalizedResourceType,
+      format: formatRaw.length > 0 ? formatRaw : undefined,
+    });
 
     return NextResponse.json({ url });
   } catch (error) {

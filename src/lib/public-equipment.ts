@@ -8,6 +8,7 @@ export interface PublicEquipmentJson {
   name: string;
   description: string;
   media: string[];
+  technicalSheet?: string;
   rentOnly: boolean;
   rentCostPerDay: number;
   rentCostPerMonth: number;
@@ -20,6 +21,7 @@ export interface LeanEquipmentDoc {
   name: string;
   description: string;
   media?: unknown;
+  technicalSheet?: unknown;
   rentOnly?: boolean;
   rentCostPerDay?: number;
   rentCostPerMonth?: number;
@@ -35,6 +37,7 @@ export function serializePublicEquipment(e: LeanEquipmentDoc): PublicEquipmentJs
     name: e.name,
     description: e.description,
     media: Array.isArray(e.media) ? e.media : [],
+    technicalSheet: typeof e.technicalSheet === 'string' ? e.technicalSheet : '',
     rentOnly: Boolean(e.rentOnly),
     rentCostPerDay: Number(e.rentCostPerDay) || 0,
     rentCostPerMonth: Number(e.rentCostPerMonth) || 0,

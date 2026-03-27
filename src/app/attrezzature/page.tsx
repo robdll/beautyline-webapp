@@ -32,19 +32,6 @@ interface EquipmentItem {
   sellingCost: number;
 }
 
-function equipmentPriceLabel(item: EquipmentItem): string {
-  if (item.rentCostPerDay > 0) {
-    return `€ ${item.rentCostPerDay.toFixed(2)}/giorno`;
-  }
-  if (item.rentCostPerMonth > 0) {
-    return `€ ${item.rentCostPerMonth.toFixed(2)}/mese`;
-  }
-  if (!item.rentOnly && item.sellingCost > 0) {
-    return `€ ${item.sellingCost.toFixed(2)}`;
-  }
-  return 'Su richiesta';
-}
-
 async function getEquipment(): Promise<EquipmentItem[]> {
   try {
     await connectDB();
@@ -124,7 +111,6 @@ export default async function AttrezzaturePage() {
                   <h3 className="heading-brand mb-2 text-xl font-bold">{item.name}</h3>
                   <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">{item.description}</p>
                   <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
-                    <p className="min-w-0 text-lg font-bold text-primary">{equipmentPriceLabel(item)}</p>
                     <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center">
                       {item.detailTypeSlug ? (
                         <Link

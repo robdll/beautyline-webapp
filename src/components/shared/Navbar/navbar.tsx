@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Logo } from '../Logo';
 import { Button } from '../Button';
 import { useAuth } from '@/contexts/AuthContext';
-import { useCart } from '@/contexts/CartContext';
 import { cn } from '@/lib/utils';
 
 const serviceLinks = [
@@ -37,7 +36,6 @@ export const Navbar: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { user, signout } = useAuth();
-  const { totalItems } = useCart();
   const router = useRouter();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -115,7 +113,7 @@ export const Navbar: React.FC = () => {
               )
             )}
 
-            {/* Cart Icon */}
+            {/* Cart icon temporarily hidden per client request
             <Link
               href="/cart"
               className="relative text-secondary hover:text-primary transition-colors duration-200 p-1"
@@ -124,12 +122,8 @@ export const Navbar: React.FC = () => {
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
               </svg>
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
             </Link>
+            */}
 
             {/* Auth Section */}
             {user ? (
@@ -155,13 +149,6 @@ export const Navbar: React.FC = () => {
                     className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-muted/50 transition-colors"
                   >
                     Il Mio Account
-                  </Link>
-                  <Link
-                    href="/cart"
-                    onClick={() => setUserMenuOpen(false)}
-                    className="block px-4 py-2.5 text-sm text-secondary hover:text-primary hover:bg-muted/50 transition-colors"
-                  >
-                    Carrello
                   </Link>
                   {user.role === 'admin' && (
                     <Link

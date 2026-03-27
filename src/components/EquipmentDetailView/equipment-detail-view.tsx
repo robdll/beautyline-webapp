@@ -18,19 +18,6 @@ function firstValidMediaUrl(media: string[] | undefined): string | null {
   return null;
 }
 
-function equipmentPriceLabel(item: PublicEquipmentJson): string {
-  if (item.rentCostPerDay > 0) {
-    return `€ ${item.rentCostPerDay.toFixed(2)}/giorno`;
-  }
-  if (item.rentCostPerMonth > 0) {
-    return `€ ${item.rentCostPerMonth.toFixed(2)}/mese`;
-  }
-  if (!item.rentOnly && item.sellingCost > 0) {
-    return `€ ${item.sellingCost.toFixed(2)}`;
-  }
-  return 'Su richiesta';
-}
-
 export interface EquipmentDetailViewProps {
   equipment: PublicEquipmentJson;
 }
@@ -40,7 +27,7 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
   const isRemote = imageSrc.startsWith('http://') || imageSrc.startsWith('https://');
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 py-10 md:py-14 md:px-6">
+    <div className="w-full max-w-2xl mx-auto px-4 md:py-14 md:px-6">
       <div className="mb-8">
         <Link
           href={`/attrezzature?tipo=${encodeURIComponent(equipment.type)}`}
@@ -72,7 +59,7 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
 
         <dl className="flex flex-col gap-4 text-sm text-gray-600">
           <div>
-            <dt className="font-medium text-gray-700">Descrizione</dt>
+            <dt className="text-[20px] font-semibold text-gray-700">Descrizione</dt>
             <dd className="mt-1 whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
               {equipment.description}
             </dd>
@@ -92,14 +79,6 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
               </dd>
             </div>
           )}
-          <div>
-            <dt className="font-medium text-gray-700">Disponibilità</dt>
-            <dd>{equipment.rentOnly ? 'Solo noleggio' : 'Vendita e/o noleggio'}</dd>
-          </div>
-          <div>
-            <dt className="font-medium text-gray-700">Prezzi</dt>
-            <dd className="text-lg font-bold text-primary">{equipmentPriceLabel(equipment)}</dd>
-          </div>
         </dl>
 
         <div className="pt-2">

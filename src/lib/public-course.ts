@@ -10,7 +10,7 @@ export interface PublicCourseJson {
   cost: number;
   type: CourseType;
   media: string[];
-  occurrences: { startDate: string; endDate: string }[];
+  occurrences: { startDate: string; endDate: string; soldOut: boolean }[];
   nextDate: string | null;
   programSections: string[];
   orario: string;
@@ -24,7 +24,7 @@ export interface LeanCourseDoc {
   cost: number;
   type: string;
   media?: unknown;
-  occurrences?: { startDate?: Date | string; endDate?: Date | string }[];
+  occurrences?: { startDate?: Date | string; endDate?: Date | string; soldOut?: boolean }[];
   programSections?: unknown;
   orario?: unknown;
 }
@@ -48,9 +48,10 @@ export function serializePublicCourse(c: LeanCourseDoc): PublicCourseJson {
           return {
             startDate: start.toISOString(),
             endDate: end.toISOString(),
+            soldOut: o?.soldOut === true,
           };
         })
-        .filter((o): o is { startDate: string; endDate: string } => Boolean(o))
+        .filter((o): o is { startDate: string; endDate: string; soldOut: boolean } => Boolean(o))
         .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
     : [];
 

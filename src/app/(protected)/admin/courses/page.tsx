@@ -13,22 +13,21 @@ interface Course {
   name: string;
   description: string;
   cost: number;
-  occurrences?: { startDate: string; endDate: string }[];
+  occurrences?: { startDate: string; endDate: string; soldOut?: boolean }[];
   orario?: string;
   media?: string[];
 }
 
-function getNextDate(occurrences: { startDate: string; endDate: string }[] | undefined): string {
-  if (!occurrences || occurrences.length === 0) return 'Data da definire';
-  const now = Date.now();
-  const sorted = [...occurrences].sort(
-    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-  );
-  const next = sorted.find((occ) => new Date(occ.endDate).getTime() >= now) ?? sorted[0];
-  return formatDateRange(next.startDate, next.endDate);
+function getAllDates(occurrences: { startDate: string; endDate: string; soldOut?: boolean }[] | undefined): string[] {
+  if (!occurrences || occurrences.length === 0) return ['Da Definire'];
+  return [...occurrences]
+    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+    .map((occ) => `${formatDateRange(occ.startDate, occ.endDate)}${occ.soldOut ? ' (sold-out)' : ''}`);
 }
 
-function getNextDateTimestamp(occurrences: { startDate: string; endDate: string }[] | undefined): number {
+function getNextDateTimestamp(
+  occurrences: { startDate: string; endDate: string; soldOut?: boolean }[] | undefined
+): number {
   if (!occurrences || occurrences.length === 0) return Number.POSITIVE_INFINITY;
   const now = Date.now();
   const sorted = [...occurrences].sort(
@@ -113,7 +112,7 @@ export default function AdminCoursesPage() {
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Immagine</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Nome</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Tipo</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Prossima Data</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Prossime Date</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Orario</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Costo</th>
                 <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Azioni</th>
@@ -142,7 +141,13 @@ export default function AdminCoursesPage() {
                     </td>
                     <td className="px-6 py-4 text-sm font-medium text-gray-900">{course.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{getCourseTypeLabel(course.type)}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{getNextDate(course.occurrences)}</td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      <ul className="space-y-1">
+                        {getAllDates(course.occurrences).map((dateLabel, idx) => (
+                          <li key={`${course._id}-date-${idx}`}>{dateLabel}</li>
+                        ))}
+                      </ul>
+                    </td>
                     <td className="px-6 py-4 text-sm text-gray-600">{course.orario || 'Da definire'}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">€{course.cost}</td>
                     <td className="px-6 py-4 text-right">

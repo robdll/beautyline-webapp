@@ -20,7 +20,7 @@ export default function AdminCoursesNewPage() {
     description: '',
     cost: '',
     media: [] as string[],
-    occurrences: [{ startDate: '', endDate: '' }],
+    occurrences: [{ startDate: '', endDate: '', soldOut: false }],
     programSections: ['', '', ''],
     orario: '',
   });
@@ -34,8 +34,8 @@ export default function AdminCoursesNewPage() {
 
   const updateOccurrence = (
     index: number,
-    field: 'startDate' | 'endDate',
-    value: string
+    field: 'startDate' | 'endDate' | 'soldOut',
+    value: string | boolean
   ) => {
     setForm((prev) => ({
       ...prev,
@@ -48,7 +48,7 @@ export default function AdminCoursesNewPage() {
   const addOccurrence = () => {
     setForm((prev) => ({
       ...prev,
-      occurrences: [...prev.occurrences, { startDate: '', endDate: '' }],
+      occurrences: [...prev.occurrences, { startDate: '', endDate: '', soldOut: false }],
     }));
   };
 
@@ -175,11 +175,23 @@ export default function AdminCoursesNewPage() {
                       className={inputClass}
                     />
                   </div>
+                  <div className="sm:col-span-2">
+                    <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+                      <input
+                        id={`soldOut-${idx}`}
+                        type="checkbox"
+                        checked={occ.soldOut}
+                        onChange={(e) => updateOccurrence(idx, 'soldOut', e.target.checked)}
+                        className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                      />
+                      Data sold-out
+                    </label>
+                  </div>
                 </div>
                 <div className="mt-2 flex items-center justify-between">
                   <p className="text-xs text-gray-500">
                     {occ.startDate && occ.endDate
-                      ? formatDateRange(occ.startDate, occ.endDate)
+                      ? `${formatDateRange(occ.startDate, occ.endDate)}${occ.soldOut ? ' (sold-out)' : ''}`
                       : 'Range da definire'}
                   </p>
                   {form.occurrences.length > 1 ? (

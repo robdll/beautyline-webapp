@@ -65,14 +65,11 @@ function resolveCourseImageUrl(c: PublicCourseItem): string {
   return firstValidMediaUrl(c.media) ?? COURSE_IMAGE_FALLBACK;
 }
 
-function getCourseNextDate(c: PublicCourseItem): string {
-  if (c.occurrences.length === 0) return 'Data da definire';
-  const now = Date.now();
-  const sorted = [...c.occurrences].sort(
-    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-  );
-  const next = sorted.find((occ) => new Date(occ.endDate).getTime() >= now) ?? sorted[0];
-  return formatDateRange(next.startDate, next.endDate);
+function getCourseAvailableDates(c: PublicCourseItem): string[] {
+  if (c.occurrences.length === 0) return ['Da Definire'];
+  return [...c.occurrences]
+    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+    .map((occ) => `${formatDateRange(occ.startDate, occ.endDate)}${occ.soldOut ? ' (sold-out)' : ''}`);
 }
 
 function CourseImageFill({
@@ -400,7 +397,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                       <tr>
                         <th className="w-24 px-3 py-3 font-semibold">Immagine</th>
                         <th className="px-3 py-3 font-semibold">Titolo</th>
-                        <th className="px-3 py-3 font-semibold">Prossima Data</th>
+                        <th className="px-3 py-3 font-semibold">Prossime Date</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
@@ -421,7 +418,13 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                             </div>
                           </td>
                           <td className="p-3 align-middle font-medium text-gray-900">{c.name}</td>
-                          <td className="p-3 align-middle text-gray-600">{getCourseNextDate(c)}</td>
+                          <td className="p-3 align-middle text-gray-600">
+                            <ul className="space-y-1">
+                              {getCourseAvailableDates(c).map((dateLabel, idx) => (
+                                <li key={`${c.id}-date-${idx}`}>{dateLabel}</li>
+                              ))}
+                            </ul>
+                          </td>
                         </tr>
                       ))}
                     </tbody>

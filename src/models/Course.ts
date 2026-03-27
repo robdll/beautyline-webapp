@@ -13,6 +13,7 @@ export interface ICourse extends Document {
   occurrences: {
     startDate: Date;
     endDate: Date;
+    soldOut: boolean;
   }[];
   programSections: string[];
   cost: number;
@@ -35,6 +36,7 @@ const CourseSchema = new Schema<ICourse>(
       {
         startDate: { type: Date, required: true },
         endDate: { type: Date, required: true },
+        soldOut: { type: Boolean, default: false },
       },
     ],
     programSections: [{ type: String, trim: true }],
@@ -71,7 +73,16 @@ CourseSchema.pre('validate', async function () {
 
 CourseSchema.plugin(softDeletePlugin);
 
+const existingCourseModel = mongoose.models.Course as Model<ICourse> | undefined;
+const hasSoldOutInCachedSchema =
+  typeof existingCourseModel?.schema?.path('occurrences.soldOut') !== 'undefined';
+
+// In dev/HMR, an old cached model can miss newly added fields.
+if (existingCourseModel && !hasSoldOutInCachedSchema) {
+  delete mongoose.models.Course;
+}
+
 const Course: Model<ICourse> =
-  mongoose.models.Course || mongoose.model<ICourse>('Course', CourseSchema);
+  (mongoose.models.Course as Model<ICourse>) || mongoose.model<ICourse>('Course', CourseSchema);
 
 export default Course;

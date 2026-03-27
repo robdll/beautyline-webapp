@@ -109,7 +109,10 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
               {nextThree.length > 0 ? (
                 <ul className="space-y-2 text-center text-sm text-gray-700">
                   {nextThree.map((occ, idx) => (
-                    <li key={`${occ.startDate}-${idx}`}>{formatDateRange(occ.startDate, occ.endDate)}</li>
+                    <li key={`${occ.startDate}-${idx}`}>
+                      {formatDateRange(occ.startDate, occ.endDate)}
+                      {occ.soldOut ? ' (sold-out)' : ''}
+                    </li>
                   ))}
                 </ul>
               ) : (

@@ -1,17 +1,29 @@
 type RawOccurrence = {
   startDate?: unknown;
   endDate?: unknown;
+  soldOut?: unknown;
 };
 
 export type CourseOccurrence = {
   startDate: Date;
   endDate: Date;
+  soldOut: boolean;
 };
 
 function parseDate(value: unknown): Date | null {
   if (typeof value !== 'string' || !value.trim()) return null;
   const parsed = new Date(value);
   return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function parseSoldOut(value: unknown): boolean {
+  if (value === true) return true;
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    return normalized === 'true' || normalized === '1' || normalized === 'yes';
+  }
+  if (typeof value === 'number') return value === 1;
+  return false;
 }
 
 function normalizeDateOnly(date: Date): Date {
@@ -37,7 +49,7 @@ export function parseOccurrences(value: unknown): CourseOccurrence[] | null {
     const end = parseDate(raw?.endDate);
     if (!start || !end) return null;
     if (normalizeDateOnly(end).getTime() < normalizeDateOnly(start).getTime()) return null;
-    parsed.push({ startDate: start, endDate: end });
+    parsed.push({ startDate: start, endDate: end, soldOut: parseSoldOut(raw?.soldOut) });
   }
   return parsed.sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
 }

@@ -17,7 +17,7 @@ interface Course {
   type: string;
   name: string;
   description: string;
-  occurrences?: { startDate: string; endDate: string }[];
+  occurrences?: { startDate: string; endDate: string; soldOut?: boolean }[];
   programSections?: string[];
   orario?: string;
   cost: number;
@@ -37,7 +37,7 @@ export default function AdminCoursesEditPage() {
     description: '',
     cost: '',
     media: [] as string[],
-    occurrences: [{ startDate: '', endDate: '' }],
+    occurrences: [{ startDate: '', endDate: '', soldOut: false }],
     programSections: ['', '', ''],
     orario: '',
   });
@@ -58,7 +58,8 @@ export default function AdminCoursesEditPage() {
               course.occurrences?.map((occ) => ({
                 startDate: occ.startDate ? new Date(occ.startDate).toISOString().slice(0, 10) : '',
                 endDate: occ.endDate ? new Date(occ.endDate).toISOString().slice(0, 10) : '',
-              })) || [{ startDate: '', endDate: '' }],
+                soldOut: occ.soldOut === true,
+              })) || [{ startDate: '', endDate: '', soldOut: false }],
             programSections:
               Array.isArray(course.programSections) && course.programSections.length > 0
                 ? [...course.programSections, '', ''].slice(0, 3)
@@ -89,8 +90,8 @@ export default function AdminCoursesEditPage() {
 
   const updateOccurrence = (
     index: number,
-    field: 'startDate' | 'endDate',
-    value: string
+    field: 'startDate' | 'endDate' | 'soldOut',
+    value: string | boolean
   ) => {
     setForm((prev) => ({
       ...prev,
@@ -103,7 +104,7 @@ export default function AdminCoursesEditPage() {
   const addOccurrence = () => {
     setForm((prev) => ({
       ...prev,
-      occurrences: [...prev.occurrences, { startDate: '', endDate: '' }],
+      occurrences: [...prev.occurrences, { startDate: '', endDate: '', soldOut: false }],
     }));
   };
 
@@ -238,11 +239,23 @@ export default function AdminCoursesEditPage() {
                       className={inputClass}
                     />
                   </div>
+                  <div className="sm:col-span-2">
+                    <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+                      <input
+                        id={`soldOut-${idx}`}
+                        type="checkbox"
+                        checked={occ.soldOut}
+                        onChange={(e) => updateOccurrence(idx, 'soldOut', e.target.checked)}
+                        className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                      />
+                      Data sold-out
+                    </label>
+                  </div>
                 </div>
                 <div className="mt-2 flex items-center justify-between">
                   <p className="text-xs text-gray-500">
                     {occ.startDate && occ.endDate
-                      ? formatDateRange(occ.startDate, occ.endDate)
+                      ? `${formatDateRange(occ.startDate, occ.endDate)}${occ.soldOut ? ' (sold-out)' : ''}`
                       : 'Range da definire'}
                   </p>
                   {form.occurrences.length > 1 ? (

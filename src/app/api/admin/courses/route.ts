@@ -9,6 +9,27 @@ import {
 } from '@/lib/course-occurrences';
 import Course from '@/models/Course';
 
+function normalizeOccurrencesForResponse(value: unknown): { startDate: Date; endDate: Date; soldOut: boolean }[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((occ) => {
+      const startDate = (occ as { startDate?: unknown })?.startDate;
+      const endDate = (occ as { endDate?: unknown })?.endDate;
+      if (!startDate || !endDate) return null;
+      return {
+        startDate: new Date(startDate as string | Date),
+        endDate: new Date(endDate as string | Date),
+        soldOut: (occ as { soldOut?: unknown })?.soldOut === true,
+      };
+    })
+    .filter(
+      (occ): occ is { startDate: Date; endDate: Date; soldOut: boolean } =>
+        Boolean(occ) &&
+        !Number.isNaN(occ.startDate.getTime()) &&
+        !Number.isNaN(occ.endDate.getTime())
+    );
+}
+
 export async function GET() {
   const { error } = await requireAdmin();
   if (error) return error;
@@ -19,6 +40,7 @@ export async function GET() {
     const serialized = courses.map((c) => ({
       ...c,
       _id: c._id.toString(),
+      occurrences: normalizeOccurrencesForResponse(c.occurrences),
     }));
     return NextResponse.json(serialized);
   } catch (err) {
@@ -81,6 +103,7 @@ export async function POST(request: NextRequest) {
     const serialized = {
       ...course.toObject(),
       _id: course._id.toString(),
+      occurrences: normalizeOccurrencesForResponse(course.occurrences),
     };
     return NextResponse.json(serialized);
   } catch (err) {

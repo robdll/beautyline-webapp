@@ -43,14 +43,23 @@ async function run() {
     if (group.length <= 1) continue;
     const [primary, ...duplicates] = group;
 
-    const mergedOccurrences = new Map<string, { startDate: Date; endDate: Date }>();
-    const addOccurrence = (occ: { startDate?: Date | string; endDate?: Date | string }) => {
+    const mergedOccurrences = new Map<string, { startDate: Date; endDate: Date; soldOut: boolean }>();
+    const addOccurrence = (occ: {
+      startDate?: Date | string;
+      endDate?: Date | string;
+      soldOut?: boolean;
+    }) => {
       if (!occ?.startDate || !occ?.endDate) return;
       const startDate = new Date(occ.startDate);
       const endDate = new Date(occ.endDate);
       if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) return;
       const key = `${startDate.toISOString()}::${endDate.toISOString()}`;
-      mergedOccurrences.set(key, { startDate, endDate });
+      const existing = mergedOccurrences.get(key);
+      mergedOccurrences.set(key, {
+        startDate,
+        endDate,
+        soldOut: (existing?.soldOut ?? false) || occ.soldOut === true,
+      });
     };
 
     for (const occ of primary.occurrences ?? []) {

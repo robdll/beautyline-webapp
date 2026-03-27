@@ -56,7 +56,7 @@ async function getUpcomingCourses(): Promise<UpcomingCourseItem[]> {
       title: doc.name,
       description: doc.description,
       date: nextOccurrence
-        ? formatDateRange(String(nextOccurrence.startDate), String(nextOccurrence.endDate))
+        ? `${formatDateRange(String(nextOccurrence.startDate), String(nextOccurrence.endDate))}${nextOccurrence.soldOut === true ? ' (sold-out)' : ''}`
         : 'Da Definire',
       image: doc.media?.[0] || 'https://placehold.co/800x450.png',
       price: `€ ${doc.cost.toFixed(2)}`,

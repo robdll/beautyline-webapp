@@ -7,7 +7,7 @@ export type CatalogCourseSeed = {
   description: string;
   cost: number;
   type: CourseType;
-  occurrences: { startDate: Date; endDate: Date }[];
+  occurrences: { startDate: Date; endDate: Date; soldOut?: boolean }[];
   programSections: string[];
 };
 
@@ -58,8 +58,8 @@ export const CATALOG_COURSE_SEED_DATA: CatalogCourseSeed[] = [
     cost: 399,
     type: 'unghie',
     occurrences: [
-      { startDate: new Date('2026-04-10'), endDate: new Date('2026-04-12') },
-      { startDate: new Date('2026-05-05'), endDate: new Date('2026-05-07') },
+      { startDate: new Date('2026-04-10'), endDate: new Date('2026-04-12'), soldOut: false },
+      { startDate: new Date('2026-05-05'), endDate: new Date('2026-05-07'), soldOut: false },
     ],
     programSections: ['', '', ''],
   },
@@ -228,7 +228,10 @@ export async function normalizeExistingCourses(): Promise<void> {
 
     const legacyOccurrences =
       Array.isArray((course as { occurrences?: unknown }).occurrences)
-        ? ((course as { occurrences?: { startDate: Date; endDate: Date }[] }).occurrences ?? [])
+        ? (
+            (course as { occurrences?: { startDate: Date; endDate: Date; soldOut?: boolean }[] })
+              .occurrences ?? []
+          )
         : [];
 
     const occurrences =
@@ -237,6 +240,17 @@ export async function normalizeExistingCourses(): Promise<void> {
         : legacyStartDate
           ? [{ startDate: new Date(legacyStartDate as string), endDate: new Date(legacyStartDate as string) }]
           : [];
+    const normalizedOccurrences = occurrences
+      .map((occ) => ({
+        startDate: new Date(occ.startDate),
+        endDate: new Date(occ.endDate),
+        soldOut: occ.soldOut === true,
+      }))
+      .filter(
+        (occ) =>
+          !Number.isNaN(occ.startDate.getTime()) &&
+          !Number.isNaN(occ.endDate.getTime())
+      );
 
     const programSections = sanitizeProgramSections((course as { programSections?: unknown }).programSections);
 
@@ -244,7 +258,7 @@ export async function normalizeExistingCourses(): Promise<void> {
       { _id: course._id },
       {
         $set: {
-          occurrences,
+          occurrences: normalizedOccurrences,
           programSections,
         },
         $unset: {

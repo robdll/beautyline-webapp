@@ -7,6 +7,7 @@
     "seed:local": "tsx scripts/seed-local.ts",
     "seed:courses": "tsx scripts/seed-courses-catalog.ts",
     "migrate:courses:multidate": "tsx scripts/migrate-courses-multidate.ts",
+    "migrate:courses:soldout": "tsx scripts/migrate-courses-soldout.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

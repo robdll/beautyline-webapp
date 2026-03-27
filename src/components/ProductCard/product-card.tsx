@@ -1,8 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Product } from '@/types';
-import { Button } from '@/components/shared/Button';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -39,11 +37,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
               {product.price}
             </p>
           )}
-          <Link href={`/prodotti/${product.id}`}>
+          {/* <Link href={`/prodotti/${product.id}`}>
             <Button variant="primary" size="sm">
               Acquista
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ function normalizeOccurrencesForResponse(value: unknown): { startDate: Date; end
     })
     .filter(
       (occ): occ is { startDate: Date; endDate: Date; soldOut: boolean } =>
-        Boolean(occ) &&
+        occ !== null &&
         !Number.isNaN(occ.startDate.getTime()) &&
         !Number.isNaN(occ.endDate.getTime())
     );

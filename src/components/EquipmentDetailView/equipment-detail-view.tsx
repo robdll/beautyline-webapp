@@ -27,7 +27,7 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
   const isRemote = imageSrc.startsWith('http://') || imageSrc.startsWith('https://');
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 md:py-14 md:px-6">
+    <div className="w-full max-w-2xl mx-auto px-4 md:px-6">
       <div className="mb-8">
         <Link
           href={`/attrezzature?tipo=${encodeURIComponent(equipment.type)}`}

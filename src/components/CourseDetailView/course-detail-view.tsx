@@ -46,7 +46,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
   const nextThree = sortedOccurrences.slice(0, 3);
   const durationsLabel =
     sortedOccurrences.length === 0
-      ? 'Da definire'
+      ? '1 giorno'
       : `${sortedOccurrences.length} ${sortedOccurrences.length === 1 ? 'giorno' : 'giorni'}`;
   const isMultiDate =
     sortedOccurrences.length > 0
@@ -113,7 +113,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
                   ))}
                 </ul>
               ) : (
-                <p className="text-center text-sm text-gray-500">Date da definire</p>
+                <p className="text-center text-sm text-gray-500">Da Definire</p>
               )}
             </article>
 

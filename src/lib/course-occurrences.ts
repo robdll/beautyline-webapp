@@ -27,6 +27,12 @@ export function parseOccurrences(value: unknown): CourseOccurrence[] | null {
   if (!Array.isArray(value) || value.length === 0) return [];
   const parsed: CourseOccurrence[] = [];
   for (const raw of value as RawOccurrence[]) {
+    const rawStart = typeof raw?.startDate === 'string' ? raw.startDate.trim() : '';
+    const rawEnd = typeof raw?.endDate === 'string' ? raw.endDate.trim() : '';
+
+    // Allow optional date rows: a completely empty row is ignored.
+    if (!rawStart && !rawEnd) continue;
+
     const start = parseDate(raw?.startDate);
     const end = parseDate(raw?.endDate);
     if (!start || !end) return null;

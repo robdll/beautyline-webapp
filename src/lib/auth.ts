@@ -3,7 +3,8 @@ import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'dev-secret');
-const ACCESS_TOKEN_EXPIRY = '15m';
+/** Access JWT lifetime and `access_token` cookie max-age (seconds). */
+const ACCESS_TOKEN_MAX_AGE_SEC = 2 * 60 * 60;
 const REFRESH_TOKEN_EXPIRY = '7d';
 
 export interface JWTPayload {
@@ -24,7 +25,7 @@ export async function signAccessToken(payload: JWTPayload): Promise<string> {
   return new SignJWT({ ...payload })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime(ACCESS_TOKEN_EXPIRY)
+    .setExpirationTime(new Date(Date.now() + ACCESS_TOKEN_MAX_AGE_SEC * 1000))
     .sign(JWT_SECRET);
 }
 
@@ -60,6 +61,34 @@ export async function verifyRefreshToken(token: string): Promise<JWTPayload | nu
   }
 }
 
+/**
+ * Pure resolution from cookie string values (no Next.js cookies()).
+ * `rotated` is true when the access token was missing/invalid but the refresh token was valid —
+ * callers should issue new cookies (see getAuthUser).
+ */
+export async function resolveAuthFromCookieValues(
+  accessToken: string | undefined,
+  refreshToken: string | undefined
+): Promise<{ user: JWTPayload | null; rotated: boolean }> {
+  if (accessToken) {
+    const payload = await verifyAccessToken(accessToken);
+    if (payload) {
+      return { user: payload, rotated: false };
+    }
+  }
+
+  if (!refreshToken) {
+    return { user: null, rotated: false };
+  }
+
+  const payload = await verifyRefreshToken(refreshToken);
+  if (!payload) {
+    return { user: null, rotated: false };
+  }
+
+  return { user: payload, rotated: true };
+}
+
 export async function setAuthCookies(payload: JWTPayload) {
   const accessToken = await signAccessToken(payload);
   const refreshToken = await signRefreshToken(payload);
@@ -70,7 +99,7 @@ export async function setAuthCookies(payload: JWTPayload) {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: 15 * 60,
+    maxAge: ACCESS_TOKEN_MAX_AGE_SEC,
   });
 
   cookieStore.set('refresh_token', refreshToken, {
@@ -91,20 +120,12 @@ export async function clearAuthCookies() {
 export async function getAuthUser(): Promise<JWTPayload | null> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('access_token')?.value;
-
-  if (accessToken) {
-    const payload = await verifyAccessToken(accessToken);
-    if (payload) return payload;
-  }
-
   const refreshToken = cookieStore.get('refresh_token')?.value;
-  if (!refreshToken) return null;
-
-  const payload = await verifyRefreshToken(refreshToken);
-  if (!payload) return null;
-
-  await setAuthCookies(payload);
-  return payload;
+  const { user, rotated } = await resolveAuthFromCookieValues(accessToken, refreshToken);
+  if (user && rotated) {
+    await setAuthCookies(user);
+  }
+  return user;
 }
 
 export function generateVerificationToken(): string {

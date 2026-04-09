@@ -10,7 +10,9 @@
     "migrate:courses:soldout": "tsx scripts/migrate-courses-soldout.ts",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@stripe/stripe-js": "^8.11.0",
@@ -38,6 +40,7 @@
     "eslint-config-next": "16.0.3",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

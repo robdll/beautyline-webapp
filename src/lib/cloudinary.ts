@@ -61,4 +61,61 @@ export async function deleteFromCloudinary(publicId: string) {
   return cloudinary.uploader.destroy(publicId);
 }
 
+export type CloudinaryLibraryItem = {
+  url: string;
+  publicId: string;
+  width?: number;
+  height?: number;
+};
+
+/**
+ * Lists previously uploaded images under a folder prefix (Admin API).
+ * `folderPrefix` should match the `folder` used at upload time (e.g. `beautyline/products`).
+ */
+export async function listCloudinaryLibraryImages(opts: {
+  folderPrefix: string;
+  maxResults?: number;
+  nextCursor?: string | null;
+}): Promise<{ items: CloudinaryLibraryItem[]; nextCursor: string | null }> {
+  ensureCloudinaryConfigured();
+  const maxResults = Math.min(Math.max(opts.maxResults ?? 24, 1), 100);
+
+  type ResourcesListResponse = {
+    resources?: Array<{
+      secure_url: string;
+      public_id: string;
+      width?: number;
+      height?: number;
+    }>;
+    next_cursor?: string;
+  };
+
+  const result = await new Promise<ResourcesListResponse>((resolve, reject) => {
+    cloudinary.api.resources(
+      {
+        type: 'upload',
+        resource_type: 'image',
+        prefix: opts.folderPrefix,
+        max_results: maxResults,
+        ...(opts.nextCursor ? { next_cursor: opts.nextCursor } : {}),
+      },
+      (err, res) => {
+        if (err) reject(err);
+        else resolve(res as ResourcesListResponse);
+      }
+    );
+  });
+
+  const resources = result.resources ?? [];
+  return {
+    items: resources.map((r) => ({
+      url: r.secure_url,
+      publicId: r.public_id,
+      width: r.width,
+      height: r.height,
+    })),
+    nextCursor: result.next_cursor ?? null,
+  };
+}
+
 export default cloudinary;

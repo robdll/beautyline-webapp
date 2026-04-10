@@ -10,6 +10,7 @@ import { PRODUCT_BRANDS } from '@/lib/product-brands';
 interface ColorOption {
   name: string;
   hex: string;
+  imageUrl: string;
 }
 
 const inputClass =
@@ -33,14 +34,14 @@ export default function AdminProductsNewPage() {
   const showLegacyTypeOption = Boolean(type) && !typeOptions.some((item) => item.title === type);
 
   const addColor = () => {
-    setAvailableColors((prev) => [...prev, { name: '', hex: '#000000' }]);
+    setAvailableColors((prev) => [...prev, { name: '', hex: '#000000', imageUrl: '' }]);
   };
 
   const removeColor = (index: number) => {
     setAvailableColors((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const updateColor = (index: number, field: 'name' | 'hex', value: string) => {
+  const updateColor = (index: number, field: 'name' | 'hex' | 'imageUrl', value: string) => {
     setAvailableColors((prev) =>
       prev.map((c, i) => (i === index ? { ...c, [field]: value } : c))
     );
@@ -69,7 +70,15 @@ export default function AdminProductsNewPage() {
           description: description.trim(),
           media,
           cost: numCost,
-          availableColors: availableColors.filter((c) => c.name.trim() && c.hex.trim()),
+          availableColors: availableColors
+            .filter((c) => c.name.trim() && c.hex.trim())
+            .map((c) => ({
+              name: c.name.trim(),
+              hex: c.hex.trim(),
+              ...(c.imageUrl.trim() && media.includes(c.imageUrl.trim())
+                ? { imageUrl: c.imageUrl.trim() }
+                : {}),
+            })),
         }),
       });
 
@@ -185,6 +194,9 @@ export default function AdminProductsNewPage() {
 
           <div>
             <label className={labelClass}>Immagini</label>
+            <p className="mb-2 text-xs text-gray-500">
+              Le immagini caricate qui possono essere riassegnate a ogni colore senza ricaricarle.
+            </p>
             <ImageUpload
               images={media}
               onChange={setMedia}
@@ -219,38 +231,57 @@ export default function AdminProductsNewPage() {
                 + Aggiungi colore
               </button>
             </div>
+            <p className="mb-2 text-xs text-gray-500">
+              Per ogni colore puoi scegliere una delle immagini già caricate; se non scegli nulla, in vetrina si usa
+              l&apos;immagine predefinita (la prima in elenco).
+            </p>
             {availableColors.length > 0 && (
               <div className="flex flex-col gap-3">
-                {availableColors.map((color, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
-                  >
-                    <input
-                      type="color"
-                      value={color.hex}
-                      onChange={(e) => updateColor(index, 'hex', e.target.value)}
-                      className="w-10 h-10 rounded border border-gray-300 cursor-pointer p-0"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Nome colore"
-                      value={color.name}
-                      onChange={(e) => updateColor(index, 'name', e.target.value)}
-                      className={`${inputClass} flex-1`}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeColor(index)}
-                      className="text-red-500 hover:text-red-600 p-1"
-                      aria-label="Rimuovi colore"
-                    >
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                ))}
+                {availableColors.map((color, index) => {
+                  const imageSelectValue =
+                    color.imageUrl && media.includes(color.imageUrl) ? color.imageUrl : '';
+                  return (
+                    <div key={index} className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg sm:flex-row sm:flex-wrap sm:items-center">
+                      <input
+                        type="color"
+                        value={color.hex}
+                        onChange={(e) => updateColor(index, 'hex', e.target.value)}
+                        className="w-10 h-10 shrink-0 rounded border border-gray-300 cursor-pointer p-0"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Nome colore"
+                        value={color.name}
+                        onChange={(e) => updateColor(index, 'name', e.target.value)}
+                        className={`${inputClass} min-w-[8rem] flex-1 sm:max-w-xs`}
+                      />
+                      <select
+                        value={imageSelectValue}
+                        onChange={(e) => updateColor(index, 'imageUrl', e.target.value)}
+                        className={`${inputClass} min-w-[12rem] flex-1 sm:max-w-sm`}
+                        disabled={media.length === 0}
+                        aria-label={`Immagine per ${color.name || 'colore'}`}
+                      >
+                        <option value="">Immagine predefinita</option>
+                        {media.map((url, i) => (
+                          <option key={url} value={url}>
+                            Immagine {i + 1}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => removeColor(index)}
+                        className="text-red-500 hover:text-red-600 p-1 sm:ml-auto"
+                        aria-label="Rimuovi colore"
+                      >
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

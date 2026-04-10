@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,9 +11,22 @@ export interface ProductDetailViewProps {
   product: PublicProductJson;
 }
 
+function isRemoteUrl(src: string): boolean {
+  return src.startsWith('http://') || src.startsWith('https://');
+}
+
 export function ProductDetailView({ product }: ProductDetailViewProps) {
-  const imageSrc = product.image;
-  const isRemote = imageSrc.startsWith('http://') || imageSrc.startsWith('https://');
+  const defaultImage = product.image;
+  const colors = product.availableColors;
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const displaySrc = useMemo(() => {
+    if (activeIndex == null || !colors[activeIndex]) return defaultImage;
+    const c = colors[activeIndex];
+    return c.imageUrl ?? defaultImage;
+  }, [activeIndex, colors, defaultImage]);
+
+  const isRemote = isRemoteUrl(displaySrc);
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10 md:px-6 md:py-14">
@@ -25,16 +40,52 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
       </div>
 
       <div className="flex flex-col gap-8 md:gap-10">
-        <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-muted mx-auto">
-          <Image
-            src={imageSrc}
-            alt=""
-            fill
-            className="object-cover"
-            sizes="(min-width: 768px) 448px, 100vw"
-            priority
-            unoptimized={isRemote}
-          />
+        <div className="flex flex-col gap-4">
+          <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl bg-muted mx-auto">
+            <Image
+              key={displaySrc}
+              src={displaySrc}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 448px, 100vw"
+              priority
+              unoptimized={isRemote}
+            />
+          </div>
+
+          {colors.length > 0 && (
+            <div className="mx-auto flex w-full max-w-md flex-col gap-3">
+              <p className="block text-center text-xs font-medium uppercase tracking-wide text-gray-500 md:text-left">
+                Colori disponibili
+              </p>
+              <ul
+                className="flex flex-wrap items-center justify-center gap-3 md:justify-start"
+                role="list"
+              >
+                {colors.map((color, index) => {
+                  const selected = activeIndex === index;
+                  return (
+                    <li key={`${color.name}-${color.hex}-${index}`}>
+                      <button
+                        type="button"
+                        onClick={() => setActiveIndex(index)}
+                        className={`relative flex h-10 w-10 items-center justify-center rounded-full border-2 transition-shadow focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+                          selected ? 'border-primary ring-2 ring-primary/30' : 'border-gray-200'
+                        }`}
+                        style={{ backgroundColor: color.hex }}
+                        aria-pressed={selected}
+                        aria-label={`Colore ${color.name}`}
+                        title={color.name}
+                      >
+                        <span className="sr-only">{color.name}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
 
         <header className="flex flex-col gap-2 text-center md:text-left">

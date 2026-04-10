@@ -4,6 +4,8 @@ import { softDeletePlugin } from './plugins/softDelete';
 export interface IColorOption {
   name: string;
   hex: string;
+  /** Must match an entry in `media` when set. */
+  imageUrl?: string;
 }
 
 export interface IProduct extends Document {
@@ -25,6 +27,7 @@ const ColorOptionSchema = new Schema<IColorOption>(
   {
     name: { type: String, required: true },
     hex: { type: String, required: true },
+    imageUrl: { type: String, required: false },
   },
   { _id: false }
 );

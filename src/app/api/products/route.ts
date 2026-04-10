@@ -63,6 +63,7 @@ export async function GET(request: NextRequest) {
         media: doc.media,
         brand: doc.brand,
         type: doc.type,
+        availableColors: doc.availableColors,
       })
     );
 

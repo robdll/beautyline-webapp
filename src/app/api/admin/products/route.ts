@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
+import { normalizeAvailableColors, normalizeMediaUrls } from '@/lib/product-colors';
 import Product from '@/models/Product';
 
 export async function GET() {
@@ -41,11 +42,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
     }
 
-    const colors = Array.isArray(availableColors)
-      ? availableColors
-          .filter((c: { name?: string; hex?: string }) => c?.name != null && c?.hex != null)
-          .map((c: { name: string; hex: string }) => ({ name: String(c.name).trim(), hex: String(c.hex).trim() }))
-      : [];
+    const mediaUrls = normalizeMediaUrls(media);
+    const colors = normalizeAvailableColors(availableColors, mediaUrls);
 
     await connectDB();
     const product = await Product.create({
@@ -53,7 +51,7 @@ export async function POST(request: NextRequest) {
       type: String(type).trim(),
       name: String(name).trim(),
       description: String(description),
-      media: Array.isArray(media) ? media : [],
+      media: mediaUrls,
       cost: numCost,
       availableColors: colors,
     });

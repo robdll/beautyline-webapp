@@ -95,13 +95,13 @@ export default async function AttrezzaturePage() {
                 key={item.id}
                 className="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
               >
-                <div className="w-full overflow-hidden bg-muted">
+                <div className="flex w-full max-h-[360px] items-center justify-center overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.name}
                     width={300}
                     height={400}
-                    className="h-auto w-full"
+                    className="h-auto w-full shrink-0"
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                   />
                 </div>

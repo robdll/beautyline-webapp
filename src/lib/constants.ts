@@ -29,7 +29,7 @@ export const HOME_COURSE_CARDS: HomeCourseCard[] = [
   },
   {
     title: 'Percorsi Master',
-    imageSrc: '/images/card-3.png',
+    imageSrc: '/images/percorsi.webp',
     href: 'https://percorsomaster.it',
     openInNewTab: true,
   },

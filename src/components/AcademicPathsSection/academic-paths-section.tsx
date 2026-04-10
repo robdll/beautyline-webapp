@@ -9,6 +9,9 @@ interface AcademicPathsSectionProps {
   id?: string;
   /** When set, shows the image; otherwise a neutral placeholder (add file under public/images when ready). */
   imageSrc?: string;
+  /** Intrinsic pixel size — with `imageSrc`, enables full-width layout and natural height (no letterboxing). */
+  imageWidth?: number;
+  imageHeight?: number;
   imageAlt?: string;
   ctaHref?: string;
 }
@@ -16,6 +19,8 @@ interface AcademicPathsSectionProps {
 export const AcademicPathsSection: React.FC<AcademicPathsSectionProps> = ({
   id,
   imageSrc,
+  imageWidth,
+  imageHeight,
   imageAlt = '',
   ctaHref = '/percorso-master',
 }) => {
@@ -32,15 +37,26 @@ export const AcademicPathsSection: React.FC<AcademicPathsSectionProps> = ({
       </h2>
 
       <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
-        <div className="relative w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-black/5 aspect-4/5 lg:aspect-auto lg:min-h-[420px]">
-          {imageSrc ? (
+        <div className="w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-black/5">
+          {imageSrc != null && imageWidth != null && imageHeight != null ? (
             <Image
               src={imageSrc}
               alt={imageAlt}
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 45vw, 100vw"
+              width={imageWidth}
+              height={imageHeight}
+              className="block h-auto w-full"
+              sizes="(min-width: 1024px) min(560px, 50vw), 100vw"
             />
+          ) : imageSrc ? (
+            <div className="relative aspect-379/666 w-full lg:aspect-auto lg:min-h-[420px]">
+              <Image
+                src={imageSrc}
+                alt={imageAlt}
+                fill
+                className="object-contain object-center"
+                sizes="(min-width: 1024px) 45vw, 100vw"
+              />
+            </div>
           ) : null}
         </div>
 

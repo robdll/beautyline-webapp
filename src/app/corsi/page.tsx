@@ -103,7 +103,9 @@ export default async function CorsiPage() {
 
       <AcademicPathsSection
         id="percorsi-accademici"
-        imageSrc="/images/card-3.png"
+        imageSrc="/images/percorsi.webp"
+        imageWidth={1516}
+        imageHeight={2664}
         imageAlt="Percorsi accademici e formazione Beautyline Academy"
         ctaHref="https://percorsomaster.it"
       />

@@ -99,19 +99,22 @@ export default function AdminServicesPage() {
               ) : (
                 services.map((service) => {
                   const categoryOk = isRecognizedServiceType(service.type, service.isPromo);
+                  const promoBadge = (
+                    <span className="inline-flex rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-900">
+                      Promo
+                    </span>
+                  );
                   return (
                   <tr key={service._id} className="hover:bg-gray-50/50">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                      {service.name}
-                      {service.isPromo ? (
-                        <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800">
-                          Promo
-                        </span>
-                      ) : null}
-                    </td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{service.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">
-                      {categoryOk ? (
-                        service.type
+                      {!categoryOk && service.isPromo ? (
+                        promoBadge
+                      ) : categoryOk ? (
+                        <span className="inline-flex flex-wrap items-center gap-2">
+                          <span>{service.type}</span>
+                          {service.isPromo ? promoBadge : null}
+                        </span>
                       ) : (
                         <span className="font-semibold text-red-600">Categoria Non Valida</span>
                       )}

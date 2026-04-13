@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Hero } from '@/components/Hero';
 import { ContactSection } from '@/components/ContactSection';
 import { Section } from '@/components/Section';
+import { PromozioniModalGrid } from '@/components/estetica/PromozioniModalGrid';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappPrenotaUrl } from '@/lib/contact';
 import ServiceModel from '@/models/Service';
@@ -103,41 +104,34 @@ export default async function ServiziEsteticaPage() {
         ctaHref="/servizi-estetica#trattamenti"
       />
 
-      <Section id="promozioni" className="scroll-mt-24 bg-muted/40">
-        <div className="space-y-8">
-          <h2 className="heading-brand text-center text-2xl font-bold uppercase tracking-wide text-secondary md:text-3xl">
-            Promozioni
-          </h2>
-          {promoServices.length > 0 ? (
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {promoServices.map((promo) => (
-                <div
-                  key={promo.id}
-                  className="relative w-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm aspect-137/160"
-                >
-                  <Image
-                    src={promo.image}
-                    alt={promo.name || 'Promozione'}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="mx-auto max-w-lg text-center text-sm text-gray-600">
-              Nessuna promozione attiva al momento. Torna a trovarci presto!
-            </p>
-          )}
-        </div>
+      <Section
+        id="promozioni"
+        className="scroll-mt-24 bg-muted/40"
+        containerClassName="gap-8 md:gap-10"
+      >
+        <h2 className="heading-brand w-full text-center text-2xl font-bold uppercase tracking-wide text-secondary md:text-3xl">
+          Promozioni
+        </h2>
+        {promoServices.length > 0 ? (
+          <PromozioniModalGrid
+            promos={promoServices.map((p) => ({
+              id: p.id,
+              image: p.image,
+              name: p.name || 'Promozione',
+            }))}
+          />
+        ) : (
+          <p className="mx-auto max-w-lg text-center text-sm text-gray-600">
+            Nessuna promozione attiva al momento. Torna a trovarci presto!
+          </p>
+        )}
       </Section>
 
       <Section id="trattamenti" className="scroll-mt-24">
         {treatmentServices.length > 0 ? (
-          <div className="space-y-12">
+          <div className="flex w-full flex-col gap-12 md:gap-14">
             {orderedCategories.map((category) => (
-              <div key={category} className="space-y-5">
+              <div key={category} className="flex w-full flex-col gap-8 md:gap-10">
                 <h2 className="heading-brand text-2xl font-bold uppercase tracking-wide text-secondary md:text-3xl">
                   {category}
                 </h2>

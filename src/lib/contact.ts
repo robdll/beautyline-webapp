@@ -8,3 +8,10 @@ export function whatsappPrenotaUrl(serviceName: string): string {
   const text = `Ciao, vorrei prenotare: ${serviceName}`;
   return `${BUSINESS_WHATSAPP_WA_ME}?text=${encodeURIComponent(text)}`;
 }
+
+export function whatsappContattaciPromoUrl(promoName?: string): string {
+  const text = promoName?.trim()
+    ? `Ciao, vorrei informazioni sulla promozione: ${promoName.trim()}`
+    : 'Ciao, vorrei informazioni su una promozione vista sul sito.';
+  return `${BUSINESS_WHATSAPP_WA_ME}?text=${encodeURIComponent(text)}`;
+}

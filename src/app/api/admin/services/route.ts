@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
 import Service from '@/models/Service';
+import { buildServicePayloadFromBody } from '@/lib/service-api';
 
 export async function GET() {
   const { error } = await requireAdmin();
@@ -27,28 +28,13 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { type, name, description, media, cost } = body;
-
-    if (!type || !name || !description || cost === undefined) {
-      return NextResponse.json(
-        { error: 'Campi obbligatori mancanti: type, name, description, cost.' },
-        { status: 400 }
-      );
-    }
-
-    const numCost = Number(cost);
-    if (isNaN(numCost) || numCost < 0) {
-      return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
+    const payload = buildServicePayloadFromBody(body);
+    if ('error' in payload) {
+      return NextResponse.json({ error: payload.error }, { status: 400 });
     }
 
     await connectDB();
-    const service = await Service.create({
-      type: String(type).trim(),
-      name: String(name).trim(),
-      description: String(description),
-      media: Array.isArray(media) ? media : [],
-      cost: numCost,
-    });
+    const service = await Service.create(payload);
 
     const serialized = {
       ...service.toObject(),

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
 import Service from '@/models/Service';
+import { buildServicePayloadFromBody } from '@/lib/service-api';
 
 export async function GET(
   _request: NextRequest,
@@ -48,32 +49,13 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { type, name, description, media, cost } = body;
-
-    if (!type || !name || !description || cost === undefined) {
-      return NextResponse.json(
-        { error: 'Campi obbligatori mancanti: type, name, description, cost.' },
-        { status: 400 }
-      );
-    }
-
-    const numCost = Number(cost);
-    if (isNaN(numCost) || numCost < 0) {
-      return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
+    const payload = buildServicePayloadFromBody(body);
+    if ('error' in payload) {
+      return NextResponse.json({ error: payload.error }, { status: 400 });
     }
 
     await connectDB();
-    const service = await Service.findByIdAndUpdate(
-      id,
-      {
-        type: String(type).trim(),
-        name: String(name).trim(),
-        description: String(description),
-        media: Array.isArray(media) ? media : [],
-        cost: numCost,
-      },
-      { new: true }
-    ).lean();
+    const service = await Service.findByIdAndUpdate(id, payload, { new: true }).lean();
 
     if (!service) {
       return NextResponse.json({ error: 'Servizio non trovato.' }, { status: 404 });

@@ -8,7 +8,7 @@ import { connectDB } from '@/lib/mongodb';
 import { whatsappPrenotaUrl } from '@/lib/contact';
 import ServiceModel from '@/models/Service';
 import { cn } from '@/lib/utils';
-import { SERVICE_CATEGORIES } from '@/lib/service-categories';
+import { isPromoVisibleNow, SERVICE_CATEGORIES } from '@/lib/service-categories';
 
 export const metadata: Metadata = {
   title: 'Servizi Estetica',
@@ -24,6 +24,9 @@ interface ServiceItem {
   type: string;
   image: string;
   cost: number;
+  isPromo?: boolean;
+  promoStartsAt?: Date | string | null;
+  promoEndsAt?: Date | string | null;
 }
 
 async function getServices(): Promise<ServiceItem[]> {
@@ -37,6 +40,9 @@ async function getServices(): Promise<ServiceItem[]> {
       type: doc.type,
       image: doc.media?.[0] || 'https://placehold.co/400x300.png',
       cost: doc.cost,
+      isPromo: Boolean(doc.isPromo),
+      promoStartsAt: doc.promoStartsAt,
+      promoEndsAt: doc.promoEndsAt,
     }));
   } catch {
     return [];
@@ -50,7 +56,16 @@ const prenotaButtonClass = cn(
 
 export default async function ServiziEsteticaPage() {
   const services = await getServices();
-  const groupedServices = services.reduce<Record<string, ServiceItem[]>>((acc, service) => {
+  const promoServices = services.filter(
+    (s) =>
+      s.isPromo &&
+      s.image &&
+      !s.image.includes('placehold.co') &&
+      isPromoVisibleNow(true, s.promoStartsAt, s.promoEndsAt),
+  );
+  const treatmentServices = services.filter((s) => !s.isPromo);
+
+  const groupedServices = treatmentServices.reduce<Record<string, ServiceItem[]>>((acc, service) => {
     if (!acc[service.type]) {
       acc[service.type] = [];
     }
@@ -59,7 +74,9 @@ export default async function ServiziEsteticaPage() {
   }, {});
   const orderedCategories = [
     ...SERVICE_CATEGORIES.filter((category) => groupedServices[category]?.length),
-    ...Object.keys(groupedServices).filter((category) => !SERVICE_CATEGORIES.includes(category as (typeof SERVICE_CATEGORIES)[number])),
+    ...Object.keys(groupedServices).filter(
+      (category) => !SERVICE_CATEGORIES.includes(category as (typeof SERVICE_CATEGORIES)[number]),
+    ),
   ];
 
   return (
@@ -86,8 +103,38 @@ export default async function ServiziEsteticaPage() {
         ctaHref="/servizi-estetica#trattamenti"
       />
 
+      <Section id="promozioni" className="scroll-mt-24 bg-muted/40">
+        <div className="space-y-8">
+          <h2 className="heading-brand text-center text-2xl font-bold uppercase tracking-wide text-secondary md:text-3xl">
+            Promozioni
+          </h2>
+          {promoServices.length > 0 ? (
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+              {promoServices.map((promo) => (
+                <div
+                  key={promo.id}
+                  className="relative w-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm aspect-137/160"
+                >
+                  <Image
+                    src={promo.image}
+                    alt={promo.name || 'Promozione'}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="mx-auto max-w-lg text-center text-sm text-gray-600">
+              Nessuna promozione attiva al momento. Torna a trovarci presto!
+            </p>
+          )}
+        </div>
+      </Section>
+
       <Section id="trattamenti" className="scroll-mt-24">
-        {services.length > 0 ? (
+        {treatmentServices.length > 0 ? (
           <div className="space-y-12">
             {orderedCategories.map((category) => (
               <div key={category} className="space-y-5">

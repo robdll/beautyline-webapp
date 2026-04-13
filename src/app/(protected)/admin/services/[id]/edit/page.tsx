@@ -5,15 +5,28 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
-import { SERVICE_CATEGORIES } from '@/lib/service-categories';
+import { PROMO_SERVICE_TYPE, SERVICE_CATEGORIES } from '@/lib/service-categories';
 
-interface Service {
+function toDateInputValue(d: unknown): string {
+  if (d == null || d === '') return '';
+  const x = new Date(d as string);
+  if (Number.isNaN(x.getTime())) return '';
+  const y = x.getFullYear();
+  const m = String(x.getMonth() + 1).padStart(2, '0');
+  const day = String(x.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+interface ServiceForm {
   _id: string;
+  isPromo: boolean;
+  promoStartsAt: string;
+  promoEndsAt: string;
   type: string;
   name: string;
   description: string;
   media: string[];
-  cost: number;
+  cost: number | string;
 }
 
 export default function AdminServicesEditPage() {
@@ -22,8 +35,9 @@ export default function AdminServicesEditPage() {
   const id = params.id as string;
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
-  const [form, setForm] = useState<Service | null>(null);
-  const showLegacyTypeOption = Boolean(form?.type) && !SERVICE_CATEGORIES.some((category) => category === form?.type);
+  const [form, setForm] = useState<ServiceForm | null>(null);
+  const showLegacyTypeOption =
+    Boolean(form?.type) && !SERVICE_CATEGORIES.some((category) => category === form?.type);
 
   useEffect(() => {
     const fetchService = async () => {
@@ -33,6 +47,9 @@ export default function AdminServicesEditPage() {
           const data = await res.json();
           setForm({
             _id: data._id,
+            isPromo: Boolean(data.isPromo),
+            promoStartsAt: toDateInputValue(data.promoStartsAt),
+            promoEndsAt: toDateInputValue(data.promoEndsAt),
             type: data.type || '',
             name: data.name || '',
             description: data.description || '',
@@ -57,22 +74,42 @@ export default function AdminServicesEditPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form) return;
-    const numCost = typeof form.cost === 'number' ? form.cost : parseFloat(String(form.cost));
-    if (isNaN(numCost) || numCost < 0) {
-      alert('Il costo deve essere un numero non negativo.');
+
+    if (form.isPromo) {
+      if (!form.promoStartsAt || !form.promoEndsAt) {
+        alert('Inserisci le date di inizio e fine della promozione.');
+        return;
+      }
+      if (!form.media[0]) {
+        alert('Carica un’immagine per la promozione.');
+        return;
+      }
+    } else if (form.type === PROMO_SERVICE_TYPE) {
+      alert('Seleziona una categoria valida per un servizio non promozionale.');
       return;
+    } else {
+      const numCost = typeof form.cost === 'number' ? form.cost : parseFloat(String(form.cost));
+      if (isNaN(numCost) || numCost < 0) {
+        alert('Il costo deve essere un numero non negativo.');
+        return;
+      }
     }
+
     setLoading(true);
     try {
+      const numCost = typeof form.cost === 'number' ? form.cost : parseFloat(String(form.cost));
       const res = await fetch(`/api/admin/services/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          isPromo: form.isPromo,
+          promoStartsAt: form.isPromo ? form.promoStartsAt : undefined,
+          promoEndsAt: form.isPromo ? form.promoEndsAt : undefined,
           type: form.type.trim(),
           name: form.name.trim(),
           description: form.description.trim(),
           media: form.media,
-          cost: numCost,
+          cost: form.isPromo ? (isNaN(numCost) ? 0 : numCost) : numCost,
         }),
       });
       if (res.ok) {
@@ -110,63 +147,119 @@ export default function AdminServicesEditPage() {
 
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 max-w-2xl">
         <div className="flex flex-col gap-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
-            <select
-              value={form.type}
-              onChange={(e) => setForm((f) => (f ? { ...f, type: e.target.value } : f))}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
-            >
-              <option value="">Seleziona categoria</option>
-              {showLegacyTypeOption && <option value={form.type}>{form.type}</option>}
-              {SERVICE_CATEGORIES.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+          <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 bg-gray-50/80 px-4 py-3">
             <input
-              type="text"
-              value={form.name}
-              onChange={(e) => setForm((f) => (f ? { ...f, name: e.target.value } : f))}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+              type="checkbox"
+              checked={form.isPromo}
+              onChange={(e) =>
+                setForm((f) => (f ? { ...f, isPromo: e.target.checked } : f))
+              }
+              className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
             />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Descrizione</label>
-            <textarea
-              value={form.description}
-              onChange={(e) => setForm((f) => (f ? { ...f, description: e.target.value } : f))}
-              required
-              rows={4}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Immagini</label>
-            <ImageUpload
-              images={form.media}
-              onChange={(images) => setForm((f) => (f ? { ...f, media: images } : f))}
-              folder="beautyline/services"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Costo (€)</label>
-            <input
-              type="number"
-              step="0.01"
-              min="0"
-              value={form.cost}
-              onChange={(e) => setForm((f) => (f ? { ...f, cost: parseFloat(e.target.value) || 0 } : f))}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
-            />
-          </div>
+            <span className="text-sm font-medium text-gray-800">Promo</span>
+          </label>
+          <p className="-mt-2 text-xs text-gray-500">
+            {form.isPromo
+              ? 'Periodo e immagine sono obbligatori. Gli altri dati (nome, categoria, ecc.) restano salvati anche se non mostrati qui: deseleziona Promo per modificarli.'
+              : null}
+          </p>
+
+          {form.isPromo ? (
+            <>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Inizio promozione</label>
+                  <input
+                    type="date"
+                    value={form.promoStartsAt}
+                    onChange={(e) => setForm((f) => (f ? { ...f, promoStartsAt: e.target.value } : f))}
+                    required={form.isPromo}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Fine promozione</label>
+                  <input
+                    type="date"
+                    value={form.promoEndsAt}
+                    onChange={(e) => setForm((f) => (f ? { ...f, promoEndsAt: e.target.value } : f))}
+                    required={form.isPromo}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Immagine promozione</label>
+                <ImageUpload
+                  images={form.media}
+                  onChange={(images) => setForm((f) => (f ? { ...f, media: images } : f))}
+                  folder="beautyline/services"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
+                <select
+                  value={form.type}
+                  onChange={(e) => setForm((f) => (f ? { ...f, type: e.target.value } : f))}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                >
+                  <option value="">Seleziona categoria</option>
+                  {showLegacyTypeOption && <option value={form.type}>{form.type}</option>}
+                  {SERVICE_CATEGORIES.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm((f) => (f ? { ...f, name: e.target.value } : f))}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Descrizione</label>
+                <textarea
+                  value={form.description}
+                  onChange={(e) => setForm((f) => (f ? { ...f, description: e.target.value } : f))}
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Immagini</label>
+                <ImageUpload
+                  images={form.media}
+                  onChange={(images) => setForm((f) => (f ? { ...f, media: images } : f))}
+                  folder="beautyline/services"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Costo (€)</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={form.cost}
+                  onChange={(e) =>
+                    setForm((f) => (f ? { ...f, cost: parseFloat(e.target.value) || 0 } : f))
+                  }
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                />
+              </div>
+            </>
+          )}
         </div>
 
         <div className="mt-6">

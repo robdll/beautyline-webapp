@@ -7,6 +7,9 @@ export interface IService extends Document {
   description: string;
   media: string[];
   cost: number;
+  isPromo: boolean;
+  promoStartsAt?: Date | null;
+  promoEndsAt?: Date | null;
   deletedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -21,6 +24,9 @@ const ServiceSchema = new Schema<IService>(
     description: { type: String, required: true },
     media: [{ type: String }],
     cost: { type: Number, required: true, min: 0 },
+    isPromo: { type: Boolean, default: false },
+    promoStartsAt: { type: Date, default: null },
+    promoEndsAt: { type: Date, default: null },
   },
   { timestamps: true }
 );

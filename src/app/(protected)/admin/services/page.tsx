@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
+import { isRecognizedServiceType } from '@/lib/service-categories';
 
 interface Service {
   _id: string;
@@ -11,6 +12,7 @@ interface Service {
   description: string;
   cost: number;
   media?: string[];
+  isPromo?: boolean;
 }
 
 export default function AdminServicesPage() {
@@ -95,11 +97,28 @@ export default function AdminServicesPage() {
                   </td>
                 </tr>
               ) : (
-                services.map((service) => (
+                services.map((service) => {
+                  const categoryOk = isRecognizedServiceType(service.type, service.isPromo);
+                  return (
                   <tr key={service._id} className="hover:bg-gray-50/50">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{service.name}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{service.type}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">€{service.cost}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      {service.name}
+                      {service.isPromo ? (
+                        <span className="ml-2 rounded bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-800">
+                          Promo
+                        </span>
+                      ) : null}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {categoryOk ? (
+                        service.type
+                      ) : (
+                        <span className="font-semibold text-red-600">Categoria Non Valida</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {service.isPromo ? '—' : `€${service.cost}`}
+                    </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link href={`/admin/services/${service._id}/edit`}>
@@ -119,7 +138,8 @@ export default function AdminServicesPage() {
                       </div>
                     </td>
                   </tr>
-                ))
+                  );
+                })
               )}
             </tbody>
           </table>

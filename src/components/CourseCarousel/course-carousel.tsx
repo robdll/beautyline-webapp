@@ -5,7 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/shared/Button';
+import { whatsappCorsoUrl } from '@/lib/contact';
 import type { CourseType } from '@/lib/course-types';
+import { cn } from '@/lib/utils';
 
 export interface UpcomingCourseItem {
   id: string;
@@ -93,10 +95,18 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                     </Button>
                   </Link>
                 ) : null}
-                <a href={`/contatti?corso=${encodeURIComponent(course.title)}`}>
-                  <Button variant="outline" size="sm">
-                    Richiedi info
-                  </Button>
+                <a
+                  href={whatsappCorsoUrl(course.title)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    'inline-flex items-center justify-center font-medium cursor-pointer transition-all duration-200',
+                    'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary',
+                    'border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-[40px]',
+                    'px-4 py-2 text-sm',
+                  )}
+                >
+                  Richiedi info
                 </a>
               </div>
             </div>

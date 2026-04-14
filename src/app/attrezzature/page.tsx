@@ -7,6 +7,7 @@ import { ContactSection } from '@/components/ContactSection';
 import { EquipmentHighlightSection } from '@/components/EquipmentHighlightSection';
 import { Section } from '@/components/Section';
 import { connectDB } from '@/lib/mongodb';
+import { whatsappAttrezzaturaUrl } from '@/lib/contact';
 import { getEquipmentTypeLabel, parseEquipmentType } from '@/lib/equipment-types';
 import EquipmentModel from '@/models/Equipment';
 import { cn } from '@/lib/utils';
@@ -121,12 +122,14 @@ export default async function AttrezzaturePage() {
                           Dettagli
                         </Link>
                       ) : null}
-                      <Link
-                        href={`/contatti?attrezzatura=${encodeURIComponent(item.name)}`}
+                      <a
+                        href={whatsappAttrezzaturaUrl(item.name)}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className={contattaciButtonClass}
                       >
                         Contattaci
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>

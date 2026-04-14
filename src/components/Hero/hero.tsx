@@ -31,10 +31,14 @@ export const Hero: React.FC<HeroProps> = ({
         loop
         muted
         playsInline
+        preload="auto"
+        src={videoSrc}
         className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src={videoSrc} type="video/mp4" />
-      </video>
+        {...({ fetchPriority: 'high' } satisfies Pick<
+          React.ImgHTMLAttributes<HTMLImageElement>,
+          'fetchPriority'
+        >)}
+      />
       
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-black/40 z-10" />

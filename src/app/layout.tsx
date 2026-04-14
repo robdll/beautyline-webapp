@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Inter, Raleway } from "next/font/google";
 import "@/styles/global.css";
 import { Navbar } from "@/components/shared/Navbar";
@@ -63,6 +64,7 @@ export default function RootLayout({
             </CookieConsentProvider>
           </CartProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );

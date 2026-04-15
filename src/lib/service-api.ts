@@ -9,6 +9,7 @@ export type ServiceCreateBody = {
   isPromo?: unknown;
   promoStartsAt?: unknown;
   promoEndsAt?: unknown;
+  priceFrom?: unknown;
 };
 
 function parsePromoDates(promoStartsAt: unknown, promoEndsAt: unknown) {
@@ -54,6 +55,7 @@ export function buildServicePayloadFromBody(body: ServiceCreateBody): { error: s
       description: descTrim,
       media,
       cost: numCost,
+      priceFrom: false,
       isPromo: true,
       promoStartsAt: dates.start,
       promoEndsAt: dates.end,
@@ -77,6 +79,7 @@ export function buildServicePayloadFromBody(body: ServiceCreateBody): { error: s
     description,
     media,
     cost: numCost,
+    priceFrom: Boolean(body.priceFrom),
     isPromo: false,
     promoStartsAt: null,
     promoEndsAt: null,

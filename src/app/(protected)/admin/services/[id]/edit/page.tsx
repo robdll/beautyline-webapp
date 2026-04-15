@@ -27,6 +27,7 @@ interface ServiceForm {
   description: string;
   media: string[];
   cost: number | string;
+  priceFrom: boolean;
 }
 
 export default function AdminServicesEditPage() {
@@ -55,6 +56,7 @@ export default function AdminServicesEditPage() {
             description: data.description || '',
             media: Array.isArray(data.media) ? data.media : [],
             cost: data.cost ?? 0,
+            priceFrom: Boolean(data.priceFrom),
           });
         } else {
           const data = await res.json();
@@ -110,6 +112,7 @@ export default function AdminServicesEditPage() {
           description: form.description.trim(),
           media: form.media,
           cost: form.isPromo ? (isNaN(numCost) ? 0 : numCost) : numCost,
+          priceFrom: form.isPromo ? false : form.priceFrom,
         }),
       });
       if (res.ok) {
@@ -258,6 +261,20 @@ export default function AdminServicesEditPage() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
                 />
               </div>
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 bg-gray-50/80 px-4 py-3">
+                <input
+                  type="checkbox"
+                  checked={form.priceFrom}
+                  onChange={(e) =>
+                    setForm((f) => (f ? { ...f, priceFrom: e.target.checked } : f))
+                  }
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+                <span className="text-sm font-medium text-gray-800">Prezzo a partire da</span>
+              </label>
+              <p className="-mt-3 text-xs text-gray-500">
+                Se attivo, sulla scheda pubblica compare «A partire da» sopra l&apos;importo.
+              </p>
             </>
           )}
         </div>

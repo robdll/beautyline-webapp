@@ -7,6 +7,8 @@ export interface IService extends Document {
   description: string;
   media: string[];
   cost: number;
+  /** When true, public cards show "A partire da" above the price. */
+  priceFrom?: boolean;
   isPromo: boolean;
   promoStartsAt?: Date | null;
   promoEndsAt?: Date | null;
@@ -24,6 +26,7 @@ const ServiceSchema = new Schema<IService>(
     description: { type: String, required: true },
     media: [{ type: String }],
     cost: { type: Number, required: true, min: 0 },
+    priceFrom: { type: Boolean, default: false },
     isPromo: { type: Boolean, default: false },
     promoStartsAt: { type: Date, default: null },
     promoEndsAt: { type: Date, default: null },

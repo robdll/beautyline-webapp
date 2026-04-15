@@ -27,6 +27,7 @@ interface ServiceItem {
   type: string;
   image: string;
   cost: number;
+  priceFrom?: boolean;
   isPromo?: boolean;
   promoStartsAt?: Date | string | null;
   promoEndsAt?: Date | string | null;
@@ -43,6 +44,7 @@ async function getServices(): Promise<ServiceItem[]> {
       type: doc.type,
       image: doc.media?.[0] || 'https://placehold.co/400x300.png',
       cost: doc.cost,
+      priceFrom: Boolean(doc.priceFrom),
       isPromo: Boolean(doc.isPromo),
       promoStartsAt: doc.promoStartsAt,
       promoEndsAt: doc.promoEndsAt,
@@ -160,7 +162,12 @@ export default async function ServiziEsteticaPage() {
                             text={displayPublicDescription(service.description)}
                           />
                           <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
-                            <p className="min-w-0 text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
+                            <div className="flex min-w-0 flex-col gap-0.5">
+                              {service.priceFrom ? (
+                                <span className="text-xs text-primary">A partire da</span>
+                              ) : null}
+                              <p className="text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
+                            </div>
                             <a
                               href={whatsappPrenotaUrl(serviceTitle)}
                               target="_blank"

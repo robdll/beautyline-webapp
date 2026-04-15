@@ -19,6 +19,7 @@ export default function AdminServicesNewPage() {
     description: '',
     media: [] as string[],
     cost: '',
+    priceFrom: false,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,6 +56,7 @@ export default function AdminServicesNewPage() {
           description: form.isPromo ? form.description.trim() : form.description.trim(),
           media: form.media,
           cost: form.isPromo ? (isNaN(numCost) ? 0 : numCost) : numCost,
+          priceFrom: form.isPromo ? false : form.priceFrom,
         }),
       });
       if (res.ok) {
@@ -195,6 +197,18 @@ export default function AdminServicesNewPage() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
                 />
               </div>
+              <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 bg-gray-50/80 px-4 py-3">
+                <input
+                  type="checkbox"
+                  checked={form.priceFrom}
+                  onChange={(e) => setForm((f) => ({ ...f, priceFrom: e.target.checked }))}
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                />
+                <span className="text-sm font-medium text-gray-800">Prezzo a partire da</span>
+              </label>
+              <p className="-mt-3 text-xs text-gray-500">
+                Se attivo, sulla scheda pubblica compare «A partire da» sopra l&apos;importo.
+              </p>
             </>
           )}
         </div>

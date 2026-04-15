@@ -78,7 +78,7 @@ export async function PUT(
         cost: numCost,
         availableColors: colors,
       },
-      { new: true }
+      { returnDocument: 'after' }
     ).lean();
 
     if (!product) {

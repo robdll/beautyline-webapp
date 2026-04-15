@@ -74,7 +74,7 @@ export async function PUT(
         media: Array.isArray(media) ? media : [],
         technicalSheet: typeof technicalSheet === 'string' ? technicalSheet.trim() : '',
       },
-      { new: true }
+      { returnDocument: 'after' }
     ).lean();
 
     if (!equipment) {

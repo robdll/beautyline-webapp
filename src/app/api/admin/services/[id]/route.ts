@@ -55,7 +55,9 @@ export async function PUT(
     }
 
     await connectDB();
-    const service = await Service.findByIdAndUpdate(id, payload, { new: true }).lean();
+    const service = await Service.findByIdAndUpdate(id, payload, {
+      returnDocument: 'after',
+    }).lean();
 
     if (!service) {
       return NextResponse.json({ error: 'Servizio non trovato.' }, { status: 404 });

@@ -117,7 +117,7 @@ export function PromozioniModalGrid({ promos }: { promos: PromoGridItem[] }) {
                   alt={promoAlt(active)}
                   fill
                   className="object-contain"
-                  sizes="100vw"
+                  sizes="(max-width: 920px) 100vw, 920px"
                   priority
                 />
               </div>

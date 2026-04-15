@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Hero } from '@/components/Hero';
 import { ContactSection } from '@/components/ContactSection';
 import { Section } from '@/components/Section';
+import { ExpandableServiceDescription } from '@/components/estetica/expandable-service-description';
 import { PromozioniModalGrid } from '@/components/estetica/PromozioniModalGrid';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappPrenotaUrl } from '@/lib/contact';
@@ -155,9 +156,9 @@ export default async function ServiziEsteticaPage() {
                         </div>
                         <div className="flex grow flex-col p-6">
                           <h3 className="heading-brand mb-2 text-xl font-bold">{serviceTitle}</h3>
-                          <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">
-                            {displayPublicDescription(service.description)}
-                          </p>
+                          <ExpandableServiceDescription
+                            text={displayPublicDescription(service.description)}
+                          />
                           <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
                             <p className="min-w-0 text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
                             <a

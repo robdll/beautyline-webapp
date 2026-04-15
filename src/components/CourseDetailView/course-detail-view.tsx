@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { formatDateRange } from '@/lib/course-occurrences';
+import { daySpanInclusive, formatDateRange } from '@/lib/course-occurrences';
 import { getCourseTypeLabel } from '@/lib/course-types';
 import { whatsappCorsoUrl } from '@/lib/contact';
 import type { PublicCourseJson } from '@/lib/public-course';
@@ -18,15 +18,6 @@ function firstValidMediaUrl(media: string[] | undefined): string | null {
     if (u.length > 0) return u;
   }
   return null;
-}
-
-function daySpanInclusive(startIso: string, endIso: string): number {
-  const start = new Date(startIso);
-  const end = new Date(endIso);
-  const msInDay = 24 * 60 * 60 * 1000;
-  const normalizedStart = new Date(start.getFullYear(), start.getMonth(), start.getDate()).getTime();
-  const normalizedEnd = new Date(end.getFullYear(), end.getMonth(), end.getDate()).getTime();
-  return Math.round((normalizedEnd - normalizedStart) / msInDay) + 1;
 }
 
 function programLabels(isMultiDate: boolean): string[] {
@@ -45,14 +36,18 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
     (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
   );
   const nextThree = sortedOccurrences.slice(0, 3);
-  const durationsLabel =
+  const durationDayCount =
     sortedOccurrences.length === 0
-      ? '1 giorno'
-      : `${sortedOccurrences.length} ${sortedOccurrences.length === 1 ? 'giorno' : 'giorni'}`;
-  const isMultiDate =
-    sortedOccurrences.length > 0
-      ? daySpanInclusive(sortedOccurrences[0].startDate, sortedOccurrences[0].endDate) > 1
-      : false;
+      ? null
+      : daySpanInclusive(
+          new Date(sortedOccurrences[0].startDate),
+          new Date(sortedOccurrences[0].endDate)
+        );
+  const durationsLabel =
+    durationDayCount === null
+      ? 'Da definire'
+      : `${durationDayCount} ${durationDayCount === 1 ? 'giorno' : 'giorni'}`;
+  const isMultiDate = durationDayCount !== null && durationDayCount > 1;
   const sectionTitles = programLabels(isMultiDate);
   const programSections = [...course.programSections, '', '', ''].slice(0, 3);
 

@@ -30,7 +30,8 @@ function normalizeDateOnly(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
-function daySpanInclusive(start: Date, end: Date): number {
+/** Inclusive calendar-day count between start and end (local date components). */
+export function daySpanInclusive(start: Date, end: Date): number {
   const msInDay = 24 * 60 * 60 * 1000;
   return Math.round((normalizeDateOnly(end).getTime() - normalizeDateOnly(start).getTime()) / msInDay) + 1;
 }

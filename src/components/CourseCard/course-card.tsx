@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Course } from '@/types';
 import { Button } from '@/components/shared/Button';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { cn } from '@/lib/utils';
 
 interface CourseCardProps {
@@ -16,7 +17,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
       <div className="relative w-full h-48">
         <Image
           src={course.image}
-          alt={course.title}
+          alt={displayPublicTitle(course.title)}
           fill
           className="object-cover"
         />
@@ -28,10 +29,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course, className }) => 
           </span>
         )}
         <h3 className="heading-brand text-xl font-bold mb-2">
-          {course.title}
+          {displayPublicTitle(course.title)}
         </h3>
         <p className="text-gray-600 text-sm mb-4 grow line-clamp-3">
-          {course.description}
+          {displayPublicDescription(course.description)}
         </p>
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
           <div className="flex flex-col gap-1">

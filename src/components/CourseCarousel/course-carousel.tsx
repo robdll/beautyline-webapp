@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { whatsappCorsoUrl } from '@/lib/contact';
 import type { CourseType } from '@/lib/course-types';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { cn } from '@/lib/utils';
 
 export interface UpcomingCourseItem {
@@ -64,7 +65,9 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
         ref={containerRef}
         className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {courses.map((course) => (
+        {courses.map((course) => {
+          const title = displayPublicTitle(course.title);
+          return (
           <article
             key={course.id}
             className="snap-start shrink-0 w-[85%] sm:w-[70%] md:w-[45%] lg:w-[32%] bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col"
@@ -72,7 +75,7 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
             <div className="relative aspect-video">
               <Image
                 src={course.image}
-                alt={course.title}
+                alt={title}
                 fill
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 85vw"
                 className="object-cover"
@@ -85,8 +88,10 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                 </span>
                 <span className="text-primary font-bold">{course.price}</span>
               </div>
-              <h3 className="heading-brand text-xl font-bold">{course.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">{course.description}</p>
+              <h3 className="heading-brand text-xl font-bold">{title}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">
+                {displayPublicDescription(course.description)}
+              </p>
               <div className="pt-2 mt-auto flex flex-wrap gap-2">
                 {course.slug ? (
                   <Link href={`/corsi/${course.courseType}/${course.slug}`}>
@@ -96,7 +101,7 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                   </Link>
                 ) : null}
                 <a
-                  href={whatsappCorsoUrl(course.title)}
+                  href={whatsappCorsoUrl(title)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
@@ -111,7 +116,8 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
               </div>
             </div>
           </article>
-        ))}
+        );
+        })}
       </div>
     </div>
   );

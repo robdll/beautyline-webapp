@@ -7,6 +7,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Section } from '@/components/Section';
 import { Button } from '@/components/shared/Button';
+import { displayPublicTitle } from '@/lib/display-text';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, totalPrice, totalItems } = useCart();
@@ -44,15 +45,18 @@ export default function CartPage() {
         ) : (
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="flex-1 flex flex-col gap-4">
-              {items.map((item) => (
+              {items.map((item) => {
+                const displayName =
+                  item.type === 'course' ? displayPublicTitle(item.name) : item.name;
+                return (
                 <div key={item.id} className="bg-white rounded-xl shadow-sm p-4 flex items-center gap-4">
                   {item.image && (
                     <div className="relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-gray-100">
-                      <Image src={item.image} alt={item.name} fill className="object-cover" sizes="80px" />
+                      <Image src={item.image} alt={displayName} fill className="object-cover" sizes="80px" />
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h3 className="heading-brand font-medium text-sm truncate">{item.name}</h3>
+                    <h3 className="heading-brand font-medium text-sm truncate">{displayName}</h3>
                     <p className="text-xs text-gray-400 capitalize">{item.type === 'course' ? 'Corso' : 'Prodotto'}</p>
                     <p className="text-primary font-bold mt-1">€ {item.price.toFixed(2)}</p>
                   </div>
@@ -88,7 +92,8 @@ export default function CartPage() {
                     </button>
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
 
             <div className="lg:w-80">

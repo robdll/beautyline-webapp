@@ -8,6 +8,7 @@ import { PromozioniModalGrid } from '@/components/estetica/PromozioniModalGrid';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappPrenotaUrl } from '@/lib/contact';
 import ServiceModel from '@/models/Service';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { cn } from '@/lib/utils';
 import { isPromoVisibleNow, SERVICE_CATEGORIES } from '@/lib/service-categories';
 
@@ -117,7 +118,7 @@ export default async function ServiziEsteticaPage() {
             promos={promoServices.map((p) => ({
               id: p.id,
               image: p.image,
-              name: p.name || 'Promozione',
+              name: displayPublicTitle(p.name || 'Promozione'),
             }))}
           />
         ) : (
@@ -133,40 +134,45 @@ export default async function ServiziEsteticaPage() {
             {orderedCategories.map((category) => (
               <div key={category} className="flex w-full flex-col gap-8 md:gap-10">
                 <h2 className="heading-brand text-2xl font-bold uppercase tracking-wide text-secondary md:text-3xl">
-                  {category}
+                  {displayPublicTitle(category)}
                 </h2>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                  {groupedServices[category].map((service) => (
-                    <div
-                      key={service.id}
-                      className="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
-                    >
-                      <div className="relative h-48 w-full">
-                        <Image
-                          src={service.image}
-                          alt={service.name}
-                          fill
-                          className="object-cover"
-                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        />
-                      </div>
-                      <div className="flex grow flex-col p-6">
-                        <h3 className="heading-brand mb-2 text-xl font-bold">{service.name}</h3>
-                        <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">{service.description}</p>
-                        <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
-                          <p className="min-w-0 text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
-                          <a
-                            href={whatsappPrenotaUrl(service.name)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={prenotaButtonClass}
-                          >
-                            Prenota ora
-                          </a>
+                  {groupedServices[category].map((service) => {
+                    const serviceTitle = displayPublicTitle(service.name);
+                    return (
+                      <div
+                        key={service.id}
+                        className="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
+                      >
+                        <div className="relative aspect-square w-full bg-gray-50">
+                          <Image
+                            src={service.image}
+                            alt={serviceTitle}
+                            fill
+                            className="object-cover object-center"
+                            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                          />
+                        </div>
+                        <div className="flex grow flex-col p-6">
+                          <h3 className="heading-brand mb-2 text-xl font-bold">{serviceTitle}</h3>
+                          <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">
+                            {displayPublicDescription(service.description)}
+                          </p>
+                          <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
+                            <p className="min-w-0 text-lg font-bold text-primary">€ {service.cost.toFixed(2)}</p>
+                            <a
+                              href={whatsappPrenotaUrl(serviceTitle)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={prenotaButtonClass}
+                            >
+                              Prenota ora
+                            </a>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ))}

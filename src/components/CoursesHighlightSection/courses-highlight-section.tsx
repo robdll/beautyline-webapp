@@ -6,6 +6,7 @@ import { CourseTypeModalHighlightGrid } from '@/components/CourseTypeModal';
 import { Section } from '@/components/Section';
 import { Button } from '@/components/shared/Button';
 import { HomeCourseCard, HOME_COURSE_CARDS } from '@/lib/constants';
+import { displayPublicTitle } from '@/lib/display-text';
 import { cn } from '@/lib/utils';
 
 interface CoursesHighlightSectionProps {
@@ -58,7 +59,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
             <Link
               key={card.title}
               href={card.href}
-              aria-label={card.title}
+              aria-label={displayPublicTitle(card.title)}
               className="group relative block min-w-0 cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <div className="relative aspect-square w-full">
@@ -84,7 +85,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
                 />
                 <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
                   <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
-                    {card.title}
+                    {displayPublicTitle(card.title)}
                   </h3>
                 </div>
               </div>

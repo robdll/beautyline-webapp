@@ -6,6 +6,7 @@ import { CourseDetailView } from '@/components/CourseDetailView';
 import { Section } from '@/components/Section';
 import { getCourseByTipoSlug } from '@/lib/course-queries';
 import { parseCourseType } from '@/lib/course-types';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { serializePublicCourse, type LeanCourseDoc } from '@/lib/public-course';
 
 export const dynamic = 'force-dynamic';
@@ -23,13 +24,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Corso non trovato | BeautyLine Academy' };
   }
   const course = serializePublicCourse(raw as LeanCourseDoc);
+  const title = displayPublicTitle(course.name);
+  const descFormatted = displayPublicDescription(course.description);
   const description =
-    course.description.length > 155 ? `${course.description.slice(0, 152)}…` : course.description;
+    descFormatted.length > 155 ? `${descFormatted.slice(0, 152)}…` : descFormatted;
   return {
-    title: `${course.name} | Corsi BeautyLine`,
+    title: `${title} | Corsi BeautyLine`,
     description,
     openGraph: {
-      title: course.name,
+      title,
       description,
     },
   };

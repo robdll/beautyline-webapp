@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { daySpanInclusive, formatDateRange } from '@/lib/course-occurrences';
 import { getCourseTypeLabel } from '@/lib/course-types';
 import { whatsappCorsoUrl } from '@/lib/contact';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import type { PublicCourseJson } from '@/lib/public-course';
 import { cn } from '@/lib/utils';
 
@@ -62,7 +63,9 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
 
       <div className="flex flex-col gap-8 md:gap-7">
         <header className="flex flex-col gap-2">
-          <h1 className="heading-brand text-3xl md:text-4xl font-bold text-balance">{course.name}</h1>
+          <h1 className="heading-brand text-3xl md:text-4xl font-bold text-balance">
+            {displayPublicTitle(course.name)}
+          </h1>
         </header>
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
@@ -143,7 +146,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
         <section className="flex flex-col gap-3">
           <h2 className="heading-brand text-2xl font-bold">Descrizione</h2>
           <p className="whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
-            {course.description}
+            {displayPublicDescription(course.description)}
           </p>
         </section>
 
@@ -156,7 +159,9 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
                   {sectionTitles[idx]}
                 </h3>
                 <p className="text-sm leading-relaxed text-gray-700 whitespace-pre-wrap">
-                  {content || 'Contenuto da definire'}
+                  {content?.trim()
+                    ? displayPublicDescription(content)
+                    : 'Contenuto da definire'}
                 </p>
               </article>
             ))}
@@ -165,7 +170,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
 
         <div className="pt-2">
           <a
-            href={whatsappCorsoUrl(course.name)}
+            href={whatsappCorsoUrl(displayPublicTitle(course.name))}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(

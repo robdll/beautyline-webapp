@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Section } from '@/components/Section';
 import { Button } from '@/components/shared/Button';
 import Link from 'next/link';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 
 export const metadata: Metadata = {
   title: 'Noleggio Attrezzature',
@@ -54,16 +55,16 @@ export default function NoleggioPage() {
               <div className="relative w-full h-64">
                 <Image
                   src={item.image}
-                  alt={item.name}
+                  alt={displayPublicTitle(item.name)}
                   fill
                   className="object-cover"
                 />
               </div>
               <div className="p-6">
                 <h3 className="heading-brand text-xl font-bold mb-2">
-                  {item.name}
+                  {displayPublicTitle(item.name)}
                 </h3>
-                <p className="text-gray-600 mb-4">{item.description}</p>
+                <p className="text-gray-600 mb-4">{displayPublicDescription(item.description)}</p>
                 <Button variant="outline" size="sm">
                   Richiedi Preventivo
                 </Button>

@@ -6,6 +6,7 @@ import { EquipmentDetailView } from '@/components/EquipmentDetailView';
 import { Section } from '@/components/Section';
 import { getEquipmentByTipoId } from '@/lib/equipment-queries';
 import { parseEquipmentType } from '@/lib/equipment-types';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { serializePublicEquipment, type LeanEquipmentDoc } from '@/lib/public-equipment';
 
 export const dynamic = 'force-dynamic';
@@ -26,13 +27,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!item) {
     return { title: 'Attrezzatura non trovata | BeautyLine' };
   }
+  const title = displayPublicTitle(item.name);
+  const descFormatted = displayPublicDescription(item.description);
   const description =
-    item.description.length > 155 ? `${item.description.slice(0, 152)}…` : item.description;
+    descFormatted.length > 155 ? `${descFormatted.slice(0, 152)}…` : descFormatted;
   return {
-    title: `${item.name} | Attrezzature BeautyLine`,
+    title: `${title} | Attrezzature BeautyLine`,
     description,
     openGraph: {
-      title: item.name,
+      title,
       description,
     },
   };

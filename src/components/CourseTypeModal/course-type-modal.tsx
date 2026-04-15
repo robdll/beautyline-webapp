@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { HomeCourseCard } from '@/lib/constants';
 import { getCourseTypeLabel, parseCourseType, type CourseType } from '@/lib/course-types';
 import { formatDateRange } from '@/lib/course-occurrences';
+import { displayPublicTitle } from '@/lib/display-text';
 import type { PublicCourseJson } from '@/lib/public-course';
 
 const modalIconBtnClass =
@@ -286,7 +287,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
               key={card.title}
               type="button"
               onClick={() => openForType(card)}
-              aria-label={`Apri elenco: ${card.title}`}
+              aria-label={`Apri elenco: ${displayPublicTitle(card.title)}`}
               className="group relative block min-w-0 w-full cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
             >
               <div className="relative aspect-square w-full">
@@ -306,7 +307,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                 />
                 <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
                   <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
-                    {card.title}
+                    {displayPublicTitle(card.title)}
                   </h3>
                 </div>
               </div>
@@ -317,7 +318,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
               href={card.href}
               target={card.openInNewTab ? '_blank' : undefined}
               rel={card.openInNewTab ? 'noopener noreferrer' : undefined}
-              aria-label={card.title}
+              aria-label={displayPublicTitle(card.title)}
               className="group relative block min-w-0 w-full cursor-pointer overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-left"
             >
               <div className="relative aspect-square w-full">
@@ -337,7 +338,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                 />
                 <div className="absolute inset-x-0 bottom-0 z-10 p-4 pt-12 md:p-5 md:pt-14">
                   <h3 className="font-raleway text-lg font-bold leading-snug tracking-wide text-balance text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.85)] md:text-xl lg:text-2xl">
-                    {card.title}
+                    {displayPublicTitle(card.title)}
                   </h3>
                 </div>
               </div>
@@ -361,7 +362,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
               id="course-modal-title"
               className="heading-brand min-w-0 flex-1 hyphens-auto wrap-break-word text-center text-lg font-bold tracking-wide md:text-xl"
             >
-              {activeCardTitle ?? 'Catalogo corsi'}
+              {displayPublicTitle(activeCardTitle ?? 'Catalogo corsi')}
             </h2>
             <div className="flex h-10 w-10 shrink-0 items-center justify-end">
               <button
@@ -417,7 +418,9 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                               />
                             </div>
                           </td>
-                          <td className="p-3 align-middle font-medium text-gray-900">{c.name}</td>
+                          <td className="p-3 align-middle font-medium text-gray-900">
+                            {displayPublicTitle(c.name)}
+                          </td>
                           <td className="p-3 align-middle text-gray-600">
                             <ul className="space-y-1">
                               {getCourseAvailableDates(c).map((dateLabel, idx) => (

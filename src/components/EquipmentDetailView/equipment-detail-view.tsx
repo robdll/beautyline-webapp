@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { getEquipmentTypeLabel } from '@/lib/equipment-types';
 import { whatsappAttrezzaturaUrl } from '@/lib/contact';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import type { PublicEquipmentJson } from '@/lib/public-equipment';
 import { cn } from '@/lib/utils';
 
@@ -55,14 +56,16 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
           <p className="text-xs font-semibold uppercase tracking-wide text-primary">
             {getEquipmentTypeLabel(equipment.type)}
           </p>
-          <h1 className="heading-brand text-3xl md:text-4xl font-bold text-balance">{equipment.name}</h1>
+          <h1 className="heading-brand text-3xl md:text-4xl font-bold text-balance">
+            {displayPublicTitle(equipment.name)}
+          </h1>
         </header>
 
         <dl className="flex flex-col gap-4 text-sm text-gray-600">
           <div>
             <dt className="text-[20px] font-semibold text-gray-700">Descrizione</dt>
             <dd className="mt-1 whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
-              {equipment.description}
+              {displayPublicDescription(equipment.description)}
             </dd>
           </div>
           {equipment.technicalSheet && (
@@ -84,7 +87,7 @@ export function EquipmentDetailView({ equipment }: EquipmentDetailViewProps) {
 
         <div className="pt-2">
           <a
-            href={whatsappAttrezzaturaUrl(equipment.name)}
+            href={whatsappAttrezzaturaUrl(displayPublicTitle(equipment.name))}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(

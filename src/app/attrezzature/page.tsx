@@ -8,6 +8,7 @@ import { EquipmentHighlightSection } from '@/components/EquipmentHighlightSectio
 import { Section } from '@/components/Section';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappAttrezzaturaUrl } from '@/lib/contact';
+import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { getEquipmentTypeLabel, parseEquipmentType } from '@/lib/equipment-types';
 import EquipmentModel from '@/models/Equipment';
 import { cn } from '@/lib/utils';
@@ -91,7 +92,9 @@ export default async function AttrezzaturePage() {
       <Section id="catalogo" className="scroll-mt-24">
         {equipment.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {equipment.map((item) => (
+            {equipment.map((item) => {
+              const itemTitle = displayPublicTitle(item.name);
+              return (
               <div
                 key={item.id}
                 className="flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
@@ -99,7 +102,7 @@ export default async function AttrezzaturePage() {
                 <div className="flex w-full max-h-[360px] items-center justify-center overflow-hidden">
                   <Image
                     src={item.image}
-                    alt={item.name}
+                    alt={itemTitle}
                     width={300}
                     height={400}
                     className="h-auto w-full shrink-0"
@@ -110,8 +113,10 @@ export default async function AttrezzaturePage() {
                   <span className="mb-1 text-xs font-semibold uppercase tracking-wide text-primary">
                     {getEquipmentTypeLabel(item.type)}
                   </span>
-                  <h3 className="heading-brand mb-2 text-xl font-bold">{item.name}</h3>
-                  <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">{item.description}</p>
+                  <h3 className="heading-brand mb-2 text-xl font-bold">{itemTitle}</h3>
+                  <p className="mb-4 line-clamp-3 grow text-sm text-gray-600">
+                    {displayPublicDescription(item.description)}
+                  </p>
                   <div className="mt-auto flex flex-row items-center justify-between gap-3 border-t border-gray-100 pt-4">
                     <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row sm:items-center">
                       {item.detailTypeSlug ? (
@@ -123,7 +128,7 @@ export default async function AttrezzaturePage() {
                         </Link>
                       ) : null}
                       <a
-                        href={whatsappAttrezzaturaUrl(item.name)}
+                        href={whatsappAttrezzaturaUrl(itemTitle)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={contattaciButtonClass}
@@ -134,7 +139,8 @@ export default async function AttrezzaturePage() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         ) : (
           <div className="py-12 text-center text-gray-500">

@@ -99,7 +99,7 @@ export default async function ServiziEsteticaPage() {
         }
         description={
           <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-snug">
-            Trattamenti professionali di estetica.
+            Trattamenti professionali di super-estetica.
             <br />
             La scienza della bellezza, il tocco del benessere.
           </p>

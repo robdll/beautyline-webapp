@@ -33,6 +33,10 @@ export default function AdminServicesNewPage() {
         alert('Carica un’immagine per la promozione.');
         return;
       }
+      if (!form.name.trim()) {
+        alert('Inserisci il titolo della promozione.');
+        return;
+      }
     } else {
       const numCost = parseFloat(form.cost);
       if (isNaN(numCost) || numCost < 0) {
@@ -102,12 +106,23 @@ export default function AdminServicesNewPage() {
           </label>
           <p className="-mt-2 text-xs text-gray-500">
             {form.isPromo
-              ? 'Per le promozioni servono solo periodo di validità e immagine. Nome, descrizione e costo sono opzionali e possono restare vuoti.'
+              ? 'Per le promozioni servono titolo, periodo di validità e immagine. Descrizione e costo sono opzionali.'
               : 'Servizio standard: compila tutti i campi sotto.'}
           </p>
 
           {form.isPromo ? (
             <>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Titolo promozione</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                  required={form.isPromo}
+                  placeholder="Es. Sconto viso primavera"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:ring-2 focus:ring-primary"
+                />
+              </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Inizio promozione</label>

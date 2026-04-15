@@ -40,7 +40,10 @@ export function buildServicePayloadFromBody(body: ServiceCreateBody): { error: s
 
     const typeTrim = String(body.type ?? '').trim();
     const resolvedType = typeTrim || PROMO_SERVICE_TYPE;
-    const nameTrim = String(body.name ?? '').trim() || 'Promozione';
+    const nameTrim = String(body.name ?? '').trim();
+    if (!nameTrim) {
+      return { error: 'Il titolo della promozione è obbligatorio.' };
+    }
     const descTrim = String(body.description ?? '').trim() || ' ';
     const rawCost = body.cost;
     const numCost =

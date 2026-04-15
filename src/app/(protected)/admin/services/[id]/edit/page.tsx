@@ -86,6 +86,10 @@ export default function AdminServicesEditPage() {
         alert('Carica un’immagine per la promozione.');
         return;
       }
+      if (!form.name.trim()) {
+        alert('Inserisci il titolo della promozione.');
+        return;
+      }
     } else if (form.type === PROMO_SERVICE_TYPE) {
       alert('Seleziona una categoria valida per un servizio non promozionale.');
       return;
@@ -163,12 +167,23 @@ export default function AdminServicesEditPage() {
           </label>
           <p className="-mt-2 text-xs text-gray-500">
             {form.isPromo
-              ? 'Periodo e immagine sono obbligatori. Gli altri dati (nome, categoria, ecc.) restano salvati anche se non mostrati qui: deseleziona Promo per modificarli.'
+              ? 'Titolo, periodo e immagine sono obbligatori. Gli altri dati (categoria, ecc.) restano salvati anche se non mostrati qui: deseleziona Promo per modificarli.'
               : null}
           </p>
 
           {form.isPromo ? (
             <>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Titolo promozione</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm((f) => (f ? { ...f, name: e.target.value } : f))}
+                  required={form.isPromo}
+                  placeholder="Es. Sconto viso primavera"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition-all focus:border-transparent focus:ring-2 focus:ring-primary"
+                />
+              </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Inizio promozione</label>

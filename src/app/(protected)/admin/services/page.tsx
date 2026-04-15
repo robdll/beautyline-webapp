@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
-import { isRecognizedServiceType } from '@/lib/service-categories';
+import { isRecognizedServiceType, PROMO_SERVICE_TYPE } from '@/lib/service-categories';
 
 interface Service {
   _id: string;
@@ -83,7 +83,7 @@ export default function AdminServicesPage() {
           <table className="w-full">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Nome</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Nome / titolo promo</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Categoria</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Costo</th>
                 <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Azioni</th>
@@ -99,6 +99,8 @@ export default function AdminServicesPage() {
               ) : (
                 services.map((service) => {
                   const categoryOk = isRecognizedServiceType(service.type, service.isPromo);
+                  const hidePromoPlaceholderCategory =
+                    Boolean(service.isPromo) && service.type === PROMO_SERVICE_TYPE;
                   const promoBadge = (
                     <span className="inline-flex rounded bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-900">
                       Promo
@@ -112,7 +114,7 @@ export default function AdminServicesPage() {
                         promoBadge
                       ) : categoryOk ? (
                         <span className="inline-flex flex-wrap items-center gap-2">
-                          <span>{service.type}</span>
+                          {hidePromoPlaceholderCategory ? null : <span>{service.type}</span>}
                           {service.isPromo ? promoBadge : null}
                         </span>
                       ) : (

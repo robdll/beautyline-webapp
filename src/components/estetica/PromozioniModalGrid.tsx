@@ -5,12 +5,23 @@ import Image from 'next/image';
 import { whatsappContattaciPromoUrl } from '@/lib/contact';
 import { cn } from '@/lib/utils';
 
-export type PromoGridItem = { id: string; image: string; name: string };
+export type PromoGridItem = {
+  id: string;
+  image: string;
+  /** Uppercase title shown above the image; may be empty for legacy rows */
+  displayTitle: string;
+  /** Trimmed title from CMS for WhatsApp and fallbacks */
+  contactName?: string;
+};
 
 const contattaciClass = cn(
   'inline-flex items-center justify-center rounded-[40px] border-2 border-primary bg-white px-5 py-2.5 text-sm font-semibold text-primary shadow-md',
   'transition-all duration-200 hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
 );
+
+function promoAlt(p: PromoGridItem): string {
+  return p.displayTitle || p.contactName || 'Promozione';
+}
 
 export function PromozioniModalGrid({ promos }: { promos: PromoGridItem[] }) {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -43,15 +54,24 @@ export function PromozioniModalGrid({ promos }: { promos: PromoGridItem[] }) {
             key={promo.id}
             type="button"
             onClick={() => setOpenId(promo.id)}
-            className="group relative w-full cursor-pointer overflow-hidden rounded-xl border border-gray-100 bg-white text-left shadow-sm outline-none transition-shadow aspect-137/160 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 hover:shadow-md"
+            className="group flex w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-100 bg-white text-left shadow-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 hover:shadow-md"
           >
-            <Image
-              src={promo.image}
-              alt={promo.name || 'Promozione'}
-              fill
-              className="pointer-events-none cursor-pointer object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            />
+            {promo.displayTitle ? (
+              <div className="shrink-0 border-b border-gray-100 bg-white px-3 py-3">
+                <p className="heading-brand text-center text-sm font-bold uppercase tracking-wide text-secondary md:text-base">
+                  {promo.displayTitle}
+                </p>
+              </div>
+            ) : null}
+            <div className="relative aspect-137/160 w-full">
+              <Image
+                src={promo.image}
+                alt={promoAlt(promo)}
+                fill
+                className="pointer-events-none cursor-pointer object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              />
+            </div>
           </button>
         ))}
       </div>
@@ -61,7 +81,11 @@ export function PromozioniModalGrid({ promos }: { promos: PromoGridItem[] }) {
           className="fixed inset-0 z-100 flex items-center justify-center bg-[rgba(255,255,255,0.72)] p-0 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
-          aria-label={active.name ? `Promozione: ${active.name}` : 'Promozione'}
+          aria-label={
+            active.displayTitle || active.contactName
+              ? `Promozione: ${active.displayTitle || active.contactName}`
+              : 'Promozione'
+          }
           onClick={close}
         >
           <div
@@ -79,19 +103,28 @@ export function PromozioniModalGrid({ promos }: { promos: PromoGridItem[] }) {
               </svg>
             </button>
 
-            <div className="relative h-full w-full bg-[rgba(250,250,252,0.98)]">
-              <Image
-                src={active.image}
-                alt={active.name || 'Promozione'}
-                fill
-                className="object-contain"
-                sizes="100vw"
-                priority
-              />
+            <div className="flex h-full min-h-0 w-full flex-col bg-[rgba(250,250,252,0.98)]">
+              {active.displayTitle ? (
+                <div className="shrink-0 border-b border-gray-100 px-4 py-3 text-center md:px-6 md:py-4">
+                  <p className="heading-brand text-base font-bold uppercase tracking-wide text-secondary md:text-lg">
+                    {active.displayTitle}
+                  </p>
+                </div>
+              ) : null}
+              <div className="relative min-h-0 w-full flex-1">
+                <Image
+                  src={active.image}
+                  alt={promoAlt(active)}
+                  fill
+                  className="object-contain"
+                  sizes="100vw"
+                  priority
+                />
+              </div>
             </div>
 
             <a
-              href={whatsappContattaciPromoUrl(active.name)}
+              href={whatsappContattaciPromoUrl(active.contactName)}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(contattaciClass, 'absolute bottom-3 right-3 z-20 md:bottom-5 md:right-5')}

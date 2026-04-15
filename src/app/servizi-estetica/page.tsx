@@ -118,11 +118,15 @@ export default async function ServiziEsteticaPage() {
         </h2>
         {promoServices.length > 0 ? (
           <PromozioniModalGrid
-            promos={promoServices.map((p) => ({
-              id: p.id,
-              image: p.image,
-              name: displayPublicTitle(p.name || 'Promozione'),
-            }))}
+            promos={promoServices.map((p) => {
+              const raw = String(p.name ?? '').trim();
+              return {
+                id: p.id,
+                image: p.image,
+                displayTitle: displayPublicTitle(raw).trim(),
+                contactName: raw || undefined,
+              };
+            })}
           />
         ) : (
           <p className="mx-auto max-w-lg text-center text-sm text-gray-600">

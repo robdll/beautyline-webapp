@@ -11,7 +11,7 @@ import { whatsappPrenotaUrl } from '@/lib/contact';
 import ServiceModel from '@/models/Service';
 import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { cn } from '@/lib/utils';
-import { isPromoVisibleNow, SERVICE_CATEGORIES } from '@/lib/service-categories';
+import { isPromoVisibleNow, SERVICE_CATEGORIES, serviceCategoryAnchorId } from '@/lib/service-categories';
 
 export const metadata: Metadata = {
   title: 'Servizi Estetica',
@@ -139,7 +139,11 @@ export default async function ServiziEsteticaPage() {
         {treatmentServices.length > 0 ? (
           <div className="flex w-full flex-col gap-12 md:gap-14">
             {orderedCategories.map((category) => (
-              <div key={category} className="flex w-full flex-col gap-8 md:gap-10">
+              <div
+                key={category}
+                id={serviceCategoryAnchorId(category)}
+                className="flex w-full scroll-mt-24 flex-col gap-8 md:gap-10"
+              >
                 <h2 className="heading-brand text-2xl font-bold uppercase tracking-wide text-secondary md:text-3xl">
                   {displayPublicTitle(category)}
                 </h2>

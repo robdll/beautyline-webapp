@@ -1,3 +1,5 @@
+import { slugifyCourseName } from '@/lib/course-slug';
+
 export const SERVICE_CATEGORIES = [
   'Viso',
   'Corpo',
@@ -11,6 +13,11 @@ export const SERVICE_CATEGORIES = [
 export const PROMO_SERVICE_TYPE = 'Promozioni' as const;
 
 export type ServiceCategory = (typeof SERVICE_CATEGORIES)[number];
+
+/** URL hash for `/servizi-estetica#…`, matching anchors on the public treatments page. */
+export function serviceCategoryAnchorId(category: string): string {
+  return slugifyCourseName(category);
+}
 
 export function isValidServiceCategory(type: string): type is ServiceCategory {
   return (SERVICE_CATEGORIES as readonly string[]).includes(type);

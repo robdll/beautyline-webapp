@@ -12,6 +12,7 @@ import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
 import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
 import { ContactSection } from '@/components/ContactSection';
 import { Button } from '@/components/shared/Button';
+import { SERVICE_CATEGORIES, serviceCategoryAnchorId } from '@/lib/service-categories';
 import { Product, Testimonial } from '@/types';
 
 const featuredProducts: Product[] = [
@@ -210,9 +211,14 @@ export default function Home() {
             eseguito con prodotti di alta gamma e tecniche all&apos;avanguardia.
           </p>
           <ul className="flex flex-wrap justify-center gap-3 py-1">
-            {['Epilazione', 'Pedicure', 'Trattamenti Viso', 'Trattamenti Corpo', 'Manicure'].map((s) => (
-              <li key={s} className="px-4 py-2 bg-purple/10 text-purple rounded-full text-sm font-medium">
-                {s}
+            {SERVICE_CATEGORIES.map((category) => (
+              <li key={category}>
+                <Link
+                  href={`/servizi-estetica#${serviceCategoryAnchorId(category)}`}
+                  className="inline-block cursor-pointer rounded-full bg-purple/10 px-4 py-2 text-sm font-medium text-purple transition-opacity hover:opacity-90"
+                >
+                  {category}
+                </Link>
               </li>
             ))}
           </ul>

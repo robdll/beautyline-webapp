@@ -295,7 +295,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                   src={card.imageSrc}
                   alt=""
                   fill
-                  sizes="(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw"
+                  sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 30vw, (min-width: 768px) 32vw, 92vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                   style={
                     card.imageObjectPosition ? { objectPosition: card.imageObjectPosition } : undefined
@@ -326,7 +326,7 @@ function CourseTypeModalHighlightGridInner({ cards, gridClassName }: CourseTypeM
                   src={card.imageSrc}
                   alt=""
                   fill
-                  sizes="(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw"
+                  sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 30vw, (min-width: 768px) 32vw, 92vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                   style={
                     card.imageObjectPosition ? { objectPosition: card.imageObjectPosition } : undefined

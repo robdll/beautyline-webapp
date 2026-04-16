@@ -30,7 +30,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
     'mx-auto grid w-full grid-cols-1 gap-4 md:gap-5',
     cards.length <= 2
       ? 'max-w-3xl md:grid-cols-2 lg:max-w-[40rem] lg:gap-5 xl:max-w-2xl'
-      : 'max-w-5xl md:grid-cols-3 lg:max-w-2xl lg:gap-3 xl:max-w-xl'
+      : 'max-w-6xl md:grid-cols-3 md:gap-5 lg:max-w-7xl lg:gap-6'
   );
 
   return (
@@ -70,7 +70,7 @@ export const CoursesHighlightSection: React.FC<CoursesHighlightSectionProps> = (
                   sizes={
                     cards.length <= 2
                       ? '(min-width: 1280px) 328px, (min-width: 1024px) 314px, (min-width: 768px) 360px, 92vw'
-                      : '(min-width: 1280px) 176px, (min-width: 1024px) 216px, (min-width: 768px) 320px, 92vw'
+                      : '(min-width: 1280px) 28vw, (min-width: 1024px) 30vw, (min-width: 768px) 32vw, 92vw'
                   }
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                   style={

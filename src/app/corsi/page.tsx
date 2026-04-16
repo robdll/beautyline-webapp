@@ -29,40 +29,52 @@ async function getUpcomingCourses(): Promise<UpcomingCourseItem[]> {
 
     const docs = await CourseModel.find().lean();
 
-    const withNextDate = docs.map((doc) => {
+    type Row = { sort: number; item: UpcomingCourseItem };
+    const rows: Row[] = [];
+
+    for (const doc of docs) {
+      const id = doc._id.toString();
+      const slug =
+        typeof (doc as { slug?: string }).slug === 'string' ? (doc as { slug: string }).slug : '';
       const occurrences = Array.isArray(doc.occurrences)
         ? [...doc.occurrences].sort(
             (a, b) =>
               new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
           )
         : [];
-      const nextOccurrence =
-        occurrences.find((occ) => new Date(occ.endDate).getTime() >= today.getTime()) ?? occurrences[0] ?? null;
-      return { doc, nextOccurrence };
-    });
 
-    const sorted = withNextDate.sort((a, b) => {
-      const aTime = a.nextOccurrence
-        ? new Date(a.nextOccurrence.startDate).getTime()
-        : Number.POSITIVE_INFINITY;
-      const bTime = b.nextOccurrence
-        ? new Date(b.nextOccurrence.startDate).getTime()
-        : Number.POSITIVE_INFINITY;
-      return aTime - bTime;
-    });
+      if (occurrences.length === 0) {
+        continue;
+      }
 
-    return sorted.map(({ doc, nextOccurrence }) => ({
-      id: doc._id.toString(),
-      title: doc.name,
-      description: doc.description,
-      date: nextOccurrence
-        ? `${formatDateRange(String(nextOccurrence.startDate), String(nextOccurrence.endDate))}${nextOccurrence.soldOut === true ? ' (sold-out)' : ''}`
-        : 'Da Definire',
-      image: doc.media?.[0] || 'https://placehold.co/800x450.png',
-      price: `€ ${doc.cost.toFixed(2)}`,
-      courseType: doc.type as CourseType,
-      slug: typeof (doc as { slug?: string }).slug === 'string' ? (doc as { slug: string }).slug : '',
-    }));
+      const stillRelevant = occurrences.filter(
+        (occ) => new Date(occ.endDate).getTime() >= today.getTime()
+      );
+      const occsToRender = stillRelevant.length > 0 ? stillRelevant : [occurrences[0]];
+
+      for (const occ of occsToRender) {
+        const startIso = String(occ.startDate);
+        const endIso = String(occ.endDate);
+        rows.push({
+          sort: new Date(occ.startDate).getTime(),
+          item: {
+            id,
+            occurrenceKey: `${id}-${startIso}-${endIso}`,
+            title: doc.name,
+            description: doc.description,
+            date: formatDateRange(startIso, endIso),
+            image: doc.media?.[0] || 'https://placehold.co/800x450.png',
+            price: `€ ${doc.cost.toFixed(2)}`,
+            courseType: doc.type as CourseType,
+            slug,
+            soldOut: occ.soldOut === true,
+          },
+        });
+      }
+    }
+
+    rows.sort((a, b) => a.sort - b.sort);
+    return rows.map((r) => r.item);
   } catch {
     return [];
   }

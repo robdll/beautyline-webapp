@@ -84,7 +84,7 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                 className="object-cover"
               />
               {course.soldOut ? (
-                <span className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-md bg-black/70 px-3 py-1.5 text-[20px] font-bold uppercase tracking-wide text-red-500 shadow-sm leading-none md:px-4 md:py-2 md:text-[30px]">
+                <span className="absolute left-1/2 top-1/2 z-10 inline-block -translate-x-1/2 -translate-y-1/2 rounded-md bg-black/70 px-3 py-1.5 text-center text-[20px] font-bold uppercase tracking-wide text-red-500 shadow-sm leading-none md:w-[180px] md:px-4 md:py-2 md:text-[30px]">
                   Sold-out
                 </span>
               ) : null}

@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils';
 
 export interface UpcomingCourseItem {
   id: string;
+  /** Stable unique key when the same course appears for multiple date ranges */
+  occurrenceKey: string;
   title: string;
   description: string;
   date: string;
@@ -19,6 +21,7 @@ export interface UpcomingCourseItem {
   price: string;
   courseType: CourseType;
   slug: string;
+  soldOut: boolean;
 }
 
 interface CourseCarouselProps {
@@ -69,7 +72,7 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
           const title = displayPublicTitle(course.title);
           return (
           <article
-            key={course.id}
+            key={course.occurrenceKey}
             className="snap-start shrink-0 w-[85%] sm:w-[70%] md:w-[45%] lg:w-[32%] bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden flex flex-col"
           >
             <div className="relative aspect-video">
@@ -80,6 +83,11 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 85vw"
                 className="object-cover"
               />
+              {course.soldOut ? (
+                <span className="absolute bottom-2 right-2 rounded-md bg-black/70 px-3 py-1.5 text-[20px] font-bold uppercase tracking-wide text-red-500 shadow-sm leading-none">
+                  Sold-out
+                </span>
+              ) : null}
             </div>
             <div className="p-6 flex flex-col gap-4 grow">
               <div className="flex items-center justify-between gap-4">
@@ -100,19 +108,25 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                     </Button>
                   </Link>
                 ) : null}
-                <a
-                  href={whatsappCorsoUrl(title)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    'inline-flex items-center justify-center font-medium cursor-pointer transition-all duration-200',
-                    'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary',
-                    'border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-[40px]',
-                    'px-4 py-2 text-sm',
-                  )}
-                >
-                  Richiedi info
-                </a>
+                {course.soldOut ? (
+                  <Button variant="outline" size="sm" type="button" disabled>
+                    Richiedi info
+                  </Button>
+                ) : (
+                  <a
+                    href={whatsappCorsoUrl(title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      'inline-flex items-center justify-center font-medium cursor-pointer transition-all duration-200',
+                      'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary',
+                      'border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-[40px]',
+                      'px-4 py-2 text-sm',
+                    )}
+                  >
+                    Richiedi info
+                  </a>
+                )}
               </div>
             </div>
           </article>

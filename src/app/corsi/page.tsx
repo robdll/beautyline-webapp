@@ -47,12 +47,13 @@ async function getUpcomingCourses(): Promise<UpcomingCourseItem[]> {
         continue;
       }
 
-      const stillRelevant = occurrences.filter(
-        (occ) => new Date(occ.endDate).getTime() >= today.getTime()
-      );
-      const occsToRender = stillRelevant.length > 0 ? stillRelevant : [occurrences[0]];
+      const upcomingOccurrences = occurrences.filter((occ) => {
+        const end = new Date(occ.endDate);
+        end.setHours(0, 0, 0, 0);
+        return end.getTime() >= today.getTime();
+      });
 
-      for (const occ of occsToRender) {
+      for (const occ of upcomingOccurrences) {
         const startIso = String(occ.startDate);
         const endIso = String(occ.endDate);
         rows.push({

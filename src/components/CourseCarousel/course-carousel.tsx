@@ -84,7 +84,7 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                 className="object-cover"
               />
               {course.soldOut ? (
-                <span className="absolute bottom-2 right-2 rounded-md bg-black/70 px-3 py-1.5 text-[20px] font-bold uppercase tracking-wide text-red-500 shadow-sm leading-none">
+                <span className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-md bg-black/70 px-3 py-1.5 text-[20px] font-bold uppercase tracking-wide text-red-500 shadow-sm leading-none md:px-4 md:py-2 md:text-[30px]">
                   Sold-out
                 </span>
               ) : null}
@@ -94,7 +94,9 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
                 <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
                   {course.date}
                 </span>
-                <span className="text-primary font-bold">{course.price}</span>
+                <span className="min-w-[70px] shrink-0 text-right text-primary font-bold">
+                  {course.price}
+                </span>
               </div>
               <h3 className="heading-brand text-xl font-bold">{title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">

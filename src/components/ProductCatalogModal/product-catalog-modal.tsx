@@ -13,6 +13,7 @@ import {
   readMarcaSlug,
   shouldOpenProductCatalog,
 } from '@/lib/product-catalog';
+import { makeProductCategoryKey } from '@/lib/product-category-visibility';
 import type { PublicProductJson } from '@/lib/public-product';
 
 const modalIconBtnClass =
@@ -87,7 +88,11 @@ function modalTitle(marcaSlug: string | null, lineaSlug: string | null): string 
   return 'Catalogo prodotti';
 }
 
-function ProductCatalogModalInner() {
+export type ProductCatalogModalProps = {
+  disabledCategoryKeys?: readonly string[];
+};
+
+function ProductCatalogModalInner({ disabledCategoryKeys = [] }: ProductCatalogModalProps) {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -96,15 +101,30 @@ function ProductCatalogModalInner() {
   const marcaFromUrl = readMarcaSlug(searchParams);
   const lineaFromUrl = readLineaSlug(searchParams);
 
+  const disabledSet = useMemo(() => new Set(disabledCategoryKeys), [disabledCategoryKeys]);
+
   const resolvedMarca = useMemo(() => {
     if (marcaFromUrl) return marcaFromUrl;
     if (lineaFromUrl) return findLineaBySlug(lineaFromUrl)?.brandSlug ?? null;
     return null;
   }, [marcaFromUrl, lineaFromUrl]);
 
+  const catalogSelectionDisabled = useMemo(() => {
+    if (marcaFromUrl && lineaFromUrl) {
+      return disabledSet.has(makeProductCategoryKey(marcaFromUrl, lineaFromUrl));
+    }
+    if (!marcaFromUrl && lineaFromUrl) {
+      const info = findLineaBySlug(lineaFromUrl);
+      if (!info) return false;
+      return disabledSet.has(makeProductCategoryKey(info.brandSlug, info.lineaSlug));
+    }
+    return false;
+  }, [marcaFromUrl, lineaFromUrl, disabledSet]);
+
   const [products, setProducts] = useState<PublicProductJson[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [unavailableSoon, setUnavailableSoon] = useState(false);
 
   const closeModal = useCallback(() => {
     setProducts([]);
@@ -136,8 +156,19 @@ function ProductCatalogModalInner() {
       setProducts([]);
       setError(null);
       setLoading(false);
+      setUnavailableSoon(false);
       return;
     }
+
+    if (catalogSelectionDisabled) {
+      setUnavailableSoon(true);
+      setProducts([]);
+      setError(null);
+      setLoading(false);
+      return;
+    }
+
+    setUnavailableSoon(false);
 
     const ac = new AbortController();
 
@@ -158,7 +189,12 @@ function ProductCatalogModalInner() {
         const res = await fetch(`/api/products${q ? `?${q}` : ''}`, { signal: ac.signal });
         const data = await res.json();
         if (ac.signal.aborted) return;
-        if (!res.ok) {
+        if (res.status === 403) {
+          setUnavailableSoon(true);
+          setError(null);
+          setProducts([]);
+        } else if (!res.ok) {
+          setUnavailableSoon(false);
           setError(typeof data.error === 'string' ? data.error : 'Errore di caricamento.');
           setProducts([]);
         } else {
@@ -166,6 +202,7 @@ function ProductCatalogModalInner() {
         }
       } catch {
         if (ac.signal.aborted) return;
+        setUnavailableSoon(false);
         setError('Errore di rete.');
         setProducts([]);
       } finally {
@@ -174,7 +211,7 @@ function ProductCatalogModalInner() {
     })();
 
     return () => ac.abort();
-  }, [open, marcaFromUrl, lineaFromUrl]);
+  }, [open, catalogSelectionDisabled, marcaFromUrl, lineaFromUrl]);
 
   const pushCatalogUrl = (next: { catalogo: boolean; marca: string | null; linea: string | null }) => {
     const qs = buildCatalogSearchParams(next);
@@ -283,11 +320,15 @@ function ProductCatalogModalInner() {
                   onChange={(e) => onLineaChange(e.target.value)}
                 >
                   <option value="">Tutte le sottocategorie</option>
-                  {lineeOptions.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.title}
-                    </option>
-                  ))}
+                  {lineeOptions.map((s) => {
+                    const optDisabled =
+                      !!resolvedMarca && disabledSet.has(makeProductCategoryKey(resolvedMarca, s.id));
+                    return (
+                      <option key={s.id} value={s.id} disabled={optDisabled}>
+                        {s.title}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
             </div>
@@ -300,15 +341,20 @@ function ProductCatalogModalInner() {
                   <div className="h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
                 </div>
               )}
-              {error && !loading && (
+              {!loading && unavailableSoon && (
+                <p className="py-12 text-center text-lg font-medium text-gray-700">
+                  Catalogo disponibile a breve.
+                </p>
+              )}
+              {error && !loading && !unavailableSoon && (
                 <p className="py-8 text-center text-red-600" role="alert">
                   {error}
                 </p>
               )}
-              {!loading && !error && products.length === 0 && (
+              {!loading && !error && !unavailableSoon && products.length === 0 && (
                 <p className="py-12 text-center text-gray-500">Nessun prodotto in questo catalogo.</p>
               )}
-              {!loading && !error && products.length > 0 && (
+              {!loading && !error && !unavailableSoon && products.length > 0 && (
                 <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
                   <table className="w-full min-w-[320px] text-left text-sm">
                     <thead className="bg-gray-50 text-gray-700">
@@ -358,10 +404,10 @@ function ProductCatalogFallback() {
   );
 }
 
-export function ProductCatalogModal() {
+export function ProductCatalogModal({ disabledCategoryKeys = [] }: ProductCatalogModalProps) {
   return (
     <Suspense fallback={<ProductCatalogFallback />}>
-      <ProductCatalogModalInner />
+      <ProductCatalogModalInner disabledCategoryKeys={disabledCategoryKeys} />
     </Suspense>
   );
 }

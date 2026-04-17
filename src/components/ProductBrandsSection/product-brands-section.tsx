@@ -3,7 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Section } from '@/components/Section';
-import { PRODUCT_BRANDS, type ProductBrand, type ProductSubcategory } from '@/lib/product-brands';
+import { SubcategoryCatalogCard } from './SubcategoryCatalogCard';
+import { PRODUCT_BRANDS, type ProductBrand } from '@/lib/product-brands';
+import { makeProductCategoryKey } from '@/lib/product-category-visibility';
 import { cn } from '@/lib/utils';
 
 interface ProductBrandsSectionProps {
@@ -11,6 +13,8 @@ interface ProductBrandsSectionProps {
   brands?: ProductBrand[];
   /** Base path per link al catalogo modale (es. `/prodotti`). */
   catalogBasePath?: string;
+  /** Chiavi `brandId:subcategoryId` non ancora pubblicate nel catalogo. */
+  disabledCategoryKeys?: readonly string[];
 }
 
 const BRAND_LINE_CARDS: { brandId: string; title: string; imageSrc: string }[] = [
@@ -18,58 +22,14 @@ const BRAND_LINE_CARDS: { brandId: string; title: string; imageSrc: string }[] =
   { brandId: 'skin-renew', title: 'Skin Renew', imageSrc: '/images/product-brand-2.webp' },
 ];
 
-function SubcategoryCard({
-  sub,
-  catalogHref,
-  variant,
-}: {
-  sub: ProductSubcategory;
-  catalogHref: string;
-  variant: 'nails' | 'skin';
-}) {
-  const gradient =
-    variant === 'nails'
-      ? 'bg-linear-to-br from-primary/25 to-purple/15'
-      : 'bg-linear-to-br from-purple/20 to-primary/20';
-
-  return (
-    <div
-      className={cn(
-        'flex min-h-0 flex-col overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg',
-        gradient
-      )}
-    >
-      <Link
-        href={catalogHref}
-        className="group relative flex min-h-34 flex-1 flex-col items-center justify-around px-4 py-5 md:min-h-38 md:px-5 md:py-6"
-        aria-label={`${sub.title} — vai al catalogo`}
-      >
-        <h4 className="heading-brand text-lg font-bold leading-snug tracking-wide text-balance text-center text-secondary md:text-xl">
-          {sub.title}
-        </h4>
-        <span className="text-sm font-semibold text-primary underline-offset-4 group-hover:underline">
-          Vedi nel catalogo
-        </span>
-      </Link>
-      {sub.description ? (
-        <div className="border-t border-black/5 bg-white/80 px-4 py-3 text-center md:px-5">
-          <details className="group/details text-sm text-gray-700">
-            <summary className="cursor-pointer list-none font-semibold text-secondary outline-none marker:content-none [&::-webkit-details-marker]:hidden">
-              <span className="underline-offset-2 group-open/details:underline">Descrizione</span>
-            </summary>
-            <p className="mt-2 text-center leading-relaxed text-pretty">{sub.description}</p>
-          </details>
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
 export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
   id = 'linee-prodotti',
   brands = PRODUCT_BRANDS,
   catalogBasePath = '/prodotti',
+  disabledCategoryKeys = [],
 }) => {
+  const disabled = new Set(disabledCategoryKeys);
+
   return (
     <Section
       id={id}
@@ -140,11 +100,12 @@ export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
               )}
             >
               {brand.subcategories.map((sub) => (
-                <SubcategoryCard
+                <SubcategoryCatalogCard
                   key={sub.id}
                   sub={sub}
                   catalogHref={`${catalogBasePath}?marca=${encodeURIComponent(brand.id)}&linea=${encodeURIComponent(sub.id)}`}
                   variant={brand.id === 'skin-renew' ? 'skin' : 'nails'}
+                  disabled={disabled.has(makeProductCategoryKey(brand.id, sub.id))}
                 />
               ))}
             </div>

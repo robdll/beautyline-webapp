@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { connectDB } from '@/lib/mongodb';
 import { findBrandBySlug, findLineaBySlug } from '@/lib/product-catalog';
+import { getProductCategoryDisabledKeys } from '@/lib/product-category-settings-store';
+import {
+  isCategoryKeyDisabled,
+  isProductHiddenByCategoryRules,
+} from '@/lib/product-category-visibility';
 import { serializePublicProduct } from '@/lib/public-product';
 import Product from '@/models/Product';
 
@@ -27,6 +32,8 @@ export async function GET(request: NextRequest) {
 
   try {
     await connectDB();
+    const disabledArr = await getProductCategoryDisabledKeys();
+    const disabled = new Set(disabledArr);
 
     const filter: Record<string, unknown> = {};
 
@@ -36,12 +43,18 @@ export async function GET(request: NextRequest) {
       if (!brand || !linea || linea.brandSlug !== marcaSlug) {
         return NextResponse.json({ error: 'Marca o linea non valida.' }, { status: 400 });
       }
+      if (isCategoryKeyDisabled(marcaSlug, lineaSlug, disabled)) {
+        return NextResponse.json({ error: 'Catalogo disponibile a breve.' }, { status: 403 });
+      }
       filter.brand = ciExact(brand.title);
       filter.type = ciExact(linea.dbType);
     } else if (lineaSlug) {
       const linea = findLineaBySlug(lineaSlug);
       if (!linea) {
         return NextResponse.json({ error: 'Linea non valida.' }, { status: 400 });
+      }
+      if (isCategoryKeyDisabled(linea.brandSlug, linea.lineaSlug, disabled)) {
+        return NextResponse.json({ error: 'Catalogo disponibile a breve.' }, { status: 403 });
       }
       filter.brand = ciExact(linea.brandTitle);
       filter.type = ciExact(linea.dbType);
@@ -54,7 +67,10 @@ export async function GET(request: NextRequest) {
     }
 
     const docs = await Product.find(filter).sort({ name: 1 }).lean();
-    const data = docs.map((doc) =>
+    const visibleDocs = docs.filter(
+      (doc) => !isProductHiddenByCategoryRules(doc.brand, doc.type, disabled)
+    );
+    const data = visibleDocs.map((doc) =>
       serializePublicProduct({
         _id: doc._id,
         name: doc.name,

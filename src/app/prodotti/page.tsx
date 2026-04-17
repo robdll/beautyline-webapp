@@ -6,6 +6,7 @@ import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ProductBrandsSection } from '@/components/ProductBrandsSection';
 import { ProductCatalogModal } from '@/components/ProductCatalogModal';
+import { getProductCategoryDisabledKeys } from '@/lib/product-category-settings-store';
 
 export const metadata: Metadata = {
   title: 'I Nostri Prodotti',
@@ -22,7 +23,9 @@ function CatalogSectionFallback() {
   );
 }
 
-export default function ProdottiPage() {
+export default async function ProdottiPage() {
+  const disabledCategoryKeys = await getProductCategoryDisabledKeys();
+
   return (
     <>
       <Hero
@@ -45,7 +48,7 @@ export default function ProdottiPage() {
         ctaHref="/prodotti#linee-prodotti"
       />
 
-      <ProductBrandsSection />
+      <ProductBrandsSection disabledCategoryKeys={disabledCategoryKeys} />
 
       <Section
         id="catalogo"
@@ -53,7 +56,7 @@ export default function ProdottiPage() {
         containerClassName="flex flex-col items-center gap-8"
       >
         <Suspense fallback={<CatalogSectionFallback />}>
-          <ProductCatalogModal />
+          <ProductCatalogModal disabledCategoryKeys={disabledCategoryKeys} />
         </Suspense>
       </Section>
     </>

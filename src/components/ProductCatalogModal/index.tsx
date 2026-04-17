@@ -1,1 +1,1 @@
-export { ProductCatalogModal } from './product-catalog-modal';
+export { ProductCatalogModal, type ProductCatalogModalProps } from './product-catalog-modal';

@@ -5,6 +5,7 @@ import { Hero } from '@/components/Hero';
 import { ContactSection } from '@/components/ContactSection';
 import { Section } from '@/components/Section';
 import { ExpandableServiceDescription } from '@/components/estetica/expandable-service-description';
+import { ServiziEsteticaIntroSection } from '@/components/estetica/servizi-estetica-intro-section';
 import { PromozioniModalGrid } from '@/components/estetica/PromozioniModalGrid';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappPrenotaUrl } from '@/lib/contact';
@@ -105,7 +106,13 @@ export default async function ServiziEsteticaPage() {
           </p>
         }
         ctaText="Scopri i Trattamenti"
-        ctaHref="/servizi-estetica#trattamenti"
+        ctaHref="/servizi-estetica#servizi-estetica-intro"
+      />
+
+      <ServiziEsteticaIntroSection
+        sectionId="servizi-estetica-intro"
+        className="scroll-mt-24"
+        showDiscoverMoreButton={false}
       />
 
       <Section

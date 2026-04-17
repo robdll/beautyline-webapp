@@ -12,7 +12,7 @@ import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
 import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
 import { ContactSection } from '@/components/ContactSection';
 import { Button } from '@/components/shared/Button';
-import { SERVICE_CATEGORIES, serviceCategoryAnchorId } from '@/lib/service-categories';
+import { ServiziEsteticaIntroSection } from '@/components/estetica/servizi-estetica-intro-section';
 import { Product, Testimonial } from '@/types';
 
 const featuredProducts: Product[] = [
@@ -200,35 +200,7 @@ export default function Home() {
       <CoursesHighlightSection id="formazione" mode="typeModal" />
 
       {/* Servizi Estetica Section */}
-      <Section id="servizi-estetica" className="bg-muted">
-        <div className="text-center max-w-4xl mx-auto flex flex-col items-center gap-7">
-          <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold tracking-wide">
-            Servizi Estetica
-          </h2>
-          <p className="max-w-3xl mx-auto text-center text-lg text-gray-600 leading-relaxed">
-            I nostri trattamenti professionali di estetica sono pensati per offrire il massimo
-            della qualità e del benessere. Dall&apos;epilazione alla pedicure, ogni servizio è
-            eseguito con prodotti di alta gamma e tecniche all&apos;avanguardia.
-          </p>
-          <ul className="flex flex-wrap justify-center gap-3 py-1">
-            {SERVICE_CATEGORIES.map((category) => (
-              <li key={category}>
-                <Link
-                  href={`/servizi-estetica#${serviceCategoryAnchorId(category)}`}
-                  className="inline-block cursor-pointer rounded-full bg-purple/10 px-4 py-2 text-sm font-medium text-purple transition-opacity hover:opacity-90"
-                >
-                  {category}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link href="/servizi-estetica">
-            <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
-              Scopri di più
-            </Button>
-          </Link>
-        </div>
-      </Section>
+      <ServiziEsteticaIntroSection />
 
       {/* Attrezzature Section */}
       <div id="attrezzature">

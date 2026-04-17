@@ -252,6 +252,7 @@ export default function AdminProductsEditPage() {
               images={media}
               onChange={setMedia}
               folder="beautyline/products"
+              maxImages={50}
             />
           </div>
 

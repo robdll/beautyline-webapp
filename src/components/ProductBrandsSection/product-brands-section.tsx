@@ -3,16 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Section } from '@/components/Section';
-import { Button } from '@/components/shared/Button';
 import { PRODUCT_BRANDS, type ProductBrand, type ProductSubcategory } from '@/lib/product-brands';
 import { cn } from '@/lib/utils';
 
 interface ProductBrandsSectionProps {
   id?: string;
   brands?: ProductBrand[];
-  ctaText?: string;
-  /** URL completo del pulsante catalogo (default: `?catalogo=1` su `catalogBasePath`). */
-  ctaHref?: string;
   /** Base path per link al catalogo modale (es. `/prodotti`). */
   catalogBasePath?: string;
 }
@@ -72,12 +68,8 @@ function SubcategoryCard({
 export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
   id = 'linee-prodotti',
   brands = PRODUCT_BRANDS,
-  ctaText = 'Vai al catalogo',
-  ctaHref,
   catalogBasePath = '/prodotti',
 }) => {
-  const catalogOpenHref = ctaHref ?? `${catalogBasePath}?catalogo=1`;
-
   return (
     <Section
       id={id}
@@ -158,14 +150,6 @@ export const ProductBrandsSection: React.FC<ProductBrandsSectionProps> = ({
             </div>
           </article>
         ))}
-      </div>
-
-      <div className="flex w-full justify-center pt-2">
-        <Link href={catalogOpenHref}>
-          <Button variant="primary" size="lg" className="font-bold uppercase tracking-wider">
-            {ctaText}
-          </Button>
-        </Link>
       </div>
     </Section>
   );

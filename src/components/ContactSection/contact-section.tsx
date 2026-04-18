@@ -78,7 +78,7 @@ export function ContactSection({
               </div>
               <div>
                 <h3 className="heading-brand text-lg font-semibold leading-snug">
-                  Telefono per informazioni su estetica e negozio
+                  Telefono per informazioni su Estetica e Negozio
                 </h3>
                 <a href={ESTETICA_PHONE_TEL_HREF} className="text-gray-600 hover:text-primary transition-colors">
                   {ESTETICA_PHONE_DISPLAY}

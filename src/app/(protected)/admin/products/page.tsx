@@ -68,11 +68,18 @@ export default function AdminProductsPage() {
         <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide">
           Prodotti
         </h1>
-        <Link href="/admin/products/new">
-          <Button variant="primary" size="md">
-            Nuovo Prodotto
-          </Button>
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/admin/products/categories">
+            <Button variant="secondary" size="md">
+              Linee catalogo
+            </Button>
+          </Link>
+          <Link href="/admin/products/new">
+            <Button variant="primary" size="md">
+              Nuovo Prodotto
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">

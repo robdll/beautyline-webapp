@@ -1,7 +1,12 @@
 import React from 'react';
 import { Section } from '@/components/Section';
 import { ContactForm } from '@/components/ContactForm';
-import { BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL_HREF } from '@/lib/contact';
+import {
+  BUSINESS_PHONE_DISPLAY,
+  BUSINESS_PHONE_TEL_HREF,
+  ESTETICA_PHONE_DISPLAY,
+  ESTETICA_PHONE_TEL_HREF,
+} from '@/lib/contact';
 
 interface ContactSectionProps {
   title?: string;
@@ -56,9 +61,27 @@ export function ContactSection({
                 </svg>
               </div>
               <div>
-                <h3 className="heading-brand text-lg font-semibold">Telefono</h3>
+                <h3 className="heading-brand text-lg font-semibold leading-snug">
+                  Telefono per informazioni su Corsi e Tecnologie
+                </h3>
                 <a href={BUSINESS_PHONE_TEL_HREF} className="text-gray-600 hover:text-primary transition-colors">
                   {BUSINESS_PHONE_DISPLAY}
+                </a>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="heading-brand text-lg font-semibold leading-snug">
+                  Telefono per informazioni su estetica e negozio
+                </h3>
+                <a href={ESTETICA_PHONE_TEL_HREF} className="text-gray-600 hover:text-primary transition-colors">
+                  {ESTETICA_PHONE_DISPLAY}
                 </a>
               </div>
             </div>

@@ -2,7 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { CookiePreferencesTrigger } from '@/components/CookieConsent';
 import { Logo } from '../Logo';
-import { BUSINESS_PHONE_DISPLAY, BUSINESS_PHONE_TEL_HREF } from '@/lib/contact';
+import {
+  BUSINESS_PHONE_DISPLAY,
+  BUSINESS_PHONE_TEL_HREF,
+  ESTETICA_PHONE_DISPLAY,
+  ESTETICA_PHONE_TEL_HREF,
+} from '@/lib/contact';
 
 export const Footer: React.FC = () => {
   return (
@@ -23,12 +28,18 @@ export const Footer: React.FC = () => {
                   info@beautylineprofessional.com
                 </a>
               </p>
-              <p className="flex items-center gap-2">
-                <span className="text-primary">Telefono:</span>
+              <div className="flex flex-col gap-1">
+                <span className="text-primary">Telefono per informazioni su Corsi e Tecnologie</span>
                 <a href={BUSINESS_PHONE_TEL_HREF} className="hover:text-primary transition-colors">
                   {BUSINESS_PHONE_DISPLAY}
                 </a>
-              </p>
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-primary">Telefono per informazioni su Estetica e Negozio</span>
+                <a href={ESTETICA_PHONE_TEL_HREF} className="hover:text-primary transition-colors">
+                  {ESTETICA_PHONE_DISPLAY}
+                </a>
+              </div>
             </div>
           </div>
 

@@ -1,6 +1,9 @@
 /** Display + tel / WhatsApp (BeautyLine) */
 export const BUSINESS_PHONE_DISPLAY = '+39 338 2535226';
 export const BUSINESS_PHONE_TEL_HREF = 'tel:+393382535226';
+
+export const ESTETICA_PHONE_DISPLAY = '+39 335 7201796';
+export const ESTETICA_PHONE_TEL_HREF = 'tel:+393357201796';
 /** wa.me: stesso recapito del telefono principale — attrezzature, contatti generali */
 export const BUSINESS_WHATSAPP_WA_ME = 'https://wa.me/393382535226';
 /** wa.me — servizi estetica (prenotazioni / promozioni) */

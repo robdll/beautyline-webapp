@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { isRecognizedServiceType, PROMO_SERVICE_TYPE } from '@/lib/service-categories';
@@ -19,6 +19,10 @@ export default function AdminServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [listinoPrezziUrl, setListinoPrezziUrl] = useState<string | null>(null);
+  const [uploadingListino, setUploadingListino] = useState(false);
+  const [listinoError, setListinoError] = useState<string | null>(null);
+  const listinoFileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchServices = async () => {
     try {
@@ -37,6 +41,61 @@ export default function AdminServicesPage() {
   useEffect(() => {
     fetchServices();
   }, []);
+
+  useEffect(() => {
+    const loadListino = async () => {
+      try {
+        const res = await fetch('/api/admin/estetica-public-settings');
+        if (!res.ok) return;
+        const data = await res.json();
+        setListinoPrezziUrl(typeof data.listinoPrezziUrl === 'string' ? data.listinoPrezziUrl : null);
+      } catch {
+        /* ignore */
+      }
+    };
+    void loadListino();
+  }, []);
+
+  const handleListinoFile = async (file: File) => {
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      setListinoError('Puoi caricare solo file PDF.');
+      return;
+    }
+
+    setUploadingListino(true);
+    setListinoError(null);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'beautyline/estetica');
+      formData.append('publicId', 'listino-prezzi');
+      formData.append('resourceType', 'raw');
+      formData.append('format', 'pdf');
+
+      const uploadRes = await fetch('/api/upload', { method: 'POST', body: formData });
+      const uploadData = await uploadRes.json();
+      if (!uploadRes.ok || !uploadData.url) {
+        throw new Error(uploadData.details || uploadData.error || 'Upload non riuscito.');
+      }
+
+      const putRes = await fetch('/api/admin/estetica-public-settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ listinoPrezziUrl: uploadData.url }),
+      });
+      const putData = await putRes.json();
+      if (!putRes.ok) {
+        throw new Error(putData.error || 'Salvataggio non riuscito.');
+      }
+      setListinoPrezziUrl(
+        typeof putData.listinoPrezziUrl === 'string' ? putData.listinoPrezziUrl : uploadData.url
+      );
+    } catch (err) {
+      setListinoError(err instanceof Error ? err.message : 'Errore durante il caricamento.');
+    } finally {
+      setUploadingListino(false);
+    }
+  };
 
   const handleDelete = async (id: string) => {
     if (!confirm('Sei sicuro di voler eliminare questo servizio?')) return;
@@ -67,15 +126,46 @@ export default function AdminServicesPage() {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+      <div className="flex flex-col gap-4 mb-8 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide">
           Servizi Estetica
         </h1>
-        <Link href="/admin/services/new">
-          <Button variant="primary" size="md">
-            Nuovo Servizio
-          </Button>
-        </Link>
+        <div className="flex flex-col gap-2 sm:items-end">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+            <input
+              ref={listinoFileInputRef}
+              type="file"
+              accept=".pdf,application/pdf"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) void handleListinoFile(file);
+                e.currentTarget.value = '';
+              }}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              size="md"
+              disabled={uploadingListino}
+              onClick={() => listinoFileInputRef.current?.click()}
+            >
+              {uploadingListino ? 'Caricamento…' : 'Carica listino PDF'}
+            </Button>
+            <Link href="/admin/services/new">
+              <Button variant="primary" size="md" className="w-full sm:w-auto">
+                Nuovo Servizio
+              </Button>
+            </Link>
+          </div>
+          {listinoError ? (
+            <p className="text-sm text-red-600 sm:text-right">{listinoError}</p>
+          ) : listinoPrezziUrl ? (
+            <p className="text-xs text-gray-600 sm:text-right">
+              Listino pubblicato: visibile su /servizi-estetica.
+            </p>
+          ) : null}
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">

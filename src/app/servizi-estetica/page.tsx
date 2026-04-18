@@ -13,6 +13,7 @@ import ServiceModel from '@/models/Service';
 import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { cn } from '@/lib/utils';
 import { isPromoVisibleNow, SERVICE_CATEGORIES, serviceCategoryAnchorId } from '@/lib/service-categories';
+import { getListinoPrezziUrl } from '@/lib/estetica-public-settings-store';
 
 export const metadata: Metadata = {
   title: 'Servizi Estetica',
@@ -62,6 +63,12 @@ const prenotaButtonClass = cn(
 
 export default async function ServiziEsteticaPage() {
   const services = await getServices();
+  let listinoPrezziUrl: string | null = null;
+  try {
+    listinoPrezziUrl = await getListinoPrezziUrl();
+  } catch {
+    listinoPrezziUrl = null;
+  }
   const promoServices = services.filter(
     (s) =>
       s.isPromo &&
@@ -113,6 +120,8 @@ export default async function ServiziEsteticaPage() {
         sectionId="servizi-estetica-intro"
         className="scroll-mt-24"
         showDiscoverMoreButton={false}
+        listinoPrezziUrl={listinoPrezziUrl}
+        promozioniHref="#promozioni"
       />
 
       <Section

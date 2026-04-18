@@ -4,16 +4,25 @@ import { Button } from '@/components/shared/Button';
 import { SERVICE_CATEGORIES, serviceCategoryAnchorId } from '@/lib/service-categories';
 import { cn } from '@/lib/utils';
 
+const primaryCtaClass =
+  'inline-flex items-center justify-center rounded-[40px] bg-primary px-6 py-3 text-base font-medium text-white shadow-sm transition-all duration-200 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2';
+
 type ServiziEsteticaIntroSectionProps = {
   sectionId?: string;
   className?: string;
   showDiscoverMoreButton?: boolean;
+  /** When set, shows “Listino Prezzi” (download) for visitors. */
+  listinoPrezziUrl?: string | null;
+  /** e.g. `#promozioni` on `/servizi-estetica` — shows “Scopri le Promozioni”. */
+  promozioniHref?: string;
 };
 
 export function ServiziEsteticaIntroSection({
   sectionId = 'servizi-estetica',
   className,
   showDiscoverMoreButton = true,
+  listinoPrezziUrl,
+  promozioniHref,
 }: ServiziEsteticaIntroSectionProps) {
   return (
     <Section id={sectionId} className={cn('bg-muted', className)}>
@@ -38,6 +47,26 @@ export function ServiziEsteticaIntroSection({
             </li>
           ))}
         </ul>
+        {listinoPrezziUrl || promozioniHref ? (
+          <div className="flex flex-wrap justify-center gap-3 pt-1">
+            {listinoPrezziUrl ? (
+              <a
+                href={listinoPrezziUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className={primaryCtaClass}
+              >
+                Listino Prezzi
+              </a>
+            ) : null}
+            {promozioniHref ? (
+              <Link href={promozioniHref} className={primaryCtaClass}>
+                Scopri le Promozioni
+              </Link>
+            ) : null}
+          </div>
+        ) : null}
         <Link
           href="/servizi-estetica"
           className={cn(!showDiscoverMoreButton && 'hidden')}

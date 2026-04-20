@@ -5,7 +5,6 @@ import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ParallaxDivider } from '@/components/ParallaxDivider';
 import { DeviceRentSection } from '@/components/DeviceRentSection';
-import { ProductCard } from '@/components/ProductCard';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { BrandStatsSection } from '@/components/BrandStatsSection';
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
@@ -13,42 +12,8 @@ import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
 import { ContactSection } from '@/components/ContactSection';
 import { Button } from '@/components/shared/Button';
 import { ServiziEsteticaIntroSection } from '@/components/estetica/servizi-estetica-intro-section';
-import { Product, Testimonial } from '@/types';
-
-const featuredProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Kit Laminazione Ciglia',
-    description: 'Kit completo professionale per trattamenti di laminazione ciglia.',
-    price: '€ 129,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Lashes',
-  },
-  {
-    id: '2',
-    name: 'Siero Viso Anti-Age',
-    description: 'Siero concentrato con acido ialuronico e vitamine.',
-    price: '€ 49,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Skincare',
-  },
-  {
-    id: '3',
-    name: 'Set Pennelli Professionali',
-    description: 'Set di 12 pennelli in fibra sintetica di alta qualità.',
-    price: '€ 89,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Tools',
-  },
-  {
-    id: '4',
-    name: 'Crema Corpo Idratante',
-    description: 'Crema ricca e nutriente per tutti i tipi di pelle.',
-    price: '€ 35,00',
-    image: 'https://placehold.co/300x300.png',
-    category: 'Body',
-  },
-];
+import { ProductBrandLines } from '@/components/ProductBrandsSection';
+import { Testimonial } from '@/types';
 
 const testimonials: Testimonial[] = [
   {
@@ -209,26 +174,18 @@ export default function Home() {
 
       {/* Featured Products Section */}
       <Section id="prodotti" className="bg-muted" containerClassName="gap-8">
-        <div className="mb-4 flex w-full flex-col items-center gap-6">
-          <h2 className="heading-brand text-center text-3xl md:text-4xl font-bold tracking-wide">
-            I Nostri Prodotti
-          </h2>
-          <p className="max-w-3xl text-center text-lg text-gray-600 leading-relaxed">
-            Scopri la nostra linea professionale dedicata alla cura e alla bellezza
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          {featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-        <div className="text-center">
-          <Link href="/prodotti">
-            <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
-              Scopri di più
-            </Button>
-          </Link>
-        </div>
+        <ProductBrandLines
+          title="I Nostri Prodotti"
+          footer={
+            <div className="text-center">
+              <Link href="/prodotti">
+                <Button variant="primary" size="lg" className="uppercase tracking-wider font-bold">
+                  Scopri di più
+                </Button>
+              </Link>
+            </div>
+          }
+        />
       </Section>
 
       {/* Reviews Section */}

@@ -5,7 +5,6 @@ import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ParallaxDivider } from '@/components/ParallaxDivider';
 import { DeviceRentSection } from '@/components/DeviceRentSection';
-import { TestimonialCard } from '@/components/TestimonialCard';
 import { BrandStatsSection } from '@/components/BrandStatsSection';
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
 import { ServiceOverviewCard } from '@/components/ServiceOverviewCard';
@@ -13,34 +12,7 @@ import { ContactSection } from '@/components/ContactSection';
 import { Button } from '@/components/shared/Button';
 import { ServiziEsteticaIntroSection } from '@/components/estetica/servizi-estetica-intro-section';
 import { ProductBrandLines } from '@/components/ProductBrandsSection';
-import { Testimonial } from '@/types';
-
-const testimonials: Testimonial[] = [
-  {
-    id: '1',
-    name: 'Maria Rossi',
-    role: 'Estetista Professionista',
-    content: 'Ho completato il corso base e sono rimasta entusiasta della qualità dell\'insegnamento. I docenti sono preparati e il materiale è sempre aggiornato.',
-    image: 'https://placehold.co/100x100.png',
-    rating: 5,
-  },
-  {
-    id: '2',
-    name: 'Giulia Bianchi',
-    role: 'Proprietaria Centro Estetico',
-    content: 'Il master in trattamenti viso mi ha permesso di ampliare l\'offerta del mio centro. Tecniche professionali e supporto continuo anche dopo il corso.',
-    image: 'https://placehold.co/100x100.png',
-    rating: 5,
-  },
-  {
-    id: '3',
-    name: 'Anna Verdi',
-    role: 'Estetista',
-    content: 'Prodotti di altissima qualità. Le mie clienti sono sempre soddisfatte dei risultati dei trattamenti con la linea BeautyLine.',
-    image: 'https://placehold.co/100x100.png',
-    rating: 5,
-  },
-];
+import { ReviewsSection } from '@/components/ReviewsSection';
 
 const FormazioneIcon = () => (
   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,7 +38,7 @@ const ProdottiIcon = () => (
   </svg>
 );
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <Hero
@@ -188,27 +160,11 @@ export default function Home() {
         />
       </Section>
 
-      {/* Reviews Section */}
-      <Section className="bg-secondary text-white" containerClassName="gap-8">
-        <div className="text-center mb-14 flex flex-col items-center gap-4">
-          <h2 className="heading-brand text-3xl md:text-4xl font-bold tracking-wide">
-            Dicono di noi
-          </h2>
-          <p className="text-lg text-gray-200 max-w-3xl mx-auto text-center leading-relaxed">
-            Le opinioni di chi ha scelto BeautyLine per la propria formazione e il proprio lavoro
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-9">
-          {testimonials.map((testimonial) => (
-            <TestimonialCard
-              key={testimonial.id}
-              testimonial={testimonial}
-              variant="dark"
-              className="bg-white/10 border border-white/15 text-white"
-            />
-          ))}
-        </div>
-      </Section>
+      <ReviewsSection
+        variant="dark"
+        title="Dicono di noi"
+        description="Le opinioni di chi ha scelto BeautyLine per la propria formazione e il proprio lavoro"
+      />
 
       <ContactSection
         className="bg-primary/10"

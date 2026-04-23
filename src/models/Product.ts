@@ -8,6 +8,12 @@ export interface IColorOption {
   imageUrl?: string;
 }
 
+export interface IProductVariant {
+  cost: number;
+  unit: string;
+  value: number;
+}
+
 export interface IProduct extends Document {
   brand: string;
   type: string;
@@ -15,6 +21,7 @@ export interface IProduct extends Document {
   description: string;
   media: string[];
   cost: number;
+  variants: IProductVariant[];
   availableColors: IColorOption[];
   deletedAt?: Date | null;
   createdAt: Date;
@@ -32,6 +39,15 @@ const ColorOptionSchema = new Schema<IColorOption>(
   { _id: false }
 );
 
+const ProductVariantSchema = new Schema<IProductVariant>(
+  {
+    cost: { type: Number, required: true, min: 0 },
+    unit: { type: String, required: true, trim: true },
+    value: { type: Number, required: true, min: 0 },
+  },
+  { _id: false }
+);
+
 const ProductSchema = new Schema<IProduct>(
   {
     brand: { type: String, required: true, trim: true },
@@ -40,6 +56,7 @@ const ProductSchema = new Schema<IProduct>(
     description: { type: String, required: true },
     media: [{ type: String }],
     cost: { type: Number, required: true, min: 0 },
+    variants: { type: [ProductVariantSchema], default: [] },
     availableColors: [ColorOptionSchema],
   },
   { timestamps: true }

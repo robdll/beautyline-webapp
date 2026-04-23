@@ -72,9 +72,6 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({
           <p className={cn('font-semibold', isDark ? 'text-white' : 'text-secondary')}>
             {testimonial.name}
           </p>
-          {testimonial.role && (
-            <p className={cn('text-sm', isDark ? 'text-gray-300' : 'text-gray-500')}>{testimonial.role}</p>
-          )}
         </div>
       </div>
     </div>

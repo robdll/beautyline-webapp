@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Testimonial } from '@/types';
+import { Testimonial } from '@/types/testimonial';
 import { cn } from '@/lib/utils';
 
 const TRUNCATE_LENGTH = 200;

@@ -7,21 +7,16 @@ import { Logo } from '../Logo';
 import { Button } from '../Button';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
+import type { NavigationItem } from '@/types/navigation';
 
-const serviceLinks = [
+const serviceLinks: NavigationItem[] = [
   { label: 'Formazione', href: '/corsi' },
   { label: 'Servizi Estetica', href: '/servizi-estetica' },
   { label: 'Attrezzature', href: '/attrezzature' },
   { label: 'Prodotti', href: '/prodotti' },
 ];
 
-interface NavItem {
-  label: string;
-  href: string;
-  children?: { label: string; href: string }[];
-}
-
-const navigationItems: NavItem[] = [
+const navigationItems: NavigationItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Chi Siamo', href: '/chi-siamo' },
   { label: 'I Nostri Servizi', href: '/#servizi', children: serviceLinks },

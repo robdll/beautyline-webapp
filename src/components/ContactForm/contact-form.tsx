@@ -5,14 +5,7 @@ import Link from 'next/link';
 
 import { Button } from '@/components/shared/Button';
 import { Alert } from '@/components/shared/Alert';
-
-type ContactFormData = {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-  privacyAccepted: boolean;
-};
+import type { ContactFormData } from '@/types/contact';
 
 const INITIAL_FORM_DATA: ContactFormData = {
   name: '',

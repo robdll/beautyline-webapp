@@ -6,18 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { PRODUCT_BRANDS } from '@/lib/product-brands';
-
-interface ColorOption {
-  name: string;
-  hex: string;
-  imageUrl: string;
-}
-
-interface VariantOption {
-  cost: string;
-  unit: string;
-  value: string;
-}
+import type { ColorOption, VariantOption } from '@/types/product';
 
 const inputClass =
   'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm';

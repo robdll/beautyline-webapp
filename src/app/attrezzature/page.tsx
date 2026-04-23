@@ -12,6 +12,7 @@ import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text
 import { getEquipmentTypeLabel, parseEquipmentType } from '@/lib/equipment-types';
 import EquipmentModel from '@/models/Equipment';
 import { cn } from '@/lib/utils';
+import type { EquipmentItem } from '@/types/equipment';
 
 export const metadata: Metadata = {
   title: 'Vendita e Noleggio Attrezzature',
@@ -19,20 +20,6 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
-
-interface EquipmentItem {
-  id: string;
-  name: string;
-  description: string;
-  type: string;
-  /** Slug categoria per URL dettaglio; assente se il tipo in DB non è tra le 4 categorie. */
-  detailTypeSlug: string | null;
-  image: string;
-  rentOnly: boolean;
-  rentCostPerDay: number;
-  rentCostPerMonth: number;
-  sellingCost: number;
-}
 
 async function getEquipment(): Promise<EquipmentItem[]> {
   try {

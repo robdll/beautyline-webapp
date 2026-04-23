@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Course } from '@/types';
+import { Course } from '@/types/course';
 import { Button } from '@/components/shared/Button';
 import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { cn } from '@/lib/utils';

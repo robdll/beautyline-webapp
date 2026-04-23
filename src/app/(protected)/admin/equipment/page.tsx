@@ -4,21 +4,10 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { getEquipmentTypeLabel } from '@/lib/equipment-types';
-
-interface EquipmentItem {
-  _id: string;
-  type: string;
-  name: string;
-  description: string;
-  media: string[];
-  rentOnly: boolean;
-  rentCostPerDay: number;
-  rentCostPerMonth: number;
-  sellingCost: number;
-}
+import type { AdminEquipmentItem } from '@/types/equipment';
 
 export default function AdminEquipmentPage() {
-  const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
+  const [equipment, setEquipment] = useState<AdminEquipmentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 

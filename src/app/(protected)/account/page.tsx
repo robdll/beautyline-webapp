@@ -4,18 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Section } from '@/components/Section';
 import { Button } from '@/components/shared/Button';
-
-interface ProfileForm {
-  firstName: string;
-  lastName: string;
-  address: {
-    street: string;
-    streetNumber: string;
-    postalCode: string;
-    city: string;
-    province: string;
-  };
-}
+import type { ProfileForm } from '@/types/profile';
 
 export default function AccountPage() {
   const { user, refreshUser } = useAuth();

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { PROMO_SERVICE_TYPE, SERVICE_CATEGORIES } from '@/lib/service-categories';
+import type { ServiceForm } from '@/types/service';
 
 function toDateInputValue(d: unknown): string {
   if (d == null || d === '') return '';
@@ -15,19 +16,6 @@ function toDateInputValue(d: unknown): string {
   const m = String(x.getMonth() + 1).padStart(2, '0');
   const day = String(x.getDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
-}
-
-interface ServiceForm {
-  _id: string;
-  isPromo: boolean;
-  promoStartsAt: string;
-  promoEndsAt: string;
-  type: string;
-  name: string;
-  description: string;
-  media: string[];
-  cost: number | string;
-  priceFrom: boolean;
 }
 
 export default function AdminServicesEditPage() {

@@ -14,6 +14,7 @@ import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text
 import { cn } from '@/lib/utils';
 import { isPromoVisibleNow, SERVICE_CATEGORIES, serviceCategoryAnchorId } from '@/lib/service-categories';
 import { getListinoPrezziUrl } from '@/lib/estetica-public-settings-store';
+import type { ServiceItem } from '@/types/service';
 
 export const metadata: Metadata = {
   title: 'Servizi Estetica',
@@ -21,19 +22,6 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = 'force-dynamic';
-
-interface ServiceItem {
-  id: string;
-  name: string;
-  description: string;
-  type: string;
-  image: string;
-  cost: number;
-  priceFrom?: boolean;
-  isPromo?: boolean;
-  promoStartsAt?: Date | string | null;
-  promoEndsAt?: Date | string | null;
-}
 
 async function getServices(): Promise<ServiceItem[]> {
   try {

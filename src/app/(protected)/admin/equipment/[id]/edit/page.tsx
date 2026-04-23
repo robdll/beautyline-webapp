@@ -6,15 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { EQUIPMENT_TYPES, EQUIPMENT_TYPE_LABELS, parseEquipmentType } from '@/lib/equipment-types';
-
-interface EquipmentData {
-  _id: string;
-  type: string;
-  name: string;
-  description: string;
-  media: string[];
-  technicalSheet?: string;
-}
+import type { EquipmentData } from '@/types/equipment';
 
 export default function AdminEquipmentEditPage() {
   const router = useRouter();

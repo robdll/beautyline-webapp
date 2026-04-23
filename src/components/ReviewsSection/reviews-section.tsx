@@ -4,7 +4,7 @@ import { Section } from '@/components/Section';
 import { TestimonialCard } from '@/components/TestimonialCard';
 import { getGooglePlaceReviews } from '@/lib/google-reviews';
 import { cn } from '@/lib/utils';
-import { Testimonial } from '@/types';
+import { Testimonial } from '@/types/testimonial';
 
 interface ReviewsSectionProps {
   id?: string;

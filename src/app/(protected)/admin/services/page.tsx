@@ -4,19 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/shared/Button';
 import { isRecognizedServiceType, PROMO_SERVICE_TYPE } from '@/lib/service-categories';
-
-interface Service {
-  _id: string;
-  type: string;
-  name: string;
-  description: string;
-  cost: number;
-  media?: string[];
-  isPromo?: boolean;
-}
+import type { AdminService } from '@/types/service';
 
 export default function AdminServicesPage() {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<AdminService[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [listinoPrezziUrl, setListinoPrezziUrl] = useState<string | null>(null);

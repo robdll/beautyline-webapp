@@ -6,28 +6,16 @@ import Image from 'next/image';
 import { Button } from '@/components/shared/Button';
 import { getCourseTypeLabel } from '@/lib/course-types';
 import { formatDateRange } from '@/lib/course-occurrences';
+import type { AdminCourse, CourseOccurrence } from '@/types/course';
 
-interface Course {
-  _id: string;
-  type: string;
-  name: string;
-  description: string;
-  cost: number;
-  occurrences?: { startDate: string; endDate: string; soldOut?: boolean }[];
-  orario?: string;
-  media?: string[];
-}
-
-function getAllDates(occurrences: { startDate: string; endDate: string; soldOut?: boolean }[] | undefined): string[] {
+function getAllDates(occurrences: CourseOccurrence[] | undefined): string[] {
   if (!occurrences || occurrences.length === 0) return ['Da Definire'];
   return [...occurrences]
     .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
     .map((occ) => `${formatDateRange(occ.startDate, occ.endDate)}${occ.soldOut ? ' (sold-out)' : ''}`);
 }
 
-function getNextDateTimestamp(
-  occurrences: { startDate: string; endDate: string; soldOut?: boolean }[] | undefined
-): number {
+function getNextDateTimestamp(occurrences: CourseOccurrence[] | undefined): number {
   if (!occurrences || occurrences.length === 0) return Number.POSITIVE_INFINITY;
   const now = Date.now();
   const sorted = [...occurrences].sort(
@@ -37,12 +25,12 @@ function getNextDateTimestamp(
   return new Date(next.startDate).getTime();
 }
 
-function sortByNextDate(courses: Course[]): Course[] {
+function sortByNextDate(courses: AdminCourse[]): AdminCourse[] {
   return [...courses].sort((a, b) => getNextDateTimestamp(a.occurrences) - getNextDateTimestamp(b.occurrences));
 }
 
 export default function AdminCoursesPage() {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<AdminCourse[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 

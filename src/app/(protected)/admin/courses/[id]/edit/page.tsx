@@ -7,22 +7,11 @@ import { Button } from '@/components/shared/Button';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { parseCourseType } from '@/lib/course-types';
 import { formatDateRange } from '@/lib/course-occurrences';
+import type { AdminCourse } from '@/types/course';
 
 const inputClass =
   'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
-
-interface Course {
-  _id: string;
-  type: string;
-  name: string;
-  description: string;
-  occurrences?: { startDate: string; endDate: string; soldOut?: boolean }[];
-  programSections?: string[];
-  orario?: string;
-  cost: number;
-  media?: string[];
-}
 
 export default function AdminCoursesEditPage() {
   const router = useRouter();
@@ -47,7 +36,7 @@ export default function AdminCoursesEditPage() {
       try {
         const res = await fetch(`/api/admin/courses/${id}`);
         if (res.ok) {
-          const course: Course = await res.json();
+          const course: AdminCourse = await res.json();
           setForm({
             type: parseCourseType(course.type) ?? '',
             name: course.name || '',

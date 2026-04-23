@@ -5,25 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
 import { cn } from '@/lib/utils';
-
-interface ProductVariant {
-  cost: number;
-  unit: string;
-  value: number;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  brand: string;
-  type: string;
-  cost: number;
-  variants?: ProductVariant[];
-}
+import type { AdminProduct } from '@/types/product';
 
 export default function AdminProductsPage() {
   const router = useRouter();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<AdminProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 

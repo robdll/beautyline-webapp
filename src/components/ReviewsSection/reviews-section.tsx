@@ -6,36 +6,6 @@ import { getGooglePlaceReviews } from '@/lib/google-reviews';
 import { cn } from '@/lib/utils';
 import { Testimonial } from '@/types';
 
-const FALLBACK_TESTIMONIALS: Testimonial[] = [
-  {
-    id: '1',
-    name: 'Maria Rossi',
-    role: 'Estetista Professionista',
-    content:
-      "Ho completato il corso base e sono rimasta entusiasta della qualità dell'insegnamento. I docenti sono preparati e il materiale è sempre aggiornato.",
-    image: 'https://placehold.co/100x100.png',
-    rating: 5,
-  },
-  {
-    id: '2',
-    name: 'Giulia Bianchi',
-    role: 'Proprietaria Centro Estetico',
-    content:
-      "Il master in trattamenti viso mi ha permesso di ampliare l'offerta del mio centro. Tecniche professionali e supporto continuo anche dopo il corso.",
-    image: 'https://placehold.co/100x100.png',
-    rating: 5,
-  },
-  {
-    id: '3',
-    name: 'Anna Verdi',
-    role: 'Estetista',
-    content:
-      'Formazione eccellente e ambiente professionale. Consiglio BeautyLine a chiunque voglia intraprendere una carriera nel settore estetico.',
-    image: 'https://placehold.co/100x100.png',
-    rating: 5,
-  },
-];
-
 interface ReviewsSectionProps {
   id?: string;
   className?: string;
@@ -58,16 +28,15 @@ export async function ReviewsSection({
   const googleReviewsData = await getGooglePlaceReviews(limit);
   const googleReviews = googleReviewsData.reviews;
 
-  const testimonials: Testimonial[] =
-    googleReviews.length > 0
-      ? googleReviews.map((review, index) => ({
-          id: `google-${index + 1}`,
-          name: review.authorName || 'Cliente verificato',
-          content: review.text || 'Recensione disponibile su Google.',
-          image: review.photoUri || 'https://placehold.co/100x100.png',
-          rating: Math.max(1, Math.min(5, Math.round(review.rating ?? 5))),
-        }))
-      : FALLBACK_TESTIMONIALS;
+  if (googleReviews.length === 0) return null;
+
+  const testimonials: Testimonial[] = googleReviews.map((review, index) => ({
+    id: `google-${index + 1}`,
+    name: review.authorName || 'Cliente verificato',
+    content: review.text || 'Recensione disponibile su Google.',
+    image: review.photoUri || 'https://placehold.co/100x100.png',
+    rating: Math.max(1, Math.min(5, Math.round(review.rating ?? 5))),
+  }));
 
   const isDark = variant === 'dark';
 

@@ -13,6 +13,18 @@ interface ColorOption {
   imageUrl: string;
 }
 
+interface VariantOption {
+  cost: string;
+  unit: string;
+  value: string;
+}
+
+interface VariantPayload {
+  cost?: number | string;
+  unit?: string;
+  value?: number | string;
+}
+
 const inputClass =
   'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
@@ -31,6 +43,8 @@ export default function AdminProductsEditPage() {
   const [description, setDescription] = useState('');
   const [media, setMedia] = useState<string[]>([]);
   const [cost, setCost] = useState('');
+  const [hasVariants, setHasVariants] = useState(false);
+  const [variants, setVariants] = useState<VariantOption[]>([]);
   const [availableColors, setAvailableColors] = useState<ColorOption[]>([]);
   const selectedBrand = PRODUCT_BRANDS.find((b) => b.title === brand);
   const typeOptions = selectedBrand?.subcategories ?? [];
@@ -59,6 +73,15 @@ export default function AdminProductsEditPage() {
         setDescription(data.description || '');
         setMedia(Array.isArray(data.media) ? data.media : []);
         setCost(data.cost != null ? String(data.cost) : '');
+        const loadedVariants: VariantOption[] = Array.isArray(data.variants)
+          ? data.variants.map((v: VariantPayload) => ({
+              cost: v.cost != null ? String(v.cost) : '',
+              unit: typeof v.unit === 'string' ? v.unit : '',
+              value: v.value != null ? String(v.value) : '',
+            }))
+          : [];
+        setVariants(loadedVariants);
+        setHasVariants(loadedVariants.length > 0);
         setAvailableColors(
           Array.isArray(data.availableColors)
             ? data.availableColors.map((c: ColorOption) => ({
@@ -77,6 +100,25 @@ export default function AdminProductsEditPage() {
     };
     fetchProduct();
   }, [id, router]);
+
+  const addVariant = () => {
+    setVariants((prev) => [...prev, { cost: '', unit: 'ml', value: '' }]);
+  };
+
+  const removeVariant = (index: number) => {
+    setVariants((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const updateVariant = (index: number, field: keyof VariantOption, value: string) => {
+    setVariants((prev) => prev.map((v, i) => (i === index ? { ...v, [field]: value } : v)));
+  };
+
+  const toggleHasVariants = (checked: boolean) => {
+    setHasVariants(checked);
+    if (checked && variants.length === 0) {
+      setVariants([{ cost: '', unit: 'ml', value: '' }]);
+    }
+  };
 
   const addColor = () => {
     setAvailableColors((prev) => [...prev, { name: '', hex: '#000000', imageUrl: '' }]);
@@ -97,11 +139,36 @@ export default function AdminProductsEditPage() {
     setError(null);
     setSubmitting(true);
 
-    const numCost = parseFloat(cost);
-    if (isNaN(numCost) || numCost < 0) {
-      setError('Il costo deve essere un numero non negativo.');
-      setSubmitting(false);
-      return;
+    let normalizedVariants: { cost: number; unit: string; value: number }[] = [];
+    let numCost = 0;
+
+    if (hasVariants) {
+      const parsed: { cost: number; unit: string; value: number }[] = [];
+      for (const v of variants) {
+        const c = parseFloat(v.cost);
+        const val = parseFloat(v.value);
+        const unit = v.unit.trim();
+        if (!unit || isNaN(c) || c < 0 || isNaN(val) || val < 0) {
+          setError('Compila correttamente tutte le varianti (costo, unità e valore).');
+          setSubmitting(false);
+          return;
+        }
+        parsed.push({ cost: c, unit, value: val });
+      }
+      if (parsed.length === 0) {
+        setError('Aggiungi almeno una variante o disattiva il flag "Prodotto con varianti".');
+        setSubmitting(false);
+        return;
+      }
+      normalizedVariants = parsed;
+      numCost = parsed[0].cost;
+    } else {
+      numCost = parseFloat(cost);
+      if (isNaN(numCost) || numCost < 0) {
+        setError('Il costo deve essere un numero non negativo.');
+        setSubmitting(false);
+        return;
+      }
     }
 
     try {
@@ -115,6 +182,7 @@ export default function AdminProductsEditPage() {
           description: description.trim(),
           media,
           cost: numCost,
+          variants: normalizedVariants,
           availableColors: availableColors
             .filter((c) => c.name.trim() && c.hex.trim())
             .map((c) => ({
@@ -257,20 +325,110 @@ export default function AdminProductsEditPage() {
           </div>
 
           <div>
-            <label htmlFor="cost" className={labelClass}>
-              Costo (€)
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={hasVariants}
+                onChange={(e) => toggleHasVariants(e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+              />
+              Prodotto con varianti
             </label>
-            <input
-              id="cost"
-              type="number"
-              step="0.01"
-              min="0"
-              value={cost}
-              onChange={(e) => setCost(e.target.value)}
-              className={inputClass}
-              required
-            />
           </div>
+
+          {!hasVariants ? (
+            <div>
+              <label htmlFor="cost" className={labelClass}>
+                Costo (€)
+              </label>
+              <input
+                id="cost"
+                type="number"
+                step="0.01"
+                min="0"
+                value={cost}
+                onChange={(e) => setCost(e.target.value)}
+                className={inputClass}
+                required
+              />
+            </div>
+          ) : (
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className={labelClass}>Varianti</label>
+                <button
+                  type="button"
+                  onClick={addVariant}
+                  className="text-sm text-primary hover:text-primary/80 font-medium"
+                >
+                  + Aggiungi Variante
+                </button>
+              </div>
+              <p className="mb-2 text-xs text-gray-500">
+                Inserisci una riga per ogni formato disponibile (es. 50 ml, 100 ml). Il costo mostrato in catalogo
+                sarà quello della prima variante.
+              </p>
+              {variants.length === 0 ? (
+                <p className="text-sm text-gray-500 italic">Nessuna variante. Aggiungine almeno una.</p>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  {variants.map((variant, index) => (
+                    <fieldset
+                      key={index}
+                      className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg sm:flex-row sm:flex-wrap sm:items-end"
+                    >
+                      <legend className="sr-only">Variante {index + 1}</legend>
+                      <div className="flex-1 min-w-32">
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Costo (€)</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={variant.cost}
+                          onChange={(e) => updateVariant(index, 'cost', e.target.value)}
+                          className={inputClass}
+                          required
+                        />
+                      </div>
+                      <div className="flex-1 min-w-24 sm:max-w-32">
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Unità</label>
+                        <input
+                          type="text"
+                          placeholder="ml, cl, g..."
+                          value={variant.unit}
+                          onChange={(e) => updateVariant(index, 'unit', e.target.value)}
+                          className={inputClass}
+                          required
+                        />
+                      </div>
+                      <div className="flex-1 min-w-24 sm:max-w-32">
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Valore</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={variant.value}
+                          onChange={(e) => updateVariant(index, 'value', e.target.value)}
+                          className={inputClass}
+                          required
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeVariant(index)}
+                        className="text-red-500 hover:text-red-600 p-1 sm:ml-auto"
+                        aria-label="Rimuovi variante"
+                      >
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </fieldset>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           <div>
             <div className="flex items-center justify-between mb-2">

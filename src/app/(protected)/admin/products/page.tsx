@@ -6,12 +6,19 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/shared/Button';
 import { cn } from '@/lib/utils';
 
+interface ProductVariant {
+  cost: number;
+  unit: string;
+  value: number;
+}
+
 interface Product {
   _id: string;
   name: string;
   brand: string;
   type: string;
   cost: number;
+  variants?: ProductVariant[];
 }
 
 export default function AdminProductsPage() {
@@ -102,13 +109,29 @@ export default function AdminProductsPage() {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {products.map((product) => {
+                  const variantsCount = product.variants?.length ?? 0;
+                  const hasVariants = variantsCount > 0;
+                  return (
                   <tr key={product._id} className="border-b border-gray-100 hover:bg-gray-50/50">
                     <td className="px-6 py-4 text-sm font-medium text-secondary">{product.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{product.brand}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{product.type}</td>
-                    <td className="px-6 py-4 text-sm text-primary font-medium">
-                      € {product.cost.toFixed(2)}
+                    <td className="px-6 py-4 text-sm">
+                      <div className="flex flex-col items-start gap-1">
+                        <span className="text-primary font-medium">€ {product.cost.toFixed(2)}</span>
+                        {hasVariants && (
+                          <span
+                            className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
+                            title={`Prodotto con ${variantsCount} ${variantsCount === 1 ? 'variante' : 'varianti'}. Il costo mostrato è quello della prima.`}
+                          >
+                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            {variantsCount} {variantsCount === 1 ? 'variante' : 'varianti'}
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
@@ -142,7 +165,8 @@ export default function AdminProductsPage() {
                       </div>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>

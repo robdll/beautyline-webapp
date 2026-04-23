@@ -80,6 +80,7 @@ export async function GET(request: NextRequest) {
         brand: doc.brand,
         type: doc.type,
         availableColors: doc.availableColors,
+        variants: doc.variants,
       })
     );
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/admin';
 import { normalizeAvailableColors, normalizeMediaUrls } from '@/lib/product-colors';
+import { normalizeProductVariants } from '@/lib/product-variants';
 import Product from '@/models/Product';
 
 export async function GET() {
@@ -28,18 +29,32 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { brand, type, name, description, media, cost, availableColors } = body;
+    const { brand, type, name, description, media, cost, availableColors, variants } = body;
 
-    if (!brand || !type || !name || !description || cost === undefined) {
+    if (!brand || !type || !name || !description) {
       return NextResponse.json(
-        { error: 'Campi obbligatori mancanti: brand, type, name, description, cost.' },
+        { error: 'Campi obbligatori mancanti: brand, type, name, description.' },
         { status: 400 }
       );
     }
 
-    const numCost = Number(cost);
-    if (isNaN(numCost) || numCost < 0) {
-      return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
+    const normalizedVariants = normalizeProductVariants(variants);
+    const hasVariants = normalizedVariants.length > 0;
+
+    let numCost: number;
+    if (hasVariants) {
+      numCost = normalizedVariants[0].cost;
+    } else {
+      if (cost === undefined) {
+        return NextResponse.json(
+          { error: 'Il costo è obbligatorio quando il prodotto non ha varianti.' },
+          { status: 400 }
+        );
+      }
+      numCost = Number(cost);
+      if (isNaN(numCost) || numCost < 0) {
+        return NextResponse.json({ error: 'Il costo deve essere un numero non negativo.' }, { status: 400 });
+      }
     }
 
     const mediaUrls = normalizeMediaUrls(media);
@@ -53,6 +68,7 @@ export async function POST(request: NextRequest) {
       description: String(description),
       media: mediaUrls,
       cost: numCost,
+      variants: normalizedVariants,
       availableColors: colors,
     });
 

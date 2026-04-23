@@ -45,25 +45,6 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
 
   return (
     <div className="w-full flex flex-col gap-8">
-      <div className="flex items-center justify-end gap-3">
-        <button
-          type="button"
-          onClick={() => scrollByCards('prev')}
-          className="h-10 w-10 rounded-full border border-gray-300 text-secondary hover:border-primary hover:text-primary transition-colors"
-          aria-label="Corsi precedenti"
-        >
-          <span aria-hidden="true">←</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollByCards('next')}
-          className="h-10 w-10 rounded-full border border-gray-300 text-secondary hover:border-primary hover:text-primary transition-colors"
-          aria-label="Prossimi corsi"
-        >
-          <span aria-hidden="true">→</span>
-        </button>
-      </div>
-
       <div
         ref={containerRef}
         className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -134,6 +115,25 @@ export function CourseCarousel({ courses }: CourseCarouselProps) {
           </article>
         );
         })}
+      </div>
+
+      <div className="flex items-center justify-center gap-3">
+        <button
+          type="button"
+          onClick={() => scrollByCards('prev')}
+          className="h-10 w-10 rounded-full border border-gray-300 text-secondary hover:border-primary hover:text-primary transition-colors"
+          aria-label="Corsi precedenti"
+        >
+          <span aria-hidden="true">←</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollByCards('next')}
+          className="h-10 w-10 rounded-full border border-gray-300 text-secondary hover:border-primary hover:text-primary transition-colors"
+          aria-label="Prossimi corsi"
+        >
+          <span aria-hidden="true">→</span>
+        </button>
       </div>
     </div>
   );

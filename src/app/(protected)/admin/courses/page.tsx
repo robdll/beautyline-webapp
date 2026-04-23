@@ -85,11 +85,18 @@ export default function AdminCoursesPage() {
         <h1 className="heading-brand text-2xl font-bold uppercase tracking-wide">
           Corsi
         </h1>
-        <Link href="/admin/courses/new">
-          <Button variant="primary" size="md">
-            Nuovo Corso
-          </Button>
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/admin/courses/posters">
+            <Button variant="secondary" size="md">
+              Locandine
+            </Button>
+          </Link>
+          <Link href="/admin/courses/new">
+            <Button variant="primary" size="md">
+              Nuovo Corso
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">

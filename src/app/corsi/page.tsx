@@ -9,10 +9,13 @@ import { AcademicPathsSection } from '@/components/AcademicPathsSection/academic
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
 import { CORSI_UNGHIE_OCCHI_CARDS } from '@/lib/constants';
 import { CourseCarousel, UpcomingCourseItem } from '@/components/CourseCarousel';
+import { CoursePostersModalGrid, type CoursePosterItem } from '@/components/CoursePostersModalGrid';
 import type { CourseType } from '@/lib/course-types';
 import { connectDB } from '@/lib/mongodb';
 import CourseModel from '@/models/Course';
+import CoursePosterModel from '@/models/CoursePoster';
 import { formatDateRange } from '@/lib/course-occurrences';
+import { formatPosterPeriod } from '@/types/course-poster';
 
 export const metadata: Metadata = {
   title: 'Corsi di Estetica',
@@ -81,8 +84,37 @@ async function getUpcomingCourses(): Promise<UpcomingCourseItem[]> {
   }
 }
 
+async function getCoursePosters(): Promise<CoursePosterItem[]> {
+  try {
+    await connectDB();
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth() + 1;
+
+    const docs = await CoursePosterModel.find().sort({ year: 1, month: 1 }).lean();
+
+    return docs
+      .filter((doc) => {
+        if (typeof doc.year !== 'number' || typeof doc.month !== 'number') return false;
+        if (doc.year > currentYear) return true;
+        if (doc.year < currentYear) return false;
+        return doc.month >= currentMonth;
+      })
+      .map((doc) => ({
+        id: String(doc._id),
+        image: doc.image,
+        displayTitle: formatPosterPeriod(doc.month, doc.year),
+      }));
+  } catch {
+    return [];
+  }
+}
+
 export default async function CorsiPage() {
-  const upcomingCourses = await getUpcomingCourses();
+  const [upcomingCourses, coursePosters] = await Promise.all([
+    getUpcomingCourses(),
+    getCoursePosters(),
+  ]);
 
   return (
     <>
@@ -123,10 +155,10 @@ export default async function CorsiPage() {
         ctaHref="https://percorsomaster.it"
       />
 
-      <Section id="calendario-corsi" className="bg-muted min-h-0">
+      <Section id="prossimi-corsi" className="bg-muted min-h-0 scroll-mt-24">
         <div className="flex flex-col gap-10">
           <div className="text-center flex flex-col items-center gap-4">
-            <h2 className="heading-brand text-3xl md:text-4xl font-bold">Calendario Corsi</h2>
+            <h2 className="heading-brand text-3xl md:text-4xl font-bold">I Prossimi Corsi</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Scopri i prossimi corsi disponibili, ordinati dalla data più vicina.
             </p>
@@ -140,6 +172,23 @@ export default async function CorsiPage() {
             </div>
           )}
         </div>
+      </Section>
+
+      <Section id="calendario-corsi" className="min-h-0 scroll-mt-24" containerClassName="gap-8 md:gap-10">
+        <div className="text-center flex flex-col items-center gap-4">
+          <h2 className="heading-brand text-3xl md:text-4xl font-bold">Calendario Corsi</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Sfoglia le locandine dei corsi mese per mese.
+          </p>
+        </div>
+
+        {coursePosters.length > 0 ? (
+          <CoursePostersModalGrid posters={coursePosters} />
+        ) : (
+          <p className="mx-auto max-w-lg text-center text-sm text-gray-600">
+            Nessuna locandina disponibile al momento. Torna a trovarci presto!
+          </p>
+        )}
       </Section>
 
       <ContactSection

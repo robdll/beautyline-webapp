@@ -18,7 +18,10 @@ function isRemoteUrl(src: string): boolean {
 export function ProductDetailView({ product }: ProductDetailViewProps) {
   const defaultImage = product.image;
   const colors = product.availableColors;
+  const variants = product.variants;
+  const hasVariants = variants.length > 0;
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeVariantIndex, setActiveVariantIndex] = useState<number>(0);
 
   const displaySrc = useMemo(() => {
     if (activeIndex == null || !colors[activeIndex]) return defaultImage;
@@ -27,6 +30,10 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
   }, [activeIndex, colors, defaultImage]);
 
   const isRemote = isRemoteUrl(displaySrc);
+
+  const displayPrice = hasVariants
+    ? variants[activeVariantIndex]?.price ?? product.price
+    : product.price;
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-10 md:px-6 md:py-14">
@@ -96,16 +103,41 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
           <h1 className="heading-brand text-3xl font-bold text-balance md:text-4xl">{product.name}</h1>
         </header>
 
-        <dl className="flex flex-col gap-4 text-sm text-gray-600">
+        <dl className="flex flex-col gap-6 text-sm text-gray-600">
           <div>
-            <dt className="font-medium text-gray-700">Descrizione</dt>
-            <dd className="mt-1 whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
+            <dt className="text-xl font-bold text-gray-900 md:text-2xl">Descrizione</dt>
+            <dd className="mt-2 whitespace-pre-wrap leading-relaxed text-gray-700 md:text-base">
               {product.description}
             </dd>
           </div>
+          {hasVariants && (
+            <div>
+              <dt className="text-xl font-bold text-gray-900 md:text-2xl">Quantità</dt>
+              <dd className="mt-2 flex flex-col gap-2">
+                <label
+                  htmlFor="product-variant-select"
+                  className="text-sm text-gray-700 md:text-base"
+                >
+                  Seleziona la variante del prodotto
+                </label>
+                <select
+                  id="product-variant-select"
+                  value={activeVariantIndex}
+                  onChange={(e) => setActiveVariantIndex(Number(e.target.value))}
+                  className="w-full max-w-xs rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 shadow-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                >
+                  {variants.map((variant, index) => (
+                    <option key={`${variant.unit}-${variant.value}-${index}`} value={index}>
+                      {variant.label}
+                    </option>
+                  ))}
+                </select>
+              </dd>
+            </div>
+          )}
           <div>
-            <dt className="font-medium text-gray-700">Prezzo</dt>
-            <dd className="text-lg font-bold text-primary">{product.price}</dd>
+            <dt className="text-xl font-bold text-gray-900 md:text-2xl">Prezzo</dt>
+            <dd className="mt-2 text-2xl font-extrabold text-primary md:text-3xl">{displayPrice}</dd>
           </div>
         </dl>
 

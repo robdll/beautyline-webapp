@@ -34,6 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       brand: doc.brand,
       type: doc.type,
       availableColors: doc.availableColors,
+      variants: doc.variants,
     });
     const description =
       p.description.length > 155 ? `${p.description.slice(0, 152)}…` : p.description;
@@ -65,6 +66,7 @@ export default async function ProdottoDetailPage({ params }: PageProps) {
       brand: doc.brand,
       type: doc.type,
       availableColors: doc.availableColors,
+      variants: doc.variants,
     });
 
     return (

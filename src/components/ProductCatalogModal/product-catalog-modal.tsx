@@ -49,9 +49,10 @@ function ProductThumb({ product }: { product: PublicProductJson }) {
     <Image
       src={src}
       alt=""
-      fill
-      className="object-cover"
-      sizes="144px"
+      width={800}
+      height={800}
+      className="h-16 w-auto max-h-16 max-w-48 rounded-lg bg-muted object-contain md:h-20 md:max-h-20 md:max-w-56"
+      sizes="(max-width: 768px) 224px, 280px"
       unoptimized={isRemote}
       onError={() => setSrc('https://placehold.co/300x300.png')}
     />
@@ -359,7 +360,7 @@ function ProductCatalogModalInner({ disabledCategoryKeys = [] }: ProductCatalogM
                   <table className="w-full min-w-[320px] text-left text-sm">
                     <thead className="bg-gray-50 text-gray-700">
                       <tr>
-                        <th className="w-36 px-3 py-3 font-semibold md:w-44">Immagine</th>
+                        <th className="px-3 py-3 font-semibold text-center">Immagine</th>
                         <th className="px-3 py-3 font-semibold">Nome</th>
                         <th className="hidden px-3 py-3 font-semibold sm:table-cell">Linea</th>
                         <th className="hidden px-3 py-3 font-semibold md:table-cell">Sottocategoria</th>
@@ -374,7 +375,7 @@ function ProductCatalogModalInner({ disabledCategoryKeys = [] }: ProductCatalogM
                           onClick={() => openProductPage(p)}
                         >
                           <td className="p-3 align-middle">
-                            <div className="relative h-16 w-28 overflow-hidden rounded-lg bg-muted md:h-20 md:w-36">
+                            <div className="flex h-16 items-center justify-center md:h-20">
                               <ProductThumb product={p} />
                             </div>
                           </td>

@@ -32,6 +32,9 @@ export const PRODUCT_BRANDS: ProductBrand[] = [
       { id: 'acrygel', title: 'Acrygel' },
       { id: 'nail-art', title: 'Nail Art' },
       { id: 'rubber-fiber-base', title: 'Rubber & Fiber Base' },
+      { id: 'top', title: 'Top' },
+      { id: 'liquidi', title: 'Liquidi' },
+      { id: 'apparecchiatura-strumenti', title: 'Apparecchiatura & Strumenti' },
     ],
   },
   {

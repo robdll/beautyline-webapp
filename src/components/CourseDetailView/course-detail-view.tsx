@@ -7,7 +7,7 @@ import { getCourseTypeLabel } from '@/lib/course-types';
 import { whatsappCorsoUrl } from '@/lib/contact';
 import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import type { PublicCourseJson } from '@/lib/public-course';
-import { cn } from '@/lib/utils';
+import { CourseRequestInfoLink } from './course-request-info-link';
 
 const COURSE_IMAGE_FALLBACK = '/images/course-placeholder.svg';
 
@@ -169,19 +169,9 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
         </section>
 
         <div className="pt-2">
-          <a
-            href={whatsappCorsoUrl(displayPublicTitle(course.name))}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              'inline-flex items-center justify-center font-medium cursor-pointer transition-all duration-200',
-              'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary',
-              'bg-primary text-white hover:bg-primary/90 rounded-[40px]',
-              'px-8 py-4 text-lg uppercase tracking-wider font-bold',
-            )}
-          >
+          <CourseRequestInfoLink href={whatsappCorsoUrl(displayPublicTitle(course.name))}>
             Richiedi informazioni
-          </a>
+          </CourseRequestInfoLink>
         </div>
       </div>
     </div>

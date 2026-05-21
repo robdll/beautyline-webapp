@@ -20,7 +20,7 @@ description: >-
 
 ## Tests
 
-- **Vitest**: `pnpm test` / `pnpm test:watch`.
+- **Vitest**: `npm test` / `npm run test:watch`.
 - Place **`*.test.ts`** or **`*.test.tsx`** **next to** the module under test (existing example: `src/lib/auth.test.ts`).
 - Expand tests for non-trivial new `lib` behavior (serialization edge cases, auth utilities, deterministic queries) rather than skipping tests for complex additions.
 

@@ -6,6 +6,8 @@
     "dev": "next dev --turbo",
     "seed:local": "tsx scripts/seed-local.ts",
     "seed:courses": "tsx scripts/seed-courses-catalog.ts",
+    "seed:sync:from-prod": "tsx scripts/sync-mongo-catalog-from-prod.ts",
+    "seed:emit:catalog-ts": "tsx scripts/emit-course-catalog-seed.ts",
     "migrate:courses:multidate": "tsx scripts/migrate-courses-multidate.ts",
     "migrate:courses:soldout": "tsx scripts/migrate-courses-soldout.ts",
     "build": "next build",

@@ -8,6 +8,7 @@ import { Footer } from "@/components/shared/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
+import { GoogleTag } from "@/components/GoogleTag";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <CookieConsentProvider>
+              <GoogleTag />
               <Navbar />
               <main className="grow">{children}</main>
               <Footer />

@@ -39,6 +39,10 @@ Main variables are listed in `.env.example`.
 - `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Stripe credentials
 - `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACES_PLACE_ID`: Google Places key and place ID for live review snippets
 
+### MongoDB scripts (CLI)
+
+See `npm run mongo:dump:prod`, `mongo:restore:local`, and `seed:sync:from-prod`. Restores honor `MONGO_RESTORE_*` vars from `.env` / `.env.local`. If mongorestore fills a database name that does not match the `/DATABASE` segment in `MONGODB_URI`, set `MONGO_RESTORE_NS_REMAP` to `SOURCE_DB:TARGET_DB`.
+
 ## Local Data Seeding (Development Only)
 
 The app supports automatic seed data when it starts **only in local development**.
@@ -55,7 +59,7 @@ Add these to `.env.local`:
 
 ```bash
 ENABLE_LOCAL_SEED=true
-LOCAL_SEED_ADMIN_EMAIL=admin@beautyline.local
+LOCAL_SEED_ADMIN_EMAIL=admin@example.local
 LOCAL_SEED_ADMIN_PASSWORD=Password123!
 ```
 

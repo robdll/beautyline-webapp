@@ -70,7 +70,7 @@ export type CloudinaryLibraryItem = {
 
 /**
  * Lists previously uploaded images under a folder prefix (Admin API).
- * `folderPrefix` should match the `folder` used at upload time (e.g. `beautyline/products`).
+ * `folderPrefix` should match the `folder` argument used at upload time (e.g. `my-folder/products`).
  */
 export async function listCloudinaryLibraryImages(opts: {
   folderPrefix: string;

@@ -7,11 +7,11 @@ import { explainMongoSrvDnsFailure } from './lib/mongo-connect-hints';
  *
  * Env:
  *   MONGODB_URI_PROD — source (falls back to MONGODB_URI)
- *   MONGODB_URI_LOCAL — destination (required)
+ *   MONGODB_URI_LOCAL — destination override; if unset, uses MONGODB_URI (must differ from resolved source).
  *
  * Does not copy `users` (passwords / PII).
  *
- * Usage: MONGODB_URI_LOCAL=mongodb://localhost:27017/beautyline npm run seed:sync:from-prod
+ * Usage (local target = MONGODB_URI): npm run seed:sync:from-prod
  * Optional: --dry-run
  */
 
@@ -19,7 +19,7 @@ const CATALOG_COLLECTIONS = [
   'courses',
   'services',
   'products',
-  'equipments',
+  'equipment',
   'courseposters',
   'esteticapublicsettings',
   'productcategorysettings',
@@ -66,14 +66,16 @@ async function run(): Promise<void> {
   const dryRun = process.argv.includes('--dry-run');
 
   const sourceUri = process.env.MONGODB_URI_PROD || process.env.MONGODB_URI;
-  const targetUri = process.env.MONGODB_URI_LOCAL;
+  const targetUri = process.env.MONGODB_URI_LOCAL || process.env.MONGODB_URI;
 
   if (!sourceUri) {
     console.error('[sync-mongo-catalog-from-prod] Set MONGODB_URI_PROD or MONGODB_URI (source).');
     process.exit(1);
   }
   if (!targetUri) {
-    console.error('[sync-mongo-catalog-from-prod] Set MONGODB_URI_LOCAL (destination).');
+    console.error(
+      '[sync-mongo-catalog-from-prod] Set MONGODB_URI (local target) or MONGODB_URI_LOCAL.'
+    );
     process.exit(1);
   }
   if (sourceUri === targetUri) {

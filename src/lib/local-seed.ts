@@ -16,7 +16,7 @@ function isLocalSeedEnabled(): boolean {
 }
 
 async function seedUsers() {
-  const adminEmail = (process.env.LOCAL_SEED_ADMIN_EMAIL || 'admin@beautyline.local').toLowerCase();
+  const adminEmail = (process.env.LOCAL_SEED_ADMIN_EMAIL || 'admin@example.local').toLowerCase();
   const adminPassword = process.env.LOCAL_SEED_ADMIN_PASSWORD || 'Password123!';
 
   const existingAdmin = await User.findOne({ email: adminEmail });

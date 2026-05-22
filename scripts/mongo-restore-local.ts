@@ -7,7 +7,7 @@ import { loadWorkspaceEnv } from './lib/load-env';
 /**
  * Restore a gzipped mongodump archive into local Mongo (e.g. Docker on localhost).
  *
- * Env: `MONGODB_URI_LOCAL` or `MONGODB_URI` (restore target) — mongodb:// to this machine,
+ * Env: `MONGODB_URI` (restore target) — mongodb:// to this machine,
  * never Atlas (*.mongodb.net / mongodb+srv). Use `LOCAL` only when `MONGODB_URI` points somewhere else (e.g. prod).
  *
  * By default `--drop`s collections before restoring (overwrite). Pass `--no-drop` to merge.
@@ -204,12 +204,10 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const localUri =
-    firstEnvMongoLine(process.env.MONGODB_URI_LOCAL) ||
-    firstEnvMongoLine(process.env.MONGODB_URI);
+  const localUri = firstEnvMongoLine(process.env.MONGODB_URI);
   if (!localUri) {
     console.error(
-      '[mongo-restore-local] Set MONGODB_URI to your local MongoDB URL, or use MONGODB_URI_LOCAL when MONGODB_URI points elsewhere.'
+      '[mongo-restore-local] Set MONGODB_URI to your local MongoDB URL'
     );
     process.exit(1);
   }

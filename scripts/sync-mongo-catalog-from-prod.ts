@@ -7,7 +7,7 @@ import { explainMongoSrvDnsFailure } from './lib/mongo-connect-hints';
  *
  * Env:
  *   MONGODB_URI_PROD — source (falls back to MONGODB_URI)
- *   MONGODB_URI_LOCAL — destination override; if unset, uses MONGODB_URI (must differ from resolved source).
+ *   MONGODB_URI — destination override; if unset, uses MONGODB_URI (must differ from resolved source).
  *
  * Does not copy `users` (passwords / PII).
  *
@@ -66,7 +66,7 @@ async function run(): Promise<void> {
   const dryRun = process.argv.includes('--dry-run');
 
   const sourceUri = process.env.MONGODB_URI_PROD || process.env.MONGODB_URI;
-  const targetUri = process.env.MONGODB_URI_LOCAL || process.env.MONGODB_URI;
+  const targetUri = process.env.MONGODB_URI;
 
   if (!sourceUri) {
     console.error('[sync-mongo-catalog-from-prod] Set MONGODB_URI_PROD or MONGODB_URI (source).');
@@ -74,7 +74,7 @@ async function run(): Promise<void> {
   }
   if (!targetUri) {
     console.error(
-      '[sync-mongo-catalog-from-prod] Set MONGODB_URI (local target) or MONGODB_URI_LOCAL.'
+      '[sync-mongo-catalog-from-prod] Set MONGODB_URI (local target)'
     );
     process.exit(1);
   }

@@ -22,8 +22,8 @@ export function CookieConsentBanner({ onEssential, onAll }: Props) {
             Utilizziamo i cookie
           </h2>
           <p id="cookie-consent-desc" className="leading-relaxed">
-            Utilizziamo cookie necessari al funzionamento del sito. Con il tuo consenso, in futuro potremo attivare anche
-            strumenti di analisi (es. Google Analytics) e pubblicità (es. Google Ads). Consulta l&apos;
+            Utilizziamo cookie necessari al funzionamento del sito. Con il tuo consenso, utilizziamo anche{' '}
+            <strong>Google Ads</strong> per misurare le conversioni e proporti annunci pertinenti. Consulta l&apos;
             <Link href="/informativa-cookie" className="text-primary underline-offset-2 hover:underline">
               informativa cookie
             </Link>{' '}

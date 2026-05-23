@@ -13,7 +13,7 @@ export default function InformativaPrivacyPage() {
       <header className="border-b border-primary/20 bg-secondary px-4 py-14 text-white sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h1 className="heading-brand text-3xl font-bold tracking-tight md:text-4xl">Informativa sulla privacy</h1>
-          <p className="mt-3 text-sm text-gray-400">Ultimo aggiornamento: marzo {new Date().getFullYear()}</p>
+          <p className="mt-3 text-sm text-gray-400">Ultimo aggiornamento: maggio 2026</p>
         </div>
       </header>
 
@@ -67,10 +67,16 @@ export default function InformativaPrivacyPage() {
                 .
               </li>
               <li>
-                <strong>Analisi delle visite e pubblicità (futuro):</strong> con strumenti quali{' '}
-                <strong>Google Analytics</strong> e <strong>Google Ads</strong>, solo previo tuo consenso espresso
-                tramite l&apos;opzione &quot;Tutti&quot; nel banner cookie, salvo utilizzi basati su legittimo interesse
-                laddove ammessi dalla legge.
+                <strong>Pubblicità e misurazione conversioni:</strong> con <strong>Google Ads</strong>, per valutare
+                l&apos;efficacia delle campagne, misurare conversioni sul sito (es. richieste di informazioni sui corsi)
+                e proporti annunci pertinenti (remarketing). Il trattamento con cookie e profilazione avviene solo
+                previo tuo consenso espresso tramite l&apos;opzione &quot;Tutti&quot; nel banner cookie; prima del
+                consenso il sito utilizza Google Consent Mode con segnali disattivati, senza cookie di profilazione.
+              </li>
+              <li>
+                <strong>Analisi delle visite (futuro):</strong> con strumenti quali <strong>Google Analytics</strong>,
+                solo previo tuo consenso espresso tramite l&apos;opzione &quot;Tutti&quot;, qualora tali strumenti
+                fossero attivati in seguito.
               </li>
               <li>
                 <strong>Comunicazioni:</strong> per rispondere alle richieste inviate tramite i canali di contatto.
@@ -82,10 +88,12 @@ export default function InformativaPrivacyPage() {
             <h2 className="heading-brand text-xl font-bold">Destinatari e trasferimenti</h2>
             <p className="text-gray-700">
               I dati possono essere trattati da personale autorizzato del Titolare e da fornitori tecnici che operano
-              come responsabili del trattamento (es. hosting, manutenzione del sito). L&apos;uso di servizi Google
-              (Analytics, Ads) può comportare trasferimenti verso paesi extra-UE secondo le garanzie previste dagli
-              articoli 44 e seguenti del GDPR (es. clausole contrattuali standard o decisioni di adeguatezza), quando
-              tali servizi saranno attivi.
+              come responsabili del trattamento (es. hosting, manutenzione del sito). L&apos;uso di{' '}
+              <strong>Google Ads</strong> comporta che Google (Google Ireland Limited / Google LLC) tratti dati anche
+              quali responsabile del trattamento o autonomo titolare secondo la propria informativa, con possibili
+              trasferimenti verso paesi extra-UE secondo le garanzie previste dagli articoli 44 e seguenti del GDPR
+              (es. clausole contrattuali standard o decisioni di adeguatezza). Eventuali futuri servizi Google
+              (Analytics) saranno soggetti alle medesime cautele e al tuo consenso ove richiesto.
             </p>
           </section>
 

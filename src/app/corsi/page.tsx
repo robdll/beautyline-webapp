@@ -8,6 +8,7 @@ import { ContactSection } from '@/components/ContactSection';
 import { AcademicPathsSection } from '@/components/AcademicPathsSection/academic-paths-section';
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
 import { CORSI_UNGHIE_OCCHI_CARDS } from '@/lib/constants';
+import { pageCanonical } from '@/lib/site';
 import { CourseCarousel, UpcomingCourseItem } from '@/components/CourseCarousel';
 import { CoursePostersModalGrid, type CoursePosterItem } from '@/components/CoursePostersModalGrid';
 import type { CourseType } from '@/lib/course-types';
@@ -20,6 +21,7 @@ import { formatPosterPeriod } from '@/types/course-poster';
 export const metadata: Metadata = {
   title: 'Corsi di Estetica',
   description: 'Scopri tutti i nostri corsi di formazione nel settore dell\'estetica professionale. Corsi base, avanzati e specialistici.',
+  alternates: pageCanonical('/corsi'),
 };
 
 export const dynamic = 'force-dynamic';

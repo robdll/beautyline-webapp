@@ -7,10 +7,12 @@ import { Section } from '@/components/Section';
 import { ProductBrandsSection } from '@/components/ProductBrandsSection';
 import { ProductCatalogModal } from '@/components/ProductCatalogModal';
 import { getProductCategoryDisabledKeys } from '@/lib/product-category-settings-store';
+import { pageCanonical } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'I Nostri Prodotti',
   description: 'Scopri la nostra linea completa di prodotti professionali per estetica e benessere.',
+  alternates: pageCanonical('/prodotti'),
 };
 
 export const dynamic = 'force-dynamic';

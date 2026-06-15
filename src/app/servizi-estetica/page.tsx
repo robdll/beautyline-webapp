@@ -14,11 +14,13 @@ import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text
 import { cn } from '@/lib/utils';
 import { isPromoVisibleNow, SERVICE_CATEGORIES, serviceCategoryAnchorId } from '@/lib/service-categories';
 import { getListinoPrezziUrl } from '@/lib/estetica-public-settings-store';
+import { pageCanonical } from '@/lib/site';
 import type { ServiceItem } from '@/types/service';
 
 export const metadata: Metadata = {
   title: 'Servizi Estetica',
   description: 'Scopri i nostri servizi di estetica professionale. Trattamenti di qualità per la cura del corpo e del viso.',
+  alternates: pageCanonical('/servizi-estetica'),
 };
 
 export const dynamic = 'force-dynamic';

@@ -8,6 +8,7 @@ import { EquipmentHighlightSection } from '@/components/EquipmentHighlightSectio
 import { Section } from '@/components/Section';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappAttrezzaturaUrl } from '@/lib/contact';
+import { pageCanonical } from '@/lib/site';
 import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import { getEquipmentTypeLabel, parseEquipmentType } from '@/lib/equipment-types';
 import EquipmentModel from '@/models/Equipment';
@@ -17,6 +18,7 @@ import type { EquipmentItem } from '@/types/equipment';
 export const metadata: Metadata = {
   title: 'Vendita e Noleggio Attrezzature',
   description: 'Attrezzature professionali per l\'estetica in vendita e noleggio. Soluzioni flessibili per professionisti e centri estetici.',
+  alternates: pageCanonical('/attrezzature'),
 };
 
 export const dynamic = 'force-dynamic';

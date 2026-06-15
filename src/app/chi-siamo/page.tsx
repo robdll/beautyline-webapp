@@ -1,9 +1,18 @@
 import React from 'react';
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { BrandStatsSection } from '@/components/BrandStatsSection';
 import { Hero } from '@/components/Hero';
 import { ReviewsSection } from '@/components/ReviewsSection';
 import { Section } from '@/components/Section';
+import { pageCanonical } from '@/lib/site';
+
+export const metadata: Metadata = {
+  title: 'Chi Siamo',
+  description:
+    'Scopri la storia, i valori e il team di BeautyLine Professional: formazione estetica, servizi e prodotti professionali a Monza.',
+  alternates: pageCanonical('/chi-siamo'),
+};
 
 export default function ChiSiamo() {
   return (

@@ -9,6 +9,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
 import { GoogleTag } from "@/components/GoogleTag";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +24,7 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "BeautyLine Professional - Corsi di Estetica e Formazione",
     template: "%s | BeautyLine Professional",
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "it_IT",
-    url: "https://www.beautylineprofessional.com",
+    url: SITE_URL,
     siteName: "BeautyLine Professional",
     title: "BeautyLine Professional - Corsi di Estetica e Formazione",
     description: "Corsi di alta formazione nel settore dell'estetica professionale",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 
 import { CourseDetailView } from '@/components/CourseDetailView';
 import { Section } from '@/components/Section';
@@ -44,7 +44,7 @@ export default async function CorsoDetailPage({ params }: PageProps) {
   if (!t) notFound();
 
   const raw = await getCourseByTipoSlug(t, slug);
-  if (!raw) notFound();
+  if (!raw) permanentRedirect('/corsi');
 
   const course = serializePublicCourse(raw as LeanCourseDoc);
 

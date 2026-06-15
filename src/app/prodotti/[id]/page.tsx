@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 
 import { ProductDetailView } from '@/components/ProductDetailView';
 import { Section } from '@/components/Section';
@@ -55,7 +55,7 @@ export default async function ProdottoDetailPage({ params }: PageProps) {
   try {
     await connectDB();
     const doc = await Product.findById(id).lean();
-    if (!doc) notFound();
+    if (!doc) permanentRedirect('/prodotti');
 
     const product = serializePublicProduct({
       _id: doc._id,

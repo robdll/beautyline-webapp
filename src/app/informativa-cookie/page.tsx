@@ -16,7 +16,7 @@ export default function InformativaCookiePage() {
       <header className="border-b border-primary/20 bg-secondary px-4 py-14 text-white sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h1 className="heading-brand text-3xl font-bold tracking-tight md:text-4xl">Informativa sui cookie</h1>
-          <p className="mt-3 text-sm text-gray-400">Ultimo aggiornamento: maggio 2026</p>
+          <p className="mt-3 text-sm text-gray-400">Ultimo aggiornamento: giugno 2026</p>
         </div>
       </header>
 
@@ -100,6 +100,18 @@ export default function InformativaCookiePage() {
               >
                 Impostazioni annunci Google
               </a>
+              .
+            </p>
+            <h3 className="font-semibold text-gray-800">Vercel Web Analytics e Speed Insights (attivi)</h3>
+            <p className="text-gray-700">
+              Il sito utilizza <strong>Vercel Web Analytics</strong> e <strong>Speed Insights</strong> per raccogliere
+              statistiche aggregate sul traffico e indicatori tecnici sulle prestazioni delle pagine. Questi strumenti
+              sono erogati da <strong>Vercel Inc.</strong> e, secondo le impostazioni attuali,{' '}
+              <strong>non impostano cookie di profilazione</strong> né sono soggetti alla scelta &quot;Tutti&quot; del
+              banner cookie. Per il trattamento dei dati tecnici e le finalità di hosting vedi l&apos;
+              <Link href="/informativa-privacy" className="text-primary underline-offset-2 hover:underline">
+                informativa sulla privacy
+              </Link>
               .
             </p>
             <h3 className="font-semibold text-gray-800">Google Analytics (non attivo)</h3>

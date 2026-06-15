@@ -13,7 +13,7 @@ export default function InformativaPrivacyPage() {
       <header className="border-b border-primary/20 bg-secondary px-4 py-14 text-white sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <h1 className="heading-brand text-3xl font-bold tracking-tight md:text-4xl">Informativa sulla privacy</h1>
-          <p className="mt-3 text-sm text-gray-400">Ultimo aggiornamento: maggio 2026</p>
+          <p className="mt-3 text-sm text-gray-400">Ultimo aggiornamento: giugno 2026</p>
         </div>
       </header>
 
@@ -38,7 +38,9 @@ export default function InformativaPrivacyPage() {
             <ul className="list-disc space-y-2 pl-5 text-gray-700">
               <li>
                 <strong>Dati di navigazione e tecnici:</strong> ad esempio indirizzo IP, tipo di browser, pagine
-                visitate, identificativi di sessione o preferenze memorizzate localmente (come la scelta sui cookie).
+                visitate, identificativi di sessione o preferenze memorizzate localmente (come la scelta sui cookie),
+                nonché metriche aggregate sul traffico e sulle prestazioni del sito raccolte tramite il fornitore di
+                hosting.
               </li>
               <li>
                 <strong>Dati forniti volontariamente:</strong> nome, email, telefono o altre informazioni inserite in
@@ -67,6 +69,16 @@ export default function InformativaPrivacyPage() {
                 .
               </li>
               <li>
+                <strong>Statistiche aggregate e prestazioni del sito:</strong> con <strong>Vercel Web Analytics</strong>{' '}
+                e <strong>Vercel Speed Insights</strong>, per monitorare in forma aggregata le visite e le performance
+                tecniche del sito. Questi strumenti non utilizzano cookie di profilazione e non richiedono il consenso
+                previsto per cookie marketing o analitici di terze parti; per i dettagli vedi anche l&apos;
+                <Link href="/informativa-cookie" className="text-primary underline-offset-2 hover:underline">
+                  informativa cookie
+                </Link>
+                .
+              </li>
+              <li>
                 <strong>Pubblicità e misurazione conversioni:</strong> con <strong>Google Ads</strong>, per valutare
                 l&apos;efficacia delle campagne, misurare conversioni sul sito (es. richieste di informazioni sui corsi)
                 e proporti annunci pertinenti (remarketing). Il trattamento con cookie e profilazione avviene solo
@@ -88,11 +100,28 @@ export default function InformativaPrivacyPage() {
             <h2 className="heading-brand text-xl font-bold">Destinatari e trasferimenti</h2>
             <p className="text-gray-700">
               I dati possono essere trattati da personale autorizzato del Titolare e da fornitori tecnici che operano
-              come responsabili del trattamento (es. hosting, manutenzione del sito). L&apos;uso di{' '}
-              <strong>Google Ads</strong> comporta che Google (Google Ireland Limited / Google LLC) tratti dati anche
-              quali responsabile del trattamento o autonomo titolare secondo la propria informativa, con possibili
-              trasferimenti verso paesi extra-UE secondo le garanzie previste dagli articoli 44 e seguenti del GDPR
-              (es. clausole contrattuali standard o decisioni di adeguatezza). Eventuali futuri servizi Google
+              come responsabili del trattamento (es. hosting, manutenzione del sito). Il sito è ospitato su{' '}
+              <strong>Vercel Inc.</strong>, che tratta dati tecnici e di navigazione per erogare l&apos;infrastruttura,
+              nonché — tramite <strong>Vercel Web Analytics</strong> e <strong>Speed Insights</strong> — metriche
+              aggregate sul traffico e sulle prestazioni, generalmente senza cookie di profilazione. Vercel può operare
+              quali responsabile del trattamento secondo i propri accordi con il Titolare, con possibili trasferimenti
+              verso paesi extra-UE secondo le garanzie previste dagli articoli 44 e seguenti del GDPR (es. clausole
+              contrattuali standard). Per maggiori informazioni consulta l&apos;
+              <a
+                href="https://vercel.com/legal/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline-offset-2 hover:underline"
+              >
+                informativa privacy di Vercel
+              </a>
+              .
+            </p>
+            <p className="text-gray-700">
+              L&apos;uso di <strong>Google Ads</strong> comporta che Google (Google Ireland Limited / Google LLC) tratti
+              dati anche quali responsabile del trattamento o autonomo titolare secondo la propria informativa, con
+              possibili trasferimenti verso paesi extra-UE secondo le garanzie previste dagli articoli 44 e seguenti del
+              GDPR (es. clausole contrattuali standard o decisioni di adeguatezza). Eventuali futuri servizi Google
               (Analytics) saranno soggetti alle medesime cautele e al tuo consenso ove richiesto.
             </p>
           </section>

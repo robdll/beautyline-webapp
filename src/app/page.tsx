@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ParallaxDivider } from '@/components/ParallaxDivider';
@@ -13,6 +14,17 @@ import { Button } from '@/components/shared/Button';
 import { ServiziEsteticaIntroSection } from '@/components/estetica/servizi-estetica-intro-section';
 import { ProductBrandLines } from '@/components/ProductBrandsSection';
 import { ReviewsSection } from '@/components/ReviewsSection';
+
+import { pageCanonical } from '@/lib/site';
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'BeautyLine Professional - Corsi di Estetica e Formazione',
+  },
+  description:
+    'BeautyLine Professional: formazione estetica, servizi, attrezzature e prodotti professionali a Monza. Il partner per la tua crescita nel settore beauty.',
+  alternates: pageCanonical('/'),
+};
 
 const FormazioneIcon = () => (
   <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -108,25 +120,25 @@ export default async function Home() {
               title="Formazione"
               description="Corsi professionali e master per diventare esperti del settore estetico."
               icon={<FormazioneIcon />}
-              targetId="formazione"
+              href="/corsi"
             />
             <ServiceOverviewCard
               title="Servizi Estetica"
               description="Trattamenti professionali di estetica per la cura del corpo e del viso."
               icon={<EsteticaIcon />}
-              targetId="servizi-estetica"
+              href="/servizi-estetica"
             />
             <ServiceOverviewCard
               title="Attrezzature"
               description="Vendita e noleggio di attrezzature professionali all'avanguardia."
               icon={<AttrezzatureIcon />}
-              targetId="attrezzature"
+              href="/attrezzature"
             />
             <ServiceOverviewCard
               title="Prodotti"
               description="Linea completa di prodotti professionali per estetica e benessere."
               icon={<ProdottiIcon />}
-              targetId="prodotti"
+              href="/prodotti"
             />
           </div>
         </div>

@@ -19,6 +19,8 @@ export interface IUser extends Document {
   emailVerified: boolean;
   verificationToken?: string;
   verificationTokenExpiry?: Date;
+  passwordResetToken?: string;
+  passwordResetExpiry?: Date;
   deletedAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
@@ -48,6 +50,8 @@ const UserSchema = new Schema<IUser>(
     emailVerified: { type: Boolean, default: false },
     verificationToken: { type: String },
     verificationTokenExpiry: { type: Date },
+    passwordResetToken: { type: String },
+    passwordResetExpiry: { type: Date },
   },
   { timestamps: true }
 );
@@ -55,6 +59,7 @@ const UserSchema = new Schema<IUser>(
 UserSchema.plugin(softDeletePlugin);
 
 UserSchema.index({ verificationToken: 1 });
+UserSchema.index({ passwordResetToken: 1 });
 
 const User: Model<IUser> =
   mongoose.models.User || mongoose.model<IUser>('User', UserSchema);

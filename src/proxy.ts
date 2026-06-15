@@ -17,7 +17,7 @@ export async function proxy(request: NextRequest) {
 
   const protectedPaths = ['/account'];
   const adminPaths = ['/admin'];
-  const authPaths = ['/signin', '/signup'];
+  const authPaths = ['/signin', '/signup', '/recupero-password'];
 
   const isProtected = protectedPaths.some((p) => pathname.startsWith(p));
   const isAdmin = adminPaths.some((p) => pathname.startsWith(p));
@@ -51,5 +51,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/account/:path*', '/admin/:path*', '/signin', '/signup'],
+  matcher: ['/account/:path*', '/admin/:path*', '/signin', '/signup', '/recupero-password'],
 };

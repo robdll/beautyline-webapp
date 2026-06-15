@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
@@ -133,3 +134,12 @@ export function generateVerificationToken(): string {
   crypto.getRandomValues(bytes);
   return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
 }
+
+/** Opaque token digest for password-reset links (stored in DB, not the raw token). */
+export function hashOpaqueToken(token: string): string {
+  return createHash('sha256')
+    .update(`${token}:${process.env.JWT_SECRET || 'dev-secret'}`)
+    .digest('hex');
+}
+
+export const PASSWORD_RESET_EXPIRY_MS = 60 * 60 * 1000;

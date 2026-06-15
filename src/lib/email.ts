@@ -39,3 +39,38 @@ export async function sendVerificationEmail(email: string, token: string) {
     throw new Error(`Invio email fallito: ${result.error.message}`);
   }
 }
+
+export async function sendPasswordResetEmail(email: string, token: string) {
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error('RESEND_API_KEY mancante.');
+  }
+
+  const resetUrl = `${APP_URL}/reimposta-password?token=${token}`;
+
+  const result = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: email,
+    subject: 'Reimposta la tua password BeautyLine',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h1 style="color: #8B66A9; text-align: center;">BeautyLine Professional</h1>
+        <p>Hai richiesto di reimpostare la password del tuo account.</p>
+        <p>Clicca il pulsante qui sotto per scegliere una nuova password:</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${resetUrl}"
+             style="background-color: #DEA43E; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">
+            Reimposta Password
+          </a>
+        </div>
+        <p style="color: #666; font-size: 14px;">
+          Se non hai richiesto il recupero password, puoi ignorare questa email.
+        </p>
+        <p style="color: #999; font-size: 12px;">Il link scade tra 1 ora.</p>
+      </div>
+    `,
+  });
+
+  if (result.error) {
+    throw new Error(`Invio email fallito: ${result.error.message}`);
+  }
+}

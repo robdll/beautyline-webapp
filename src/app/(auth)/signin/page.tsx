@@ -15,6 +15,7 @@ function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const resetSuccess = searchParams.get('reset') === 'success';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +47,12 @@ function SignInForm() {
           Inserisci le tue credenziali per accedere
         </p>
 
+        {resetSuccess && (
+          <div className="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm">
+            Password aggiornata con successo. Ora puoi accedere.
+          </div>
+        )}
+
         {error && (
           <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg mb-6 text-sm">
             {error}
@@ -69,9 +76,17 @@ function SignInForm() {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <Link
+                href="/recupero-password"
+                className="text-xs text-primary hover:underline font-medium"
+              >
+                Password dimenticata?
+              </Link>
+            </div>
             <input
               id="password"
               type="password"

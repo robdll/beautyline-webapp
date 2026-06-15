@@ -6,6 +6,7 @@ import {
   signRefreshToken,
   verifyAccessToken,
   verifyRefreshToken,
+  hashOpaqueToken,
   type JWTPayload,
 } from './auth';
 
@@ -89,5 +90,17 @@ describe('token round-trips', () => {
     const token = await signRefreshToken(sampleUser);
     const payload = await verifyRefreshToken(token);
     expect(payload).toMatchObject(sampleUser);
+  });
+});
+
+describe('hashOpaqueToken', () => {
+  it('returns a stable hex digest for the same token', () => {
+    const token = 'abc123reset';
+    expect(hashOpaqueToken(token)).toBe(hashOpaqueToken(token));
+    expect(hashOpaqueToken(token)).toMatch(/^[a-f0-9]{64}$/);
+  });
+
+  it('returns different digests for different tokens', () => {
+    expect(hashOpaqueToken('token-a')).not.toBe(hashOpaqueToken('token-b'));
   });
 });

@@ -24,12 +24,13 @@ function ReimpostaPasswordForm() {
       return;
     }
 
+    const resetToken = token;
     let cancelled = false;
 
     async function validateToken() {
       try {
         const res = await fetch(
-          `/api/auth/reset-password?token=${encodeURIComponent(token)}`
+          `/api/auth/reset-password?token=${encodeURIComponent(resetToken)}`
         );
         const data = await res.json();
         if (!cancelled) {

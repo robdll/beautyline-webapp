@@ -59,11 +59,13 @@ CourseSchema.pre('validate', async function () {
   const Model = doc.constructor as Model<ICourse>;
 
   for (;;) {
-    const existing = await Model.findOne({
+    // Query sulla collection nativa: include anche i documenti soft-deleted, così
+    // lo slug non collide con l'indice unico { type, slug } (che li conta comunque).
+    const existing = await Model.collection.findOne({
       type: doc.type,
       slug,
       _id: { $ne: doc._id },
-    }).lean();
+    });
     if (!existing) break;
     slug = `${base}-${counter}`;
     counter += 1;

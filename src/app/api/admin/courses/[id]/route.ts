@@ -8,6 +8,7 @@ import {
   sanitizeProgramSections,
   validateOccurrencesShape,
 } from '@/lib/course-occurrences';
+import { isDuplicateKeyError } from '@/lib/mongo-errors';
 import Course from '@/models/Course';
 
 function normalizeOccurrencesForResponse(value: unknown): { startDate: Date; endDate: Date; soldOut: boolean }[] {
@@ -135,6 +136,12 @@ export async function PUT(
     return NextResponse.json(serialized);
   } catch (err) {
     console.error('Course PUT error:', err);
+    if (isDuplicateKeyError(err)) {
+      return NextResponse.json(
+        { error: 'Esiste già un corso con lo stesso nome per questo tipo. Modifica leggermente il nome.' },
+        { status: 409 }
+      );
+    }
     return NextResponse.json({ error: 'Errore nell\'aggiornamento del corso.' }, { status: 500 });
   }
 }

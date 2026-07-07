@@ -30,15 +30,15 @@ export const HOME_COURSE_CARDS: HomeCourseCard[] = [
   {
     title: 'Percorsi Master',
     imageSrc: '/images/percorsi.webp',
-    href: 'https://percorsomaster.it',
-    openInNewTab: true,
+    href: '/percorsi',
   },
 ];
 
-/** Corsi page — “I Nostri Corsi”: solo Unghie e Occhi (senza Percorsi Master). */
+/** Corsi page — “I Nostri Corsi”: Unghie, Occhi e Percorsi (link diretto al catalogo percorsi). */
 export const CORSI_UNGHIE_OCCHI_CARDS: HomeCourseCard[] = [
   { ...HOME_COURSE_CARDS[0], courseType: 'unghie' },
   { ...HOME_COURSE_CARDS[1], courseType: 'occhi' },
+  { ...HOME_COURSE_CARDS[2] },
 ];
 
 export type EquipmentHighlightCard = {

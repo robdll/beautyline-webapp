@@ -10,6 +10,7 @@ import {
 } from '@/lib/course-occurrences';
 import { isDuplicateKeyError } from '@/lib/mongo-errors';
 import Course from '@/models/Course';
+import Percorso from '@/models/Percorso';
 
 function normalizeOccurrencesForResponse(value: unknown): { startDate: Date; endDate: Date; soldOut: boolean }[] {
   if (!Array.isArray(value)) return [];
@@ -163,6 +164,23 @@ export async function DELETE(
     const course = await Course.findById(id);
     if (!course) {
       return NextResponse.json({ error: 'Corso non trovato.' }, { status: 404 });
+    }
+
+    // Un corso incluso in uno o più percorsi (attivi) non può essere eliminato.
+    const objectId = new mongoose.Types.ObjectId(id);
+    const linkedPercorsi = await Percorso.find({
+      $or: [{ 'items.course': objectId }, { courseIds: objectId }],
+    })
+      .select('name')
+      .lean();
+    if (linkedPercorsi.length > 0) {
+      const names = linkedPercorsi.map((p) => p.name).join(', ');
+      return NextResponse.json(
+        {
+          error: `Impossibile eliminare: il corso è incluso nel percorso "${names}". Rimuovilo prima dai percorsi.`,
+        },
+        { status: 409 }
+      );
     }
 
     await course.softDelete();

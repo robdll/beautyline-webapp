@@ -7,8 +7,21 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/account/', '/signin', '/signup', '/api/'],
+      disallow: [
+        '/admin/',
+        '/account/',
+        '/api/',
+        '/cart',
+        '/checkout/',
+        '/signin',
+        '/signup',
+        '/verify',
+        '/recupero-password',
+        '/reimposta-password',
+        '/percorso-master',
+      ],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL.replace(/^https?:\/\//, ''),
   };
 }

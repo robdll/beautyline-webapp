@@ -34,11 +34,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PercorsoDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const percorso = await getPercorsoBySlug(slug);
-  if (!percorso) permanentRedirect('/percorsi');
+  if (!percorso) permanentRedirect('/corsi');
 
   return (
     <Section className="min-h-0 bg-white py-12 md:py-16" containerClassName="max-w-6xl">
-      <PercorsoDetailView percorso={percorso} />
+      <PercorsoDetailView percorso={percorso} backHref="/corsi#percorsi-accademici" />
     </Section>
   );
 }

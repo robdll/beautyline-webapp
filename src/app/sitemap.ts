@@ -4,13 +4,16 @@ import { parseCourseType } from '@/lib/course-types';
 import { parseEquipmentType } from '@/lib/equipment-types';
 import { connectDB } from '@/lib/mongodb';
 import { getPublicCourseSlug, type LeanCourseDoc } from '@/lib/public-course';
+import { getPublicPercorsoSlug, type LeanPercorsoDoc } from '@/lib/public-percorso';
 import { SITE_URL } from '@/lib/site';
 import Course from '@/models/Course';
 import Equipment from '@/models/Equipment';
+import Percorso from '@/models/Percorso';
 import Product from '@/models/Product';
 
 export const dynamic = 'force-dynamic';
 
+/** Pagine statiche pubbliche. I percorsi accademici sono su /corsi; le schede percorso sono /percorsi/{slug}. */
 const STATIC_PATHS = [
   '',
   '/chi-siamo',
@@ -19,6 +22,8 @@ const STATIC_PATHS = [
   '/attrezzature',
   '/prodotti',
   '/contatti',
+  '/informativa-cookie',
+  '/informativa-privacy',
 ] as const;
 
 function sitemapEntry(path: string, lastModified?: Date): MetadataRoute.Sitemap[number] {
@@ -35,10 +40,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     await connectDB();
 
-    const [courses, products, equipment] = await Promise.all([
+    const [courses, products, equipment, percorsi] = await Promise.all([
       Course.find().select('type slug name updatedAt').lean(),
       Product.find().select('updatedAt').lean(),
       Equipment.find().select('type updatedAt').lean(),
+      Percorso.find().select('slug name updatedAt').lean(),
     ]);
 
     const courseEntries = courses.flatMap((doc) => {
@@ -60,7 +66,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       return sitemapEntry(`/attrezzature/${tipo}/${doc._id.toString()}`, updatedAt);
     });
 
-    return [...staticEntries, ...courseEntries, ...productEntries, ...equipmentEntries];
+    const percorsoEntries = percorsi.flatMap((doc) => {
+      const slug = getPublicPercorsoSlug(doc as LeanPercorsoDoc);
+      if (!slug) return [];
+      const updatedAt = doc.updatedAt ? new Date(doc.updatedAt) : undefined;
+      return sitemapEntry(`/percorsi/${slug}`, updatedAt);
+    });
+
+    return [
+      ...staticEntries,
+      ...courseEntries,
+      ...productEntries,
+      ...equipmentEntries,
+      ...percorsoEntries,
+    ];
   } catch {
     return staticEntries;
   }

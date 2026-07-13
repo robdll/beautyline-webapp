@@ -5,9 +5,10 @@ import Image from 'next/image';
 import { Hero } from '@/components/Hero';
 import { Section } from '@/components/Section';
 import { ContactSection } from '@/components/ContactSection';
-import { AcademicPathsSection } from '@/components/AcademicPathsSection/academic-paths-section';
 import { CoursesHighlightSection } from '@/components/CoursesHighlightSection';
+import { PercorsiSection } from '@/components/PercorsiSection';
 import { CORSI_UNGHIE_OCCHI_CARDS } from '@/lib/constants';
+import { getPublicPercorsi } from '@/lib/percorso-queries';
 import { pageCanonical } from '@/lib/site';
 import { CourseCarousel, UpcomingCourseItem } from '@/components/CourseCarousel';
 import { CoursePostersModalGrid, type CoursePosterItem } from '@/components/CoursePostersModalGrid';
@@ -113,9 +114,10 @@ async function getCoursePosters(): Promise<CoursePosterItem[]> {
 }
 
 export default async function CorsiPage() {
-  const [upcomingCourses, coursePosters] = await Promise.all([
+  const [upcomingCourses, coursePosters, percorsi] = await Promise.all([
     getUpcomingCourses(),
     getCoursePosters(),
+    getPublicPercorsi(),
   ]);
 
   return (
@@ -148,16 +150,9 @@ export default async function CorsiPage() {
         ctaHref="#calendario-corsi"
       />
 
-      <AcademicPathsSection
-        id="percorsi-accademici"
-        imageSrc="/images/percorsi.webp"
-        imageWidth={1516}
-        imageHeight={2664}
-        imageAlt="Percorsi accademici e formazione Beautyline Academy"
-        ctaHref="https://percorsomaster.it"
-      />
+      <PercorsiSection percorsi={percorsi} />
 
-      <Section id="prossimi-corsi" className="bg-muted min-h-0 scroll-mt-24">
+      <Section id="prossimi-corsi" className="min-h-0 scroll-mt-24">
         <div className="flex flex-col gap-10">
           <div className="text-center flex flex-col items-center gap-4">
             <h2 className="heading-brand text-3xl md:text-4xl font-bold">I Prossimi Corsi</h2>
@@ -176,7 +171,7 @@ export default async function CorsiPage() {
         </div>
       </Section>
 
-      <Section id="calendario-corsi" className="min-h-0 scroll-mt-24" containerClassName="gap-8 md:gap-10">
+      <Section id="calendario-corsi" className="min-h-0 scroll-mt-24 bg-muted" containerClassName="gap-8 md:gap-10">
         <div className="text-center flex flex-col items-center gap-4">
           <h2 className="heading-brand text-3xl md:text-4xl font-bold">Calendario Corsi</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">

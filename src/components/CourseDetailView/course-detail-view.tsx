@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { daySpanInclusive, formatDateRange } from '@/lib/course-occurrences';
@@ -8,18 +7,7 @@ import { whatsappCorsoUrl } from '@/lib/contact';
 import { displayPublicDescription, displayPublicTitle } from '@/lib/display-text';
 import type { PublicCourseJson } from '@/lib/public-course';
 import { CourseRequestInfoLink } from './course-request-info-link';
-
-const COURSE_IMAGE_FALLBACK = '/images/course-placeholder.svg';
-
-function firstValidMediaUrl(media: string[] | undefined): string | null {
-  if (!media?.length) return null;
-  for (const raw of media) {
-    if (typeof raw !== 'string') continue;
-    const u = raw.trim();
-    if (u.length > 0) return u;
-  }
-  return null;
-}
+import { CourseImageGallery } from './course-image-gallery';
 
 function programLabels(isMultiDate: boolean): string[] {
   if (isMultiDate) return ['Giorno 1', 'Giorno 2', 'Giorno 3'];
@@ -31,8 +19,6 @@ export interface CourseDetailViewProps {
 }
 
 export function CourseDetailView({ course }: CourseDetailViewProps) {
-  const imageSrc = firstValidMediaUrl(course.media) ?? COURSE_IMAGE_FALLBACK;
-  const isRemote = imageSrc.startsWith('http://') || imageSrc.startsWith('https://');
   const sortedOccurrences = [...course.occurrences].sort(
     (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
   );
@@ -69,17 +55,7 @@ export function CourseDetailView({ course }: CourseDetailViewProps) {
         </header>
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-          <div className="relative aspect-4/3 w-full overflow-hidden rounded-2xl bg-muted">
-            <Image
-              src={imageSrc}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 66vw, 100vw"
-              priority
-              unoptimized={isRemote}
-            />
-          </div>
+          <CourseImageGallery media={course.media} alt={displayPublicTitle(course.name)} />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 lg:justify-items-center">
             <article className="rounded-xl border border-gray-200 p-4 w-full lg:max-w-[280px]">

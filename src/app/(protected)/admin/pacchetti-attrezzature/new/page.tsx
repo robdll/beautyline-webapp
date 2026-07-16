@@ -18,7 +18,7 @@ export default function AdminPacchettoNewPage() {
     name: '',
     description: '',
     details: '',
-    annualPrice: '',
+    monthlyPrice: '',
     badge: '',
     media: [] as string[],
     equipmentIds: [] as string[],
@@ -42,7 +42,7 @@ export default function AdminPacchettoNewPage() {
           name: form.name,
           description: form.description,
           details: form.details,
-          annualPrice: Number(form.annualPrice) || 0,
+          monthlyPrice: Number(form.monthlyPrice) || 0,
           badge: form.badge,
           media: form.media,
           equipmentIds: form.equipmentIds,
@@ -137,16 +137,16 @@ export default function AdminPacchettoNewPage() {
           </div>
 
           <div>
-            <label htmlFor="annualPrice" className={labelClass}>
-              Prezzo annuo (€)
+            <label htmlFor="monthlyPrice" className={labelClass}>
+              Prezzo mensile (€)
             </label>
             <input
-              id="annualPrice"
-              name="annualPrice"
+              id="monthlyPrice"
+              name="monthlyPrice"
               type="number"
               min="0"
               step="0.01"
-              value={form.annualPrice}
+              value={form.monthlyPrice}
               onChange={handleChange}
               required
               className={inputClass}

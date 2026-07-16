@@ -39,13 +39,17 @@ export const EquipmentPromoSection: React.FC<EquipmentPromoSectionProps> = ({
         <div className="mx-auto flex max-w-3xl flex-col gap-5 text-base leading-relaxed text-gray-600 md:text-lg">
           <p>
             Noleggia un pacchetto di {PROMO_PACKAGE_SIZE} attrezzature professionali a un canone
-            annuo vantaggioso. Una formula pensata per far crescere il tuo centro estetico senza
+            mensile vantaggioso. Una formula pensata per far crescere il tuo centro estetico senza
             costi iniziali elevati.
           </p>
-          <p>
-            Scegli uno dei pacchetti pronti oppure crea il tuo su misura selezionando le
-            attrezzature che preferisci.
-          </p>
+          {packages.length > 0 ? (
+            <p>
+              Scegli uno dei pacchetti pronti oppure crea il tuo su misura selezionando le
+              attrezzature che preferisci.
+            </p>
+          ) : (
+            <p>Crea il tuo pacchetto su misura selezionando le attrezzature che preferisci.</p>
+          )}
         </div>
       </div>
 
@@ -98,9 +102,9 @@ export const EquipmentPromoSection: React.FC<EquipmentPromoSectionProps> = ({
               </ul>
               <p className="pt-1">
                 <span className="text-2xl font-bold text-primary">
-                  € {priceFormatter.format(pkg.annualPrice)}
+                  € {priceFormatter.format(pkg.monthlyPrice)}
                 </span>
-                <span className="text-sm text-gray-500"> / anno</span>
+                <span className="text-sm text-gray-500"> / mese</span>
               </p>
               <span className="mt-auto pt-2 text-sm font-medium text-primary group-hover:underline">
                 Scopri il pacchetto →

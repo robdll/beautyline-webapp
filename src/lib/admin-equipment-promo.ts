@@ -4,7 +4,7 @@ export function serializePromoPackage(doc: {
   name: string;
   description: string;
   details?: unknown;
-  annualPrice: number;
+  monthlyPrice: number;
   badge?: unknown;
   media?: unknown;
   equipmentIds?: unknown;

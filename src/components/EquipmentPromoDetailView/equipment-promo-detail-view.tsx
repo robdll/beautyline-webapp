@@ -74,11 +74,11 @@ export function EquipmentPromoDetailView({
                     />
                   </svg>
                 </span>
-                <h2 className="font-semibold text-gray-800">Canone annuo</h2>
+                <h2 className="font-semibold text-gray-800">Canone mensile</h2>
               </div>
               <p className="text-center text-2xl font-bold text-primary">
-                € {priceFormatter.format(pkg.annualPrice)}
-                <span className="text-sm font-medium text-gray-500"> / anno</span>
+                € {priceFormatter.format(pkg.monthlyPrice)}
+                <span className="text-sm font-medium text-gray-500"> / mese</span>
               </p>
             </article>
 

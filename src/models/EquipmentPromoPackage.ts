@@ -9,8 +9,8 @@ export interface IEquipmentPromoPackage extends Document {
   description: string;
   /** Descrizione estesa mostrata nella pagina di dettaglio. */
   details: string;
-  /** Prezzo annuo di noleggio del pacchetto, in euro. */
-  annualPrice: number;
+  /** Prezzo mensile di noleggio del pacchetto, in euro. */
+  monthlyPrice: number;
   /** Etichetta opzionale evidenziata (es. "Più richiesto"). */
   badge: string;
   media: string[];
@@ -29,7 +29,7 @@ const EquipmentPromoPackageSchema = new Schema<IEquipmentPromoPackage>(
     slug: { type: String, required: true, trim: true, lowercase: true, unique: true },
     description: { type: String, required: true },
     details: { type: String, default: '' },
-    annualPrice: { type: Number, required: true, min: 0 },
+    monthlyPrice: { type: Number, required: true, min: 0 },
     badge: { type: String, default: '' },
     media: [{ type: String }],
     equipmentIds: [{ type: Schema.Types.ObjectId, ref: 'Equipment', required: true }],

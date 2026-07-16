@@ -77,7 +77,7 @@ export default function AdminPacchettiAttrezzaturePage() {
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Immagine</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Nome</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">N. attrezzature</th>
-                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Prezzo annuo</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-gray-700">Prezzo mensile</th>
                 <th className="text-right px-6 py-4 text-sm font-semibold text-gray-700">Azioni</th>
               </tr>
             </thead>
@@ -108,7 +108,7 @@ export default function AdminPacchettiAttrezzaturePage() {
                       </td>
                       <td className="px-6 py-4 text-sm font-medium text-gray-900">{pkg.name}</td>
                       <td className="px-6 py-4 text-sm text-gray-600">{pkg.equipmentIds?.length ?? 0}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600">€{pkg.annualPrice} / anno</td>
+                      <td className="px-6 py-4 text-sm text-gray-600">€{pkg.monthlyPrice} / mese</td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <Link href={`/admin/pacchetti-attrezzature/${pkg._id}/edit`}>

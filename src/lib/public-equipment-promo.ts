@@ -10,7 +10,7 @@ export interface PublicEquipmentPromoJson {
   description: string;
   /** Descrizione estesa (ripiega su `description` se non valorizzata). */
   details: string;
-  annualPrice: number;
+  monthlyPrice: number;
   badge: string | null;
   /** Immagine di copertina (prima media valida o ripiego). */
   image: string;
@@ -24,7 +24,7 @@ export interface LeanEquipmentPromoDoc {
   name: string;
   description: string;
   details?: unknown;
-  annualPrice: number;
+  monthlyPrice: number;
   badge?: unknown;
   media?: unknown;
   equipmentIds?: unknown;
@@ -51,7 +51,7 @@ export function serializePublicEquipmentPromo(p: LeanEquipmentPromoDoc): PublicE
     name: p.name,
     description: p.description,
     details,
-    annualPrice: Number(p.annualPrice) || 0,
+    monthlyPrice: Number(p.monthlyPrice) || 0,
     badge,
     image: firstValidMediaUrl(p.media) ?? PROMO_PACKAGE_IMAGE_FALLBACK,
     equipmentIds,

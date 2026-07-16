@@ -29,19 +29,19 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { name, description, details, annualPrice, badge, media, equipmentIds } = body;
+    const { name, description, details, monthlyPrice, badge, media, equipmentIds } = body;
 
-    if (!name || !description || annualPrice === undefined) {
+    if (!name || !description || monthlyPrice === undefined) {
       return NextResponse.json(
-        { error: 'Campi obbligatori mancanti: name, description, annualPrice.' },
+        { error: 'Campi obbligatori mancanti: name, description, monthlyPrice.' },
         { status: 400 }
       );
     }
 
-    const numPrice = Number(annualPrice);
+    const numPrice = Number(monthlyPrice);
     if (isNaN(numPrice) || numPrice < 0) {
       return NextResponse.json(
-        { error: 'Il prezzo annuo deve essere un numero non negativo.' },
+        { error: 'Il prezzo mensile deve essere un numero non negativo.' },
         { status: 400 }
       );
     }
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
       name: String(name).trim(),
       description: String(description),
       details: typeof details === 'string' ? details : '',
-      annualPrice: numPrice,
+      monthlyPrice: numPrice,
       badge: typeof badge === 'string' ? badge.trim() : '',
       media: Array.isArray(media) ? media : [],
       equipmentIds: itemsResult.ids,

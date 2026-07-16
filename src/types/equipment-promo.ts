@@ -7,7 +7,7 @@ export interface AdminEquipmentPromoPackage {
   name: string;
   description: string;
   details: string;
-  annualPrice: number;
+  monthlyPrice: number;
   badge: string;
   media: string[];
   /** ID (Mongo) delle attrezzature incluse, nell'ordine. */

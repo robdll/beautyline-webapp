@@ -47,19 +47,19 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { name, description, details, annualPrice, badge, media, equipmentIds } = body;
+    const { name, description, details, monthlyPrice, badge, media, equipmentIds } = body;
 
-    if (!name || !description || annualPrice === undefined) {
+    if (!name || !description || monthlyPrice === undefined) {
       return NextResponse.json(
-        { error: 'Campi obbligatori mancanti: name, description, annualPrice.' },
+        { error: 'Campi obbligatori mancanti: name, description, monthlyPrice.' },
         { status: 400 }
       );
     }
 
-    const numPrice = Number(annualPrice);
+    const numPrice = Number(monthlyPrice);
     if (isNaN(numPrice) || numPrice < 0) {
       return NextResponse.json(
-        { error: 'Il prezzo annuo deve essere un numero non negativo.' },
+        { error: 'Il prezzo mensile deve essere un numero non negativo.' },
         { status: 400 }
       );
     }
@@ -78,7 +78,7 @@ export async function PUT(
     pkg.name = String(name).trim();
     pkg.description = String(description);
     pkg.details = typeof details === 'string' ? details : '';
-    pkg.annualPrice = numPrice;
+    pkg.monthlyPrice = numPrice;
     pkg.badge = typeof badge === 'string' ? badge.trim() : '';
     pkg.media = Array.isArray(media) ? media : [];
     pkg.equipmentIds = itemsResult.ids.map((eid) => new mongoose.Types.ObjectId(eid));

@@ -7,7 +7,6 @@ import { ContactSection } from '@/components/ContactSection';
 import { EquipmentHighlightSection } from '@/components/EquipmentHighlightSection';
 import { EquipmentPromoSection } from '@/components/EquipmentPromoSection';
 import { Section } from '@/components/Section';
-import { getPublicEquipmentPromoPackages } from '@/lib/equipment-promo-queries';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappAttrezzaturaUrl } from '@/lib/contact';
 import { pageCanonical } from '@/lib/site';
@@ -52,10 +51,7 @@ const contattaciButtonClass = cn(
 );
 
 export default async function AttrezzaturePage() {
-  const [equipment, promoPackages] = await Promise.all([
-    getEquipment(),
-    getPublicEquipmentPromoPackages(),
-  ]);
+  const equipment = await getEquipment();
 
   return (
     <>
@@ -83,7 +79,9 @@ export default async function AttrezzaturePage() {
 
       <EquipmentHighlightSection />
 
-      <EquipmentPromoSection packages={promoPackages} equipment={equipment} />
+      {/* Carte dei pacchetti pronti nascoste finché il cliente non le ha create tutte:
+          la sezione mostra solo il configuratore del pacchetto personalizzato. */}
+      <EquipmentPromoSection packages={[]} equipment={equipment} />
 
       <Section id="catalogo" className="scroll-mt-24">
         {equipment.length > 0 ? (

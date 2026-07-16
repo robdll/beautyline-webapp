@@ -1,5 +1,5 @@
 /**
- * Costanti dei pacchetti promo attrezzature (noleggio di 3 tecnologie a canone annuo).
+ * Costanti dei pacchetti promo attrezzature (noleggio di 3 tecnologie a canone mensile).
  *
  * I pacchetti sono gestiti dall'area admin e salvati su MongoDB
  * (model `EquipmentPromoPackage`, query in `equipment-promo-queries.ts`).

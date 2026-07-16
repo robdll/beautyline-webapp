@@ -19,6 +19,19 @@ export function whatsappCorsoUrl(courseName: string): string {
   return `${BUSINESS_WHATSAPP_WA_ME}?text=${encodeURIComponent(text)}`;
 }
 
+/** Richiesta info su un pacchetto promo attrezzature predefinito. */
+export function whatsappPacchettoPromoUrl(packageName: string): string {
+  const text = `Ciao, vorrei informazioni sul pacchetto attrezzature: ${packageName}`;
+  return `${BUSINESS_WHATSAPP_WA_ME}?text=${encodeURIComponent(text)}`;
+}
+
+/** Richiesta di un pacchetto attrezzature personalizzato con 3 attrezzature scelte. */
+export function whatsappPacchettoPersonalizzatoUrl(items: string[]): string {
+  const list = items.map((name, i) => `${i + 1}. ${name}`).join('\n');
+  const text = `Ciao, vorrei un preventivo per un pacchetto attrezzature personalizzato con:\n${list}`;
+  return `${BUSINESS_WHATSAPP_WA_ME}?text=${encodeURIComponent(text)}`;
+}
+
 export function whatsappPrenotaUrl(serviceName: string): string {
   const text = `Ciao, vorrei prenotare: ${serviceName}`;
   return `${ESTETICA_WHATSAPP_WA_ME}?text=${encodeURIComponent(text)}`;

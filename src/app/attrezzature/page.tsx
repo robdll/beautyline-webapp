@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { Hero } from '@/components/Hero';
 import { ContactSection } from '@/components/ContactSection';
 import { EquipmentHighlightSection } from '@/components/EquipmentHighlightSection';
+import { EquipmentPromoSection } from '@/components/EquipmentPromoSection';
 import { Section } from '@/components/Section';
+import { getPublicEquipmentPromoPackages } from '@/lib/equipment-promo-queries';
 import { connectDB } from '@/lib/mongodb';
 import { whatsappAttrezzaturaUrl } from '@/lib/contact';
 import { pageCanonical } from '@/lib/site';
@@ -50,7 +52,10 @@ const contattaciButtonClass = cn(
 );
 
 export default async function AttrezzaturePage() {
-  const equipment = await getEquipment();
+  const [equipment, promoPackages] = await Promise.all([
+    getEquipment(),
+    getPublicEquipmentPromoPackages(),
+  ]);
 
   return (
     <>
@@ -77,6 +82,8 @@ export default async function AttrezzaturePage() {
       />
 
       <EquipmentHighlightSection />
+
+      <EquipmentPromoSection packages={promoPackages} equipment={equipment} />
 
       <Section id="catalogo" className="scroll-mt-24">
         {equipment.length > 0 ? (

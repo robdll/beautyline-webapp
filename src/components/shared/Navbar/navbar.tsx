@@ -249,6 +249,13 @@ export const Navbar: React.FC = () => {
                       Il Mio Account
                     </Button>
                   </Link>
+                  {user.role === 'admin' && (
+                    <Link href="/admin" onClick={() => setIsOpen(false)}>
+                      <Button variant="outline" size="sm" className="w-full uppercase tracking-wider font-bold">
+                        Dashboard Admin
+                      </Button>
+                    </Link>
+                  )}
                   <button
                     onClick={() => { handleSignout(); setIsOpen(false); }}
                     className="w-full text-center text-sm text-red-600 py-2"

@@ -159,7 +159,7 @@ export function PercorsoDetailView({ percorso, backHref = '/corsi' }: PercorsoDe
                         src={courseImage}
                         alt=""
                         fill
-                        className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                         sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
                         unoptimized={courseIsRemote}
                       />
